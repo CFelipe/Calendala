@@ -279,7 +279,7 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	Mandala.getInstance().removeSlices();
+	    	//Mandala.getInstance().removeSlices();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 	    }
@@ -493,7 +493,7 @@ public class MainController {
 		}
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	Mandala.getInstance().colorSelection();
+	    	Mandala.getInstance().paintSelection();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 		}
 	}

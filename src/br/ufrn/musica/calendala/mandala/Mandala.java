@@ -16,26 +16,28 @@ import br.ufrn.musica.calendala.mandala.Ring.Direction;
 
 public class Mandala {
 	private static Mandala mandala;
-	private ArrayList<Ring> rings = new ArrayList<Ring>();
+	private ArrayList<Ring> rings;
 	private String title;
 	private int selectedRing;
-	private LinkedList<Integer> selectedSlices;
+	private LinkedList<Slice> selectedSlices;
 	private Direction selectionDirection = Direction.NONE;
 	
 	public enum Position {BEFORE, AFTER};
 	
 	public Mandala() {
 		title = "Untitled";
+		rings = new ArrayList<Ring>();
 		selectedRing = 0;
-		selectedSlices = new LinkedList<Integer>();
-		selectedSlices.add(0);
+		selectedSlices = new LinkedList<Slice>();
+		selectedSlices.add(rings.get(0).getGroups().get(0).getSlices().get(0));
 	}
 	
 	public Mandala(String title) {
 		this.title = title;
+		rings = new ArrayList<Ring>();
 		selectedRing = 0;
-		selectedSlices = new LinkedList<Integer>();
-		selectedSlices.add(0);
+		selectedSlices = new LinkedList<Slice>();
+		selectedSlices.add(rings.get(0).getGroups().get(0).getSlices().get(0));
 	}
 	
 	public void setMandala(Mandala mandala) {
@@ -83,15 +85,7 @@ public class Mandala {
 		}
 	}
 	
-	public int getSelectedSlice() {
-		return selectedSlices.get(0);
-	}
-	
-	public List<Integer> getSelectedSlices() {
-		return selectedSlices;
-	}
-	
-	public void setSelectedSlice(int selectedSlice) {
+	public void setSelectedSlice(Slice selectedSlice) {
 		selectedSlices.clear();
 		selectionDirection = Direction.NONE;
 		
@@ -219,7 +213,7 @@ public class Mandala {
 			setSelectedSlice(0);
 		}
 	}	
-	public void removeSlices() {
+	public void removeGroups() {
 		if(rings.get(selectedRing).getSlices().size() > 1) {
 			rings.get(selectedRing).getSlices().remove(getSelectedSlice());
 			setSelectedSlice(getSelectedSlice() - 1);
@@ -259,20 +253,18 @@ public class Mandala {
 		}
 	}
 	
-	public void colorSelection() {
+	public void paintSelection() {
 		for(int i = 0; i < selectedSlices.size(); i++) {
 			rings.get(getSelectedRing()).getSlices().
 			get(selectedSlices.get(i)).setColor(Color.red);
 		}
 	}
 
-	public void merge() {
-		//double sum = 0;
-	}
-	
 	public void init() {
 		setTitle("Mandala");
 		
+		//Old format:
+		/*
 		// Circle of fifths
 		Ring ring1 = new Ring("C");
 		ring1.getSlices().add(new Slice("F"));
@@ -307,6 +299,40 @@ public class Mandala {
 		
 		setSelectedRing(0);
 		setSelectedSlice(0);
+		*/
+		
+		//New format:
+		Ring ring1 = new Ring("C");
+		ring1.getGroups().get(0).addSlice(new Slice("F"));
+		ring1.getGroups().get(0).addSlice(new Slice("Bb"));
+		ring1.getGroups().get(0).addSlice(new Slice("Eb"));
+		ring1.getGroups().get(0).addSlice(new Slice("Ab"));
+		ring1.getGroups().get(0).addSlice(new Slice("Db"));
+		ring1.getGroups().get(0).addSlice(new Slice("Gb"));
+		ring1.getGroups().get(0).addSlice(new Slice("B"));
+		ring1.getGroups().get(0).addSlice(new Slice("E"));
+		ring1.getGroups().get(0).addSlice(new Slice("A"));
+		ring1.getGroups().get(0).addSlice(new Slice("D"));
+		ring1.getGroups().get(0).addSlice(new Slice("G"));
+		getRings().add(ring1);
+		
+		Ring ring2 = new Ring("Am");
+		ring2.getGroups().get(0).addSlice(new Slice("Dm"));
+		ring2.getGroups().get(0).addSlice(new Slice("Gm"));
+		ring2.getGroups().get(0).addSlice(new Slice("Cm"));
+		ring2.getGroups().get(0).addSlice(new Slice("Fm"));
+		ring2.getGroups().get(0).addSlice(new Slice("Bbm"));
+		ring2.getGroups().get(0).addSlice(new Slice("Ebm"));
+		ring2.getGroups().get(0).addSlice(new Slice("Abm"));
+		ring2.getGroups().get(0).addSlice(new Slice("Dbm"));
+		ring2.getGroups().get(0).addSlice(new Slice("Gbm"));
+		ring2.getGroups().get(0).addSlice(new Slice("Bm"));
+		ring2.getGroups().get(0).addSlice(new Slice("Em"));
+		getRings().add(ring2);
+		
+		Ring ring3 = new Ring(" ");
+		getRings().add(ring3);
+		
 		
 	}
 	

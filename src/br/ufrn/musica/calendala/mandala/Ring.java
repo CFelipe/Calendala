@@ -11,24 +11,24 @@ import br.ufrn.musica.calendala.util.CircularArrayList;
  */
 
 public class Ring {
-	private CircularArrayList<Slice> slices;
+	private CircularArrayList<Group> groups;
 	
 	public enum Direction {CW, CCW, UP, DOWN, NONE}
 	
 	public Ring() {
-		slices = new CircularArrayList<Slice>();
+		groups = new CircularArrayList<Group>();
 	}
 	
 	public Ring(String sliceTitle) {
-		slices = new CircularArrayList<Slice>();
-		slices.add(new Slice(sliceTitle));
+		groups = new CircularArrayList<Group>();
+		groups.add(new Group(sliceTitle));
 	}
 	
 	// For copy-pasting and cloning
 	public Ring(Ring source) {
-		slices = new CircularArrayList<Slice>();
-		for(Slice s : source.slices) {
-			slices.add(new Slice(s));
+		groups = new CircularArrayList<Group>();
+		for(Group s : source.groups) {
+			groups.add(new Group(s));
 		}
 	}
 	
@@ -40,14 +40,14 @@ public class Ring {
 	 */
 	public void rotate(Direction direction) {
 		if(direction == Direction.CW) {
-			Collections.rotate(slices, 1);
+			Collections.rotate(groups, 1);
 		} else {
-			Collections.rotate(slices, -1);
+			Collections.rotate(groups, -1);
 		}
 	}
 	
-	public CircularArrayList<Slice> getSlices() {
-		return slices;
+	public CircularArrayList<Group> getGroups() {
+		return groups;
 	}
 	
 }

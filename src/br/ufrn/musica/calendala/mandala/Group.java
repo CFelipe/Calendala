@@ -32,7 +32,11 @@ public class Group {
 	}
 	
 	public void addSlice(Slice s) {
-		
+		slices.add(s);
+	}
+	
+	public void addSlice(String s) {
+		slices.add(new Slice(s));
 	}
 	
 	public void removeFirstSlice() {
@@ -42,7 +46,9 @@ public class Group {
 	}
 	
 	public void removeSlice(Slice s) {
-		slices.remove(s);
+		if(slices.size > 1) {
+			slices.remove(s);
+		}
 	}
 
 }

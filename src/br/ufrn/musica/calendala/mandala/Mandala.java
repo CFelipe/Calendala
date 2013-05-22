@@ -18,7 +18,7 @@ public class Mandala {
 	private static Mandala mandala;
 	private ArrayList<Ring> rings;
 	private String title;
-	private int selectedRing;
+	private Ring selectedRing;
 	private LinkedList<Slice> selectedSlices;
 	private Direction selectionDirection = Direction.NONE;
 	
@@ -27,7 +27,7 @@ public class Mandala {
 	public Mandala() {
 		title = "Untitled";
 		rings = new ArrayList<Ring>();
-		selectedRing = 0;
+		//selectedRing = 0;
 		selectedSlices = new LinkedList<Slice>();
 		selectedSlices.add(rings.get(0).getGroups().get(0).getSlices().get(0));
 	}
@@ -35,7 +35,7 @@ public class Mandala {
 	public Mandala(String title) {
 		this.title = title;
 		rings = new ArrayList<Ring>();
-		selectedRing = 0;
+		//selectedRing = 0;
 		selectedSlices = new LinkedList<Slice>();
 		selectedSlices.add(rings.get(0).getGroups().get(0).getSlices().get(0));
 	}
@@ -67,37 +67,31 @@ public class Mandala {
 		this.title = title;
 	}
 	
-	public int getSelectedRing() {
+	public Ring getSelectedRing() {
 		return selectedRing;
 	}
 	
-	public void setSelectedRing(int selectedRing) {
-		if(!getRings().isEmpty()) {
-			if(selectedRing < 0) {
-				this.selectedRing = 0;
-			} else if (selectedRing > getRings().size() - 1){
-				this.selectedRing = getRings().size() - 1;
-			} else {
-				this.selectedRing = selectedRing;
-			}
-		} else {
-			System.out.println("No rings in the mandala");
-		}
-	}
-	
-	public void setSelectedSlice(Slice selectedSlice) {
-		selectedSlices.clear();
-		selectionDirection = Direction.NONE;
+	public void setSelectedRing(Ring selectedRing) {
 		
-		if(selectedSlice < 0) {
-			this.selectedSlices.add(getRings().
-				get(getSelectedRing()).getSlices().size() - 1);
+	}
+	
+	public void removeSelectedRing() {
+		if(rings.size() > 1) {
+			rings.remove(selectedRing);
 		} else {
-			this.selectedSlices.add(selectedSlice % getRings().
-					get(getSelectedRing()).getSlices().size());
+			//Only one ring in mandala
 		}
 	}
 	
+	public void insertGroup(Ring r) {
+		r.getGroups().add(new Group());
+	}
+	
+	public void removeGroup(Group g) {
+		getSelectedRing().getGroups().remove(g);
+	}
+	
+	/*
 	private int getCWNext() {
 		return (selectedSlices.getLast() + 1) % 
 						getRings().get(getSelectedRing()).getSlices().size();
@@ -222,11 +216,6 @@ public class Mandala {
 			removeRing();
 			setSelectedSlice(0);
 		}
-		/*
-		Ring selRing = rings.get(selectedRing);
-		int selSize = selectedSlices.size();
-		setSelectedSlice(0);
-		*/
 	}
 	
 	public void cloneRing (Direction direction) {
@@ -259,6 +248,7 @@ public class Mandala {
 			get(selectedSlices.get(i)).setColor(Color.red);
 		}
 	}
+	*/
 
 	public void init() {
 		setTitle("Mandala");

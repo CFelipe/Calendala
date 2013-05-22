@@ -12,8 +12,6 @@ public class FacadeSwing {
 	private static FacadeSwing singleton;
 	private static MenuBar menuBar;
 	private static MandalaPanel mandalaPanel;
-	private static InfoPanel infoPanel;
-	private static ColorPanel colorPanel;
 	private static JFileChooser openFileChooser, saveFileChooser;
 
 	public static FacadeSwing singleton() {
@@ -25,8 +23,6 @@ public class FacadeSwing {
 	private FacadeSwing() {
 		menuBar = new MenuBar();
 		mandalaPanel = new MandalaPanel();
-		infoPanel = new InfoPanel();
-		colorPanel = new ColorPanel();
 	}
 
 	public MenuBar getMenuBar() {
@@ -35,14 +31,6 @@ public class FacadeSwing {
 
 	public MandalaPanel getMandalaPanel() {
 		return mandalaPanel;
-	}
-	
-	public InfoPanel getInfoPanel() {
-		return infoPanel;
-	}
-	
-	public ColorPanel getColorPanel() {
-		return colorPanel;
 	}
 
 	public JFileChooser getOpenFileChooser() {

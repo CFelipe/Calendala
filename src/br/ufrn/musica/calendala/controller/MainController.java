@@ -196,7 +196,6 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().rotateSelectedSlice(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 	    }
 	  }
 	 
@@ -215,7 +214,6 @@ public class MainController {
 	    	Mandala.getInstance().getRings().get(Mandala.getInstance().getSelectedRing()).rotate(direction);
 	    	Mandala.getInstance().rotateSelectedSlice(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 	    }
 	  }
 	 
@@ -232,7 +230,6 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().shiftRingSelection(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 	    }
 	  }
 	 
@@ -249,7 +246,6 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().changeSelection(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 	    }
 	  }
 	 
@@ -266,7 +262,6 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().insertSlice(position);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 	    }
 	  }
 	 
@@ -281,7 +276,6 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().removeSlices();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 	    }
 	  }
 	 
@@ -296,7 +290,6 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().removeRing();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 	    }
 	    
 	  }
@@ -313,7 +306,6 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().insertRing(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 	    }
 		 
 	 }
@@ -331,7 +323,6 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().cloneRing(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 	    }
 		 
 	 }
@@ -435,7 +426,6 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 	    	FacadeSwing.singleton().getMandalaPanel().toggleHelpOverlay();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    	FacadeSwing.singleton().getInfoPanel().updateInfo();
 		}
 	}
 	

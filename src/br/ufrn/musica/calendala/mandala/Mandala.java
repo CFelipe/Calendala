@@ -1,12 +1,7 @@
 package br.ufrn.musica.calendala.mandala;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
-
-import br.ufrn.musica.calendala.mandala.Ring.Direction;
 
 /**
  * @author Felipe Cortez de Sá
@@ -20,7 +15,7 @@ public class Mandala {
 	private String title;
 	private Ring selectedRing;
 	private LinkedList<Slice> selectedSlices;
-	private Direction selectionDirection = Direction.NONE;
+//	private Direction selectionDirection = Direction.NONE;
 	
 	public enum Position {BEFORE, AFTER};
 	
@@ -72,23 +67,67 @@ public class Mandala {
 	}
 	
 	public void setSelectedRing(Ring selectedRing) {
-		
+		//?
+	}
+	
+	public void insertRing() {
+		rings.add(new Ring("nil"));
+	}
+	
+	public void insertGroup(Ring r) {
+		r.getGroups().add(new Group(r));
+	}
+	
+	public void insertSlice(Group g) {
+		g.getSlices().add(new Slice(g, "nil"));
 	}
 	
 	public void removeSelectedRing() {
 		if(rings.size() > 1) {
 			rings.remove(selectedRing);
 		} else {
-			//Only one ring in mandala
+			System.out.println("Cannot remove ring");
 		}
 	}
 	
-	public void insertGroup(Ring r) {
-		r.getGroups().add(new Group());
+	public void removeSelectedSlices() {
+		for(Slice s : selectedSlices) {
+			if(removeSlice(s)) {
+				selectedRing = rings.get(0);
+				selectedSlices.clear();
+				selectedSlices.add(rings.get(0).getGroups().get(0).getSlices().get(0));
+			}
+		}
 	}
 	
-	public void removeGroup(Group g) {
-		getSelectedRing().getGroups().remove(g);
+	public boolean removeRing(Ring r) {
+		if(rings.size() > 1) {
+			rings.remove(r);
+			return true;
+		} else {
+			System.out.println("Cannot remove ring");
+			return false;
+		}
+	}
+	
+	public boolean removeGroup(Group g) {
+		if(g.getRing().getGroups().size() > 1) {
+			g.getRing().getGroups().remove(g);
+			return true;
+		} else {
+			removeRing(g.getRing());
+			return false;
+		}
+	}
+	
+	public boolean removeSlice(Slice s) {
+		if(s.getGroup().getSlices().size() > 1) {
+			s.getGroup().getSlices().remove(s);
+			return true;
+		} else {
+			removeGroup(s.getGroup());
+			return false;
+		}
 	}
 	
 	/*
@@ -291,6 +330,7 @@ public class Mandala {
 		setSelectedSlice(0);
 		*/
 		
+		/*
 		//New format:
 		Ring ring1 = new Ring("C");
 		ring1.getGroups().get(0).addSlice(new Slice("F"));
@@ -322,7 +362,7 @@ public class Mandala {
 		
 		Ring ring3 = new Ring(" ");
 		getRings().add(ring3);
-		
+		*/
 		
 	}
 	

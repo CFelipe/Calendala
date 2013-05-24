@@ -4,23 +4,27 @@ import java.util.ArrayList;
 
 public class Group {
 	private ArrayList<Slice> slices;
+	private Ring ring;
 	
-	public Group() {
+	public Group(Ring ring) {
 		slices = new ArrayList<Slice>();
 		slices.add(new Slice());
+		this.ring = ring;
 	}
 	
-	public Group(String s) {
+	public Group(Ring ring, String s) {
 		slices = new ArrayList<Slice>();
 		slices.add(new Slice(s));
+		this.ring = ring;
 	}
-	
+
 	//For copy-pasting and cloning
 	public Group(Group source) {
 		slices = new ArrayList<Slice>();
 		for(Slice s : source.slices) {
 			slices.add(new Slice(s));
 		}
+		ring = source.ring;
 	}
 
 	public ArrayList<Slice> getSlices() {
@@ -31,6 +35,14 @@ public class Group {
 		this.slices = slices;
 	}
 	
+	public Ring getRing() {
+		return ring;
+	}
+
+	public void setRing(Ring ring) {
+		this.ring = ring;
+	}
+	
 	public void addSlice(Slice s) {
 		slices.add(s);
 	}
@@ -38,17 +50,4 @@ public class Group {
 	public void addSlice(String s) {
 		slices.add(new Slice(s));
 	}
-	
-	public void removeFirstSlice() {
-		if(slices.size() > 1) {
-			slices.remove(0);
-		}
-	}
-	
-	public void removeSlice(Slice s) {
-		if(slices.size > 1) {
-			slices.remove(s);
-		}
-	}
-
 }

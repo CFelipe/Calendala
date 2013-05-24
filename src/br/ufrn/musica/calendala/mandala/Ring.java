@@ -21,7 +21,7 @@ public class Ring {
 	
 	public Ring(String sliceTitle) {
 		groups = new CircularArrayList<Group>();
-		groups.add(new Group(sliceTitle));
+		groups.add(new Group(this, sliceTitle));
 	}
 	
 	// For copy-pasting and cloning
@@ -32,12 +32,6 @@ public class Ring {
 		}
 	}
 	
-	/** Rotates elements in an CircularArrayList, e.g.:
-	 *<p> S  :  1, 2, 3, 4
-	 *<p> S  :  4, 1, 2, 3
-	 * @param direction 
-	 * Clockwise or counter-clockwise ring rotation
-	 */
 	public void rotate(Direction direction) {
 		if(direction == Direction.CW) {
 			Collections.rotate(groups, 1);

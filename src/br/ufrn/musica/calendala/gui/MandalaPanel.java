@@ -200,7 +200,6 @@ public class MandalaPanel extends JPanel {
         
         int width = getWidth();
         int ringsNum = Mandala.getInstance().getRings().size();
-        // Calculates the distance between the rings' borders
         int ringSize = (width - DOC_MARGIN) / ringsNum;
         
         for(int i = 0; i < ringsNum; i++) {
@@ -210,7 +209,7 @@ public class MandalaPanel extends JPanel {
 			double groupAngle = 360 / groupsNum;
 			
 			Arc2D.Double arc = new Arc2D.Double();
-    		arc.setArcByCenter(width / 2, width / 2, arcRadius, 0, 0, Arc2D.PIE);
+    		arc.setArcByCenter(width / 2, width / 2, arcRadius, 90, 0, Arc2D.PIE);
     		
         	for(int j = 0; j < groupsNum; j++) {
         		Group currentGroup = currentRing.getGroups().get(j);
@@ -220,8 +219,8 @@ public class MandalaPanel extends JPanel {
 				for(int k = 0; k < slicesNum; k++) {
         			Slice currentSlice = currentGroup.getSlices().get(k);
         			
-	    			arc.start += sliceAngle;
-	    			arc.setAngleExtent((-sliceAngle/*+ (offset / slicesNum)) * -1*/));
+	    			arc.start -= sliceAngle;
+	    			arc.setAngleExtent((sliceAngle/*+ (offset / slicesNum)) * -1*/));
 	    			
 	    			g2d.setColor(currentSlice.getColor());
 	        		g2d.fill(arc);
@@ -247,24 +246,43 @@ public class MandalaPanel extends JPanel {
         }
         
         // Renders the text
-        /*
         for(int i = 0; i < ringsNum; i++) {
         	Ring currentRing = Mandala.getInstance().getRings().get(i);
-        	double slicesNum = currentRing.getSlices().size();
-    		double textRadius = ((ringSize * (ringsNum - i)) / 2) - (ringSize / 2) / 2;
+			double textRadius = ((ringSize * (ringsNum - i)) / 2) - (ringSize / 2) / 2;    			
+    		double arcRadius = (ringSize * (ringsNum - i)) / 2;
+        	double groupsNum = currentRing.getGroups().size();
+			double groupAngle = 360 / groupsNum;
+			
+			Arc2D.Double arc = new Arc2D.Double();
+    		arc.setArcByCenter(width / 2, width / 2, arcRadius, 90, 0, Arc2D.PIE);
     		
-        	for(int j = 0; j < slicesNum; j++) {
-        		Slice currentSlice = currentRing.getSlices().get(j);
-        		double sliceAngle = (360 / slicesNum);
-        		double textAngle = (((sliceAngle * j) + (sliceAngle * (j + 1))) / 2) - 90;
-    			int strWidth = 
-    					(int) g2d.getFontMetrics()
-    					.getStringBounds(currentSlice.getTitle(), g2d).getWidth();
-    			double textX = ((textRadius * Math.cos(Math.toRadians(textAngle)))) - (strWidth / 2);
-    			double textY = ((textRadius * Math.sin(Math.toRadians(textAngle))));
-    			
-    			g2d.setColor(Color.black);
-    			g2d.drawString(currentSlice.getTitle(), (int) ((width / 2) + textX), (int) ((width / 2) + textY));
+        	for(int j = 0; j < groupsNum; j++) {
+        		Group currentGroup = currentRing.getGroups().get(j);
+				double slicesNum = currentGroup.getSlices().size();
+        		double sliceAngle = groupAngle / slicesNum;
+        		
+				for(int k = 0; k < slicesNum; k++) {
+        			Slice currentSlice = currentGroup.getSlices().get(k);
+        			
+	    			arc.start -= sliceAngle;
+	    			arc.setAngleExtent((sliceAngle/*+ (offset / slicesNum)) * -1*/));
+	    			
+	    			//double textAngle = (sliceAngle + (2 * sliceAngle)) / 2 - arc.start;
+	    			double textAngle = -arc.start;
+	    			textAngle -= arc.extent / 2;
+	    			System.out.println(textAngle);
+	        		
+	    			int strWidth = 
+	    					(int) g2d.getFontMetrics()
+	    					.getStringBounds(currentSlice.getTitle(), g2d).getWidth();
+	    			double textX = ((textRadius * Math.cos(Math.toRadians(textAngle)))) - (strWidth / 2);
+	    			double textY = ((textRadius * Math.sin(Math.toRadians(textAngle))));
+	    			
+	    			g2d.setColor(Color.black);
+	    			g2d.drawString(currentSlice.getTitle(), (int) ((width / 2) + textX), (int) ((width / 2) + textY));
+				}
+        	}
+        }
     			
     			/*
     			if(Mandala.getInstance().getSelectedRing() == i &&

@@ -88,6 +88,10 @@ public class Mandala {
 		g.getSlices().add(new Slice(g, "nil"));
 	}
 	
+	public void insertSlice(Group g, String title) {
+		g.getSlices().add(new Slice(g, title));
+	}
+	
 	public void removeSelectedRing() {
 		if(rings.size() > 1) {
 			rings.remove(selectedRing);
@@ -206,63 +210,7 @@ public class Mandala {
 		
 		setSelectedSlice((int) newSlice);
 	}
-		public void insertSlice(Position position) {
-		if(position == Position.BEFORE) {
-			rings.get(getSelectedRing()).getSlices().add(getSelectedSlice(), new Slice(" "));
-			setSelectedSlice((getSelectedSlice()));
-		} else if(position == Position.AFTER) {
-			rings.get(getSelectedRing()).getSlices().add(getSelectedSlice() + 1, new Slice(" "));
-			setSelectedSlice((getSelectedSlice() + 1));
-		}
-		
-	}	
-	
-	public void insertRing(Direction direction) {
-		if(direction == Direction.UP) {
-			rings.add(this.getSelectedRing(), new Ring(" "));
-			setSelectedRing((getSelectedRing()));
-		} else if(direction == Direction.DOWN) {
-			rings.add(this.getSelectedRing() + 1, new Ring(" "));
-			setSelectedRing((getSelectedRing()) + 1);
-		}
-		setSelectedSlice(0);
-	}
-		public void insertRing(Ring r, Direction direction, boolean clone) {
-		if(direction == Direction.UP) {
-			rings.add(this.getSelectedRing(), r);
-			setSelectedRing((getSelectedRing()));
-		} else if(direction == Direction.DOWN) {
-			rings.add(this.getSelectedRing() + 1, r);
-			setSelectedRing((getSelectedRing()) + 1);
-		}
-		
-		if(!clone) {
-			setSelectedSlice(0);
-		}
-	}
-		public void removeRing() {
-		if(rings.size() > 1) {
-			rings.remove(getSelectedRing());
-			setSelectedRing(getSelectedRing() - 1);
-			setSelectedSlice(0);
-		} else {
-			// Mandala só tem um anel
-			rings.clear();
-			rings.add(new Ring(" "));
-			setSelectedSlice(0);
-		}
-	}	
-	public void removeGroups() {
-		if(rings.get(selectedRing).getSlices().size() > 1) {
-			rings.get(selectedRing).getSlices().remove(getSelectedSlice());
-			setSelectedSlice(getSelectedSlice() - 1);
-			
-		} else {
-			removeRing();
-			setSelectedSlice(0);
-		}
-	}
-	
+		
 	public void cloneRing (Direction direction) {
 		Ring r = new Ring(getRings().get(getSelectedRing()));
 		insertRing(r, direction, true);
@@ -301,14 +249,31 @@ public class Mandala {
 		//New format:
 		Ring ring1 = new Ring();
 		Group group1 = new Group(ring1);
-		insertSlice(group1);
+		group1.insertSlice("1/1");
+		group1.insertSlice("1/2");
 		Group group2 = new Group(ring1);
-		insertSlice(group2);
-		insertSlice(group2);
-		insertSlice(group2);
+		group2.insertSlice("2/1");
+		group2.insertSlice("2/2");
+		group2.insertSlice("2/3");
+		
+		Group group3 = new Group(ring1);
+		group3.insertSlice("3/1");
+		
+		Group group4 = new Group(ring1);
+		group4.insertSlice("4/1");
+		
+		Group group5 = new Group(ring1);
+		group5.insertSlice("5/1");
+		
+		Group group6 = new Group(ring1);
+		group6.insertSlice("6/1");
 		
 		insertGroup(ring1, group1);
 		insertGroup(ring1, group2);
+		insertGroup(ring1, group3);
+		insertGroup(ring1, group4);
+		insertGroup(ring1, group5);
+		insertGroup(ring1, group6);
 		
 		getRings().add(ring1);
 		/*

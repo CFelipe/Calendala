@@ -23,8 +23,10 @@ public class Mandala {
 		title = "Untitled";
 		rings = new ArrayList<Ring>();
 		//selectedRing = 0;
+		/*
 		selectedSlices = new LinkedList<Slice>();
 		selectedSlices.add(rings.get(0).getGroups().get(0).getSlices().get(0));
+		*/
 	}
 	
 	public Mandala(String title) {
@@ -76,6 +78,10 @@ public class Mandala {
 	
 	public void insertGroup(Ring r) {
 		r.getGroups().add(new Group(r));
+	}
+	
+	public void insertGroup(Ring r, Group g) {
+		r.getGroups().add(g);
 	}
 	
 	public void insertSlice(Group g) {
@@ -292,48 +298,20 @@ public class Mandala {
 	public void init() {
 		setTitle("Mandala");
 		
-		//Old format:
-		/*
-		// Circle of fifths
-		Ring ring1 = new Ring("C");
-		ring1.getSlices().add(new Slice("F"));
-		ring1.getSlices().add(new Slice("Bb"));
-		ring1.getSlices().add(new Slice("Eb"));
-		ring1.getSlices().add(new Slice("Ab"));
-		ring1.getSlices().add(new Slice("Db"));
-		ring1.getSlices().add(new Slice("Gb"));
-		ring1.getSlices().add(new Slice("B"));
-		ring1.getSlices().add(new Slice("E"));
-		ring1.getSlices().add(new Slice("A"));
-		ring1.getSlices().add(new Slice("D"));
-		ring1.getSlices().add(new Slice("G"));
-		getRings().add(ring1);
-		
-		Ring ring2 = new Ring("Am");
-		ring2.getSlices().add(new Slice("Dm"));
-		ring2.getSlices().add(new Slice("Gm"));
-		ring2.getSlices().add(new Slice("Cm"));
-		ring2.getSlices().add(new Slice("Fm"));
-		ring2.getSlices().add(new Slice("Bbm"));
-		ring2.getSlices().add(new Slice("Ebm"));
-		ring2.getSlices().add(new Slice("Abm"));
-		ring2.getSlices().add(new Slice("Dbm"));
-		ring2.getSlices().add(new Slice("Gbm"));
-		ring2.getSlices().add(new Slice("Bm"));
-		ring2.getSlices().add(new Slice("Em"));
-		getRings().add(ring2);
-		
-		Ring ring3 = new Ring(" ");
-		getRings().add(ring3);
-		
-		setSelectedRing(0);
-		setSelectedSlice(0);
-		*/
-		
-		/*
 		//New format:
-		Ring ring1 = new Ring("C");
-		ring1.getGroups().get(0).addSlice(new Slice("F"));
+		Ring ring1 = new Ring();
+		Group group1 = new Group(ring1);
+		insertSlice(group1);
+		Group group2 = new Group(ring1);
+		insertSlice(group2);
+		insertSlice(group2);
+		insertSlice(group2);
+		
+		insertGroup(ring1, group1);
+		insertGroup(ring1, group2);
+		
+		getRings().add(ring1);
+		/*
 		ring1.getGroups().get(0).addSlice(new Slice("Bb"));
 		ring1.getGroups().get(0).addSlice(new Slice("Eb"));
 		ring1.getGroups().get(0).addSlice(new Slice("Ab"));
@@ -344,8 +322,9 @@ public class Mandala {
 		ring1.getGroups().get(0).addSlice(new Slice("A"));
 		ring1.getGroups().get(0).addSlice(new Slice("D"));
 		ring1.getGroups().get(0).addSlice(new Slice("G"));
-		getRings().add(ring1);
+		*/
 		
+		/*
 		Ring ring2 = new Ring("Am");
 		ring2.getGroups().get(0).addSlice(new Slice("Dm"));
 		ring2.getGroups().get(0).addSlice(new Slice("Gm"));

@@ -82,7 +82,7 @@ public class FileIO {
 							continue;
 						} else if(startElement.getName().getLocalPart().equals("cell")) {
 							event = eventReader.nextEvent();
-							slice = new Slice();
+							//slice = new Slice();
 							
 							@SuppressWarnings("unchecked")
 							Iterator<Attribute> attributes = startElement.getAttributes();
@@ -105,15 +105,15 @@ public class FileIO {
 						if(endElement.getName().getLocalPart().equals("mandala")) {
 							mandala.setRings(rings);
 							mandala.setTitle(title);
-							mandala.setSelectedRing(selectedRing);
-							mandala.setSelectedSlice(selectedSlice);
+							//mandala.setSelectedRing(selectedRing);
+							//mandala.setSelectedSlice(selectedSlice);
 							mandala.setMandala(mandala);
 							continue;
 						} else if(endElement.getName().getLocalPart().equals("ring")) {
 							rings.add(ring);
 							continue;
 						} else if(endElement.getName().getLocalPart().equals("cell")) {
-							ring.getSlices().add(slice);
+							//ring.getSlices().add(slice);
 							continue;
 						}
 					}
@@ -144,16 +144,17 @@ public class FileIO {
 				writer.writeCharacters("\n");
 				writer.writeStartElement("mandala");
 				writer.writeAttribute("title", Mandala.getInstance().getTitle());
-				writer.writeAttribute("selRing", 
+				/*writer.writeAttribute("selRing", 
 						Integer.toString(Mandala.getInstance().getSelectedRing()));
 				writer.writeAttribute("selSlice", 
 						Integer.toString(Mandala.getInstance().getSelectedSlice()));
 				writer.writeCharacters("\n");
+				*/
 				
 				for(Ring r : Mandala.getInstance().getRings()) {
 					writer.writeStartElement("ring");
 					writer.writeCharacters("\n");
-					for(Slice s : r.getSlices()) {
+					/*for(Slice s : r.getSlices()) {
 						writer.writeStartElement("cell");
 						String rgb = Integer.toHexString(s.getColor().getRGB());
 						rgb = rgb.substring(2, rgb.length());
@@ -161,7 +162,7 @@ public class FileIO {
 						writer.writeCharacters(s.getTitle());
 						writer.writeEndElement();
 						writer.writeCharacters("\n");
-					}
+					}*/
 					writer.writeEndElement();
 					writer.writeCharacters("\n");
 				}

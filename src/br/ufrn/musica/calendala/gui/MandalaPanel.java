@@ -23,6 +23,7 @@ import javax.swing.KeyStroke;
 
 import br.ufrn.musica.calendala.controller.MainController;
 import br.ufrn.musica.calendala.io.ResourceIO;
+import br.ufrn.musica.calendala.mandala.Group;
 import br.ufrn.musica.calendala.mandala.Mandala;
 import br.ufrn.musica.calendala.mandala.Ring;
 import br.ufrn.musica.calendala.mandala.Slice;
@@ -162,9 +163,11 @@ public class MandalaPanel extends JPanel {
 				if(finalText.equals(""))
 					finalText = " ";
 				
+				/*
 				Mandala.getInstance().getRings().get(Mandala.getInstance().
 						getSelectedRing()).getSlices().get(Mandala.getInstance().
 								getSelectedSlice()).setTitle(finalText);
+								*/
 				remove(editField);
 				repaint();
 			}
@@ -180,7 +183,6 @@ public class MandalaPanel extends JPanel {
     }
     
 	public void drawMandala() {
-    	// Gets g2d from the BufferedImage
 		Graphics2D g2d = bi.createGraphics();
 		Composite original = g2d.getComposite();
 		Composite translucentDarker = 
@@ -188,15 +190,10 @@ public class MandalaPanel extends JPanel {
 		Composite translucentBrighter = 
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.04f);	
         
-        // Sets anti-alias on
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
         RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        
-        // Paints the background white
-		//g2d.setBackground(Color.white);        
-		//g2d.clearRect(0, 0, WIDTH, WIDTH);
         
         g2d.setColor(Color.black);
         g2d.setStroke(mandalaStroke);
@@ -206,55 +203,51 @@ public class MandalaPanel extends JPanel {
         // Calculates the distance between the rings' borders
         int ringSize = (width - DOC_MARGIN) / ringsNum;
         
-        // Iterates through the mandala's rings
         for(int i = 0; i < ringsNum; i++) {
         	Ring currentRing = Mandala.getInstance().getRings().get(i);
-        	double slicesNum = currentRing.getSlices().size();
-        	double offset = 360 % slicesNum;
-        	
     		double arcRadius = (ringSize * (ringsNum - i)) / 2;
-    		/*
-    		if(offset != 0) {
-    			System.out.println("Erro de desenho: " + (360 % slicesNum));
-    			System.out.println((double) offset / slicesNum);
-    			System.out.println((double) offset);
-    		}
-    		*/
+        	double groupsNum = currentRing.getGroups().size();
+			double groupAngle = 360 / groupsNum;
+			
+			Arc2D.Double arc = new Arc2D.Double();
+    		arc.setArcByCenter(width / 2, width / 2, arcRadius, 0, 0, Arc2D.PIE);
     		
-        	// Iterates through the slices of the ring that has index i
-        	for(int j = 0; j < slicesNum; j++) {
-        		Slice currentSlice = currentRing.getSlices().get(j);
-        		Arc2D.Float arc = new Arc2D.Float();
-    			
-        		double aux = slicesNum - j;
-        		double sliceAngle = (360 / slicesNum);
-        		arc.setArcByCenter(width / 2, width / 2, arcRadius, 0, 0, Arc2D.PIE);
-    			arc.setAngleStart((sliceAngle * aux) + 90);
-    			arc.setAngleExtent((sliceAngle + (offset / slicesNum)) * -1);
-    			
-    			g2d.setColor(currentSlice.getColor());
-        		g2d.fill(arc);
-    			
-    			if(Mandala.getInstance().getSelectedRing() == i && showSelection) {
-						g2d.setColor(Color.gray);
-						g2d.setComposite(translucentBrighter);
-		        		g2d.fill(arc);
-					if(Mandala.getInstance().getSelectedSlices().contains(j)) {
-						g2d.setComposite(translucentDarker);
-		        		g2d.fill(arc);
+        	for(int j = 0; j < groupsNum; j++) {
+        		Group currentGroup = currentRing.getGroups().get(j);
+				double slicesNum = currentGroup.getSlices().size();
+        		double sliceAngle = groupAngle / slicesNum;
+        		
+				for(int k = 0; k < slicesNum; k++) {
+        			Slice currentSlice = currentGroup.getSlices().get(k);
+        			
+	    			arc.start += sliceAngle;
+	    			arc.setAngleExtent((-sliceAngle/*+ (offset / slicesNum)) * -1*/));
+	    			
+	    			g2d.setColor(currentSlice.getColor());
+	        		g2d.fill(arc);
+	        		
+	        		/*
+	    			if(Mandala.getInstance().getSelectedRing() == i && showSelection) {
+							g2d.setColor(Color.gray);
+							g2d.setComposite(translucentBrighter);
+			        		g2d.fill(arc);
+						if(Mandala.getInstance().getSelectedSlices().contains(j)) {
+							g2d.setComposite(translucentDarker);
+			        		g2d.fill(arc);
+		    			}
+		        		g2d.setComposite(original);
 	    			}
-	        		g2d.setComposite(original);
-    			}
-        		
-        		// Finally, draw the slice
-        		
-    			// Draws the outline
-    			g2d.setColor(currentSlice.getColor().darker());
-        		g2d.draw(arc);
+	    			*/
+	        		
+	    			// Draws the outline
+	    			g2d.setColor(currentSlice.getColor().darker());
+	        		g2d.draw(arc);
+        		}
         	}
         }
         
         // Renders the text
+        /*
         for(int i = 0; i < ringsNum; i++) {
         	Ring currentRing = Mandala.getInstance().getRings().get(i);
         	double slicesNum = currentRing.getSlices().size();
@@ -273,14 +266,18 @@ public class MandalaPanel extends JPanel {
     			g2d.setColor(Color.black);
     			g2d.drawString(currentSlice.getTitle(), (int) ((width / 2) + textX), (int) ((width / 2) + textY));
     			
-    			if( Mandala.getInstance().getSelectedRing() == i &&
+    			/*
+    			if(Mandala.getInstance().getSelectedRing() == i &&
     				Mandala.getInstance().getSelectedSlice() == j) {
     				editField.setText(currentSlice.getTitle());
     				selectedBoundsX = (int) (((width / 2) + textX - 3) + (strWidth / 2));
     				selectedBoundsY = (int) ((width / 2) + textY - 12);
     			}
+    			*/
+        /*
         	}
         }
+        */
         
         // Draws the overlay
         if(showHelpOverlay) {

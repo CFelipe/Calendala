@@ -8,13 +8,13 @@ public class Group {
 	
 	public Group(Ring ring) {
 		slices = new ArrayList<Slice>();
-		slices.add(new Slice());
+		slices.add(new Slice(this));
 		this.ring = ring;
 	}
 	
 	public Group(Ring ring, String s) {
 		slices = new ArrayList<Slice>();
-		slices.add(new Slice(s));
+		slices.add(new Slice(this, s));
 		this.ring = ring;
 	}
 
@@ -48,6 +48,6 @@ public class Group {
 	}
 	
 	public void addSlice(String s) {
-		slices.add(new Slice(s));
+		slices.add(new Slice(this, s));
 	}
 }

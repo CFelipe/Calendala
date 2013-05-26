@@ -43,5 +43,4 @@ public class Ring {
 	public CircularArrayList<Group> getGroups() {
 		return groups;
 	}
-	
 }

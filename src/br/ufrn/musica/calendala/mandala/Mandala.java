@@ -207,7 +207,9 @@ public class Mandala {
 	public void removeSelectedSlices() {
 		for(Slice s : selectedSlices) {
 			if(removeSlice(s)) {
-				
+				selectedRing = rings.get(0);
+				selectedSlices.clear();
+				selectedSlices.add(rings.get(0).getGroups().get(0).getSlices().get(0));
 			}
 		}
 	}

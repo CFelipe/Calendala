@@ -36,6 +36,10 @@ public class MenuBar extends JMenuBar {
 		editMenu.add(new JMenuItem(ctrl.insertRingDOWNAction));
 		editMenu.addSeparator();
 		editMenu.add(new JMenuItem(ctrl.insertSliceAfterSelectionAction));
+		editMenu.add(new JMenuItem(ctrl.insertSliceBeforeSelectionAction));
+		editMenu.addSeparator();
+		editMenu.add(new JMenuItem(ctrl.insertGroupAfterSelectionAction));
+		editMenu.add(new JMenuItem(ctrl.insertGroupBeforeSelectionAction));
 		editMenu.addSeparator();
 		editMenu.add(new JMenuItem(ctrl.shiftRingCWAction));
 		editMenu.add(new JMenuItem(ctrl.shiftRingCCWAction));

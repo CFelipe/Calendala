@@ -16,7 +16,6 @@ import br.ufrn.musica.calendala.io.FileIO;
 import br.ufrn.musica.calendala.io.FileIO.Extension;
 import br.ufrn.musica.calendala.io.ResourceIO;
 import br.ufrn.musica.calendala.mandala.Mandala;
-import br.ufrn.musica.calendala.mandala.Mandala.Position;
 import br.ufrn.musica.calendala.mandala.Ring.Direction;
 
 public class MainController {
@@ -82,13 +81,25 @@ public class MainController {
 			"Insert slice (CCW)", 
 			"Inserts a slice before the selection", 
 			new ImageIcon(ResourceIO.addSliceIcon),
-			Position.BEFORE),
+			Direction.CCW),
 	
 	insertSliceAfterSelectionAction = new InsertSliceAction(
 			"Insert slice (CW)", 
 			"Inserts a slice after the selection", 
 			new ImageIcon(ResourceIO.addSliceIcon),
-			Position.AFTER),
+			Direction.CW),
+			
+	insertGroupAfterSelectionAction = new InsertGroupAction(
+			"Insert group (CW)",
+			"Inserts a group after the selection",
+			new ImageIcon(ResourceIO.addSliceIcon),
+			Direction.CW),
+			
+	insertGroupBeforeSelectionAction = new InsertGroupAction(
+			"Insert group (CCW)",
+			"Inserts a group before the selection",
+			new ImageIcon(ResourceIO.addSliceIcon),
+			Direction.CCW),
 	
 	removeSlicesAction = new RemoveSlicesAction(
 			"Remove slice", 
@@ -194,7 +205,7 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().rotateSelectedSlice(direction);
+	    	Mandala.getInstance().rotateSelectedSlice(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }
@@ -244,26 +255,42 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().changeSelection(direction);
+	    	Mandala.getInstance().changeSelection(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }
 	 
 	 public class InsertSliceAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
-		private Position position;
+		private Direction direction;
 	
-		public InsertSliceAction(String name, String shortDescription, Icon icon, Position position) {
+		public InsertSliceAction(String name, String shortDescription, Icon icon, Direction direction) {
 	      super(name, icon);
 	      putValue(SHORT_DESCRIPTION, shortDescription);
-	      this.position = position;
+	      this.direction = direction;
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().insertSlice(position);
+	    	Mandala.getInstance().insertSlice(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }
+	 
+	public class InsertGroupAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		private Direction direction;
+	
+		public InsertGroupAction(String name, String shortDescription, Icon icon, Direction direction) {
+		    super(name, icon);
+			putValue(SHORT_DESCRIPTION, shortDescription);
+		    this.direction = direction;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			Mandala.getInstance().insertGroup(direction);
+			FacadeSwing.singleton().getMandalaPanel().repaint();
+		}
+	}
 	 
 	 public class RemoveSlicesAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
@@ -274,7 +301,7 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().removeSlices();
+		    Mandala.getInstance().removeSelectedSlices();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }
@@ -304,7 +331,7 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().insertRing(direction);
+	    	Mandala.getInstance().insertRing();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 		 
@@ -321,7 +348,7 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().cloneRing(direction);
+	    	Mandala.getInstance().cloneRing(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 		 
@@ -452,7 +479,7 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().enumerateSelection();
+	    	Mandala.getInstance().enumerateSelection();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	   	}
 	}
@@ -483,7 +510,7 @@ public class MainController {
 		}
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().paintSelection();
+		    Mandala.getInstance().paintSelection();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 		}
 	}
@@ -498,7 +525,10 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(
 					MainFrame.getInstance(), 
-					"Calendala is a free open-source software for the creation of mandalas\n\nTeam: Alexandre Reche, Felipe Cortez de Sá\nEntypo pictograms by Daniel Bruce — www.entypo.com",
+					"Calendala is a free, open-source mandala editor\n" +
+					"distributed under the GNU/GPL v3.0\n\n" +
+					"Team: Alexandre Reche, Felipe Cortez de Sá\n\n" +
+					"Entypo pictograms by Daniel Bruce — www.entypo.com",
 					"About", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(ResourceIO.cogIcon));
 		}
 	}

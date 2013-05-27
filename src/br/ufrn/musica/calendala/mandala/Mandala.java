@@ -1,7 +1,11 @@
 package br.ufrn.musica.calendala.mandala;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Stack;
+
+import br.ufrn.musica.calendala.mandala.Ring.Direction;
 
 /**
  * @author Felipe Cortez de Sá
@@ -15,9 +19,7 @@ public class Mandala {
 	private String title;
 	private Ring selectedRing;
 	private LinkedList<Slice> selectedSlices;
-//	private Direction selectionDirection = Direction.NONE;
-	
-	public enum Position {BEFORE, AFTER};
+	private Direction selectionDirection = Direction.NONE;
 	
 	public Mandala() {
 		title = "Untitled";
@@ -63,7 +65,7 @@ public class Mandala {
 	}
 	
 	public void setSelectedRing(Ring selectedRing) {
-		//?
+		
 	}
 	
 	public Slice getFirstSelectedSlice() {
@@ -82,20 +84,112 @@ public class Mandala {
 		this.selectedSlices = selectedSlices;
 	}
 	
-	public void insertRing() {
-		rings.add(new Ring("nil"));
+	private Slice getCWSlice() {
+		Slice s = selectedSlices.getLast();
+		Group g = s.getGroup();
+		if(s.getGroup().getSlices().getLast() == s) {
+			int gIndex = selectedRing.getGroups().indexOf(g);
+			selectedRing.getGroups().moveTo(gIndex);
+			Group nextG = selectedRing.getGroups().next();
+			return nextG.getSlices().getFirst();
+		} else {
+			int nextSliceIndex = s.getGroup().getSlices().indexOf(s) + 1;
+			return s.getGroup().getSlices().get(nextSliceIndex);
+		}
 	}
 	
-	public void insertGroup(Ring r) {
-		r.getGroups().add(new Group(r));
+	private Slice getCCWSlice() {
+		Slice s = selectedSlices.getLast();
+		Group g = s.getGroup();
+		if(s.getGroup().getSlices().getFirst() == s) {
+			int gIndex = selectedRing.getGroups().indexOf(g);
+			selectedRing.getGroups().moveTo(gIndex);
+			Group nextG = selectedRing.getGroups().previous();
+			return nextG.getSlices().getLast();
+		} else {
+			int prevSliceIndex = s.getGroup().getSlices().indexOf(s) - 1;
+			return s.getGroup().getSlices().get(prevSliceIndex);
+		}
+	}
+	
+	public void rotateSelectedSlice(Direction direction) {
+		Slice s = getCWSlice();
+		if(direction == Direction.CW) {
+			if(selectionDirection == Direction.NONE) {
+				s = getCWSlice();
+			} else if(selectionDirection == Direction.CW) {
+				s = getCWSlice();
+			} else if(selectionDirection == Direction.CCW) {
+				s = getCCWSlice();
+			}
+		} else if(direction == Direction.CCW) {
+			if(selectionDirection == Direction.NONE) {
+				s = getCCWSlice();
+			} else if(selectionDirection == Direction.CW) {
+				s = getCWSlice();
+			} else if(selectionDirection == Direction.CCW) {
+				s = getCCWSlice();
+			}
+		} else {
+			s = getCCWSlice();
+		}
+		selectedSlices.clear();
+		selectedSlices.add(s);
+		selectionDirection = Direction.NONE;
+	}	
+	
+	public void changeSelection(Direction dir) {
+		boolean add = true;
+		if(selectionDirection == Direction.NONE) {
+			selectionDirection = dir;
+		} else if(selectionDirection != dir) {
+			add = false;
+			selectedSlices.removeLast();
+			if(selectedSlices.size() == 1)
+				selectionDirection = Direction.NONE;
+		} 
+		
+		if(add) {
+			if(dir == Direction.CW) {
+				if(getCWSlice() != selectedSlices.getFirst())
+					selectedSlices.addLast(getCWSlice());
+			} else if(dir == Direction.CCW) {
+				if(getCCWSlice() != selectedSlices.getFirst())
+					selectedSlices.addLast(getCCWSlice());
+			}
+		} 
+	}
+	
+	public void insertRing() {
+		rings.add(new Ring(" "));
+	}
+	
+	public void insertRing(Ring r, Direction d, boolean clone) {
+		int index = rings.indexOf(selectedRing);
+		rings.add(index, r);
 	}
 	
 	public void insertGroup(Ring r, Group g) {
 		r.getGroups().add(g);
 	}
 	
+	public void insertGroup(Direction d) {
+		int index = selectedRing.getGroups().
+				indexOf(selectedSlices.getFirst().getGroup());
+		if(d == Direction.CCW) {
+			index++;
+		}
+		selectedRing.getGroups().
+		add(index, new Group(selectedRing, true));
+	}
+	
 	public void insertSlice(Group g) {
 		g.getSlices().add(new Slice(g, "nil"));
+	}
+	
+	public void insertSlice(Direction d) {
+		Group g = selectedSlices.getFirst().getGroup();
+		g.insertSlice(new Slice(g));
 	}
 	
 	public void insertSlice(Group g, String title) {
@@ -113,9 +207,7 @@ public class Mandala {
 	public void removeSelectedSlices() {
 		for(Slice s : selectedSlices) {
 			if(removeSlice(s)) {
-				selectedRing = rings.get(0);
-				selectedSlices.clear();
-				selectedSlices.add(rings.get(0).getGroups().get(0).getSlices().get(0));
+				
 			}
 		}
 	}
@@ -150,58 +242,37 @@ public class Mandala {
 		}
 	}
 	
-	/*
-	private int getCWNext() {
-		return (selectedSlices.getLast() + 1) % 
-						getRings().get(getSelectedRing()).getSlices().size();
+	public void paintSelection() {
+		for(Slice s : selectedSlices)
+			s.setColor(Color.red);
 	}
 	
-	private int getCCWNext() {
-		if(selectedSlices.getLast() == 0) {
-			return getRings().get(getSelectedRing()).getSlices().size() - 1;
-		} else {
-			return selectedSlices.getLast() - 1;
-		}
-		
-	}
-	
-	public void changeSelection(Direction dir) {
-		boolean add = true;
-		if(selectionDirection == Direction.NONE) {
-			selectionDirection = dir;
-		} else if(selectionDirection != dir) {
-			add = false;
-			selectedSlices.removeLast();
-			if(selectedSlices.size() == 1)
-				selectionDirection = Direction.NONE;
-		} else if(selectionDirection == dir) {
-			// Nada
-		}
-		
-		if(add) {
-			if(dir == Direction.CW) {
-				if(getCWNext() != selectedSlices.getFirst())
-					selectedSlices.addLast(getCWNext());
-			} else if(dir == Direction.CCW) {
-				if(getCCWNext() != selectedSlices.getFirst())
-					selectedSlices.addLast(getCCWNext());
+	public void enumerateSelection() {
+		if(selectedSlices.size() > 1) {
+			int i = 1;
+			for(Slice s : selectedSlices) {
+				s.setTitle(Integer.toString(i));
+				i++;
 			}
-		} 
+		}
 	}
 	
-	public void rotateSelectedSlice(Direction direction) {
-		if(direction == Direction.CW) {
-			if(selectionDirection == Direction.CW)
-				setSelectedSlice((selectedSlices.getLast() + 1));
-			else
-				setSelectedSlice((selectedSlices.getFirst() + 1));
-		} else if(direction == Direction.CCW) {
-			if(selectionDirection == Direction.CW)
-				setSelectedSlice((selectedSlices.getFirst() - 1));
-			else
-				setSelectedSlice((selectedSlices.getLast() - 1));
+	public void cloneRing (Direction direction) {
+		Ring r = new Ring(getSelectedRing());
+		insertRing(r, direction, true);
+	}
+	
+	public void insideOut() {
+		if(rings.size() > 1) {
+			Stack<Ring> ringStack = new Stack<Ring>();
+			while(!rings.isEmpty())
+				ringStack.push(rings.remove(0));
+			while(!ringStack.isEmpty())
+				rings.add(ringStack.pop());
 		}
-	}	
+	}
+	
+	/*
 	
 	public void shiftRingSelection(Direction direction) {
 		float oldSlice = getSelectedSlice();
@@ -221,36 +292,8 @@ public class Mandala {
 		setSelectedSlice((int) newSlice);
 	}
 		
-	public void cloneRing (Direction direction) {
-		Ring r = new Ring(getRings().get(getSelectedRing()));
-		insertRing(r, direction, true);
-	}
 	
-	public void insideOut() {
-		if(rings.size() > 1) {
-			Stack<Ring> ringStack = new Stack<Ring>();
-			while(!rings.isEmpty())
-				ringStack.push(rings.remove(0));
-			while(!ringStack.isEmpty())
-				rings.add(ringStack.pop());
-		}
-	}
 	
-	public void enumerateSelection() {
-		if(selectedSlices.size() > 1) {
-			for(int i = 0; i < selectedSlices.size(); i++) {
-				rings.get(getSelectedRing()).getSlices().
-				get(selectedSlices.get(i)).setTitle(Integer.toString(i));
-			}
-		}
-	}
-	
-	public void paintSelection() {
-		for(int i = 0; i < selectedSlices.size(); i++) {
-			rings.get(getSelectedRing()).getSlices().
-			get(selectedSlices.get(i)).setColor(Color.red);
-		}
-	}
 	*/
 
 	public void init() {
@@ -258,69 +301,27 @@ public class Mandala {
 		
 		//New format:
 		Ring ring1 = new Ring();
-		Group group1 = new Group(ring1);
+		Group group1 = new Group(ring1, false);
 		group1.insertSlice("1/1");
-		group1.insertSlice("1/2");
-		Group group2 = new Group(ring1);
-		group2.insertSlice("2/1");
-		Slice sl = new Slice(group2, "2/2");
+		Group group2 = new Group(ring1, false);
+		Slice sl = new Slice(group2, "2/1");
 		group2.insertSlice(sl);
 		selectedSlices.add(sl);
-		group2.insertSlice("2/3");
+		group2.insertSlice("2/2");
 		
-		Group group3 = new Group(ring1);
+		Group group3 = new Group(ring1, false);
 		group3.insertSlice("3/1");
 		
-		Group group4 = new Group(ring1);
+		Group group4 = new Group(ring1, false);
 		group4.insertSlice("4/1");
-		
-		Group group5 = new Group(ring1);
-		group5.insertSlice("5/1");
-		
-		Group group6 = new Group(ring1);
-		group6.insertSlice("6/1");
 		
 		insertGroup(ring1, group1);
 		insertGroup(ring1, group2);
 		insertGroup(ring1, group3);
 		insertGroup(ring1, group4);
-		insertGroup(ring1, group5);
-		insertGroup(ring1, group6);
 		
 		selectedRing = ring1;
 		getRings().add(ring1);
-		/*
-		ring1.getGroups().get(0).addSlice(new Slice("Bb"));
-		ring1.getGroups().get(0).addSlice(new Slice("Eb"));
-		ring1.getGroups().get(0).addSlice(new Slice("Ab"));
-		ring1.getGroups().get(0).addSlice(new Slice("Db"));
-		ring1.getGroups().get(0).addSlice(new Slice("Gb"));
-		ring1.getGroups().get(0).addSlice(new Slice("B"));
-		ring1.getGroups().get(0).addSlice(new Slice("E"));
-		ring1.getGroups().get(0).addSlice(new Slice("A"));
-		ring1.getGroups().get(0).addSlice(new Slice("D"));
-		ring1.getGroups().get(0).addSlice(new Slice("G"));
-		*/
-		
-		/*
-		Ring ring2 = new Ring("Am");
-		ring2.getGroups().get(0).addSlice(new Slice("Dm"));
-		ring2.getGroups().get(0).addSlice(new Slice("Gm"));
-		ring2.getGroups().get(0).addSlice(new Slice("Cm"));
-		ring2.getGroups().get(0).addSlice(new Slice("Fm"));
-		ring2.getGroups().get(0).addSlice(new Slice("Bbm"));
-		ring2.getGroups().get(0).addSlice(new Slice("Ebm"));
-		ring2.getGroups().get(0).addSlice(new Slice("Abm"));
-		ring2.getGroups().get(0).addSlice(new Slice("Dbm"));
-		ring2.getGroups().get(0).addSlice(new Slice("Gbm"));
-		ring2.getGroups().get(0).addSlice(new Slice("Bm"));
-		ring2.getGroups().get(0).addSlice(new Slice("Em"));
-		getRings().add(ring2);
-		
-		Ring ring3 = new Ring(" ");
-		getRings().add(ring3);
-		*/
-		
 	}
 	
 	 

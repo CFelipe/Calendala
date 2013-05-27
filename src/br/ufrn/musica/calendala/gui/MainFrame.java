@@ -20,7 +20,7 @@ import br.ufrn.musica.calendala.mandala.Mandala;
 public class MainFrame extends JFrame {
 	public static final int WIDTH = 600;
 	private static final long serialVersionUID = 1L;
-	private static final String version = "0.3.0";
+	private static final String version = "0.4.0";
 	private static MainFrame instance;
 	
 	private MainFrame() {
@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				//OSX-specificc
+				//OSX-specific
 				System.setProperty("apple.laf.useScreenMenuBar", "true");
 				System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Calendala");
 				instance = new MainFrame();

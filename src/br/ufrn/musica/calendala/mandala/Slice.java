@@ -14,7 +14,7 @@ public class Slice {
 	private Group group;
 	
 	public Slice(Group group) {
-		this.title = "Untitled";
+		this.title = " ";
 		this.color = Color.WHITE;
 		this.group = group;
 	}

@@ -1,35 +1,38 @@
 package br.ufrn.musica.calendala.mandala;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Group {
-	private ArrayList<Slice> slices;
+	private LinkedList<Slice> slices;
 	private Ring ring;
 	
-	public Group(Ring ring) {
-		slices = new ArrayList<Slice>();
+	public Group(Ring ring, boolean createSlice) {
+		slices = new LinkedList<Slice>();
 		this.ring = ring;
+		if(createSlice)
+			insertSlice(" ");
 	}
 	
 	public Group(Ring ring, String s) {
-		slices = new ArrayList<Slice>();
+		slices = new LinkedList<Slice>();
 		this.ring = ring;
+		insertSlice(s);
 	}
 
 	//For copy-pasting and cloning
 	public Group(Group source) {
-		slices = new ArrayList<Slice>();
+		slices = new LinkedList<Slice>();
 		for(Slice s : source.slices) {
 			slices.add(new Slice(s));
 		}
 		ring = source.ring;
 	}
 
-	public ArrayList<Slice> getSlices() {
+	public LinkedList<Slice> getSlices() {
 		return slices;
 	}
 
-	public void setSlices(ArrayList<Slice> slices) {
+	public void setSlices(LinkedList<Slice> slices) {
 		this.slices = slices;
 	}
 	

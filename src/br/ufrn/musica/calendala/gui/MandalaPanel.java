@@ -93,6 +93,9 @@ public class MandalaPanel extends JPanel {
     			InputEvent.SHIFT_DOWN_MASK), "shiftCKey");
     	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0), "eKey");
     	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0), "pKey");
+    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_G, 0), "gKey");
+    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_G, 
+    			InputEvent.SHIFT_DOWN_MASK), "shiftGKey");
     	
     	/* Action map */
         getActionMap().put("F2Key", 
@@ -125,6 +128,10 @@ public class MandalaPanel extends JPanel {
         		MainController.getInstance().insertRingUPAction);
         getActionMap().put("ctrlShiftInsertKey", 
         		MainController.getInstance().insertRingDOWNAction);
+        getActionMap().put("gKey", 
+        		MainController.getInstance().insertGroupBeforeSelectionAction);
+        getActionMap().put("shiftGKey", 
+        		MainController.getInstance().insertGroupAfterSelectionAction);
         getActionMap().put("cKey", 
         		MainController.getInstance().cloneRingUPAction);
         getActionMap().put("shiftCKey", 
@@ -163,11 +170,7 @@ public class MandalaPanel extends JPanel {
 				if(finalText.equals(""))
 					finalText = " ";
 				
-				/*
-				Mandala.getInstance().getRings().get(Mandala.getInstance().
-						getSelectedRing()).getSlices().get(Mandala.getInstance().
-								getSelectedSlice()).setTitle(finalText);
-								*/
+				Mandala.getInstance().getFirstSelectedSlice().setTitle(finalText);
 				remove(editField);
 				repaint();
 			}
@@ -268,9 +271,7 @@ public class MandalaPanel extends JPanel {
 	    			arc.start -= sliceAngle;
 	    			arc.setAngleExtent((sliceAngle/*+ (offset / slicesNum)) * -1*/));
 	    			
-	    			//double textAngle = (sliceAngle + (2 * sliceAngle)) / 2 - arc.start;
-	    			double textAngle = -arc.start;
-	    			textAngle -= arc.extent / 2;
+	    			double textAngle = -arc.start - (arc.extent / 2);
 	        		
 	    			int strWidth = 
 	    					(int) g2d.getFontMetrics()
@@ -280,22 +281,17 @@ public class MandalaPanel extends JPanel {
 	    			
 	    			g2d.setColor(Color.black);
 	    			g2d.drawString(currentSlice.getTitle(), (int) ((width / 2) + textX), (int) ((width / 2) + textY));
+	    			
+			        if(Mandala.getInstance().getFirstSelectedSlice() == currentSlice) {
+						editField.setText(currentSlice.getTitle());
+						selectedBoundsX = (int) (((width / 2) + textX - 3) + (strWidth / 2));
+						selectedBoundsY = (int) ((width / 2) + textY - 12);
+					}
+			        
 				}
         	}
         }
     			
-    			/*
-    			if(Mandala.getInstance().getSelectedRing() == i &&
-    				Mandala.getInstance().getSelectedSlice() == j) {
-    				editField.setText(currentSlice.getTitle());
-    				selectedBoundsX = (int) (((width / 2) + textX - 3) + (strWidth / 2));
-    				selectedBoundsY = (int) ((width / 2) + textY - 12);
-    			}
-    			*/
-        /*
-        	}
-        }
-        */
         
         // Draws the overlay
         if(showHelpOverlay) {

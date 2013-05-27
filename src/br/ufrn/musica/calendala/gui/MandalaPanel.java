@@ -225,18 +225,19 @@ public class MandalaPanel extends JPanel {
 	    			g2d.setColor(currentSlice.getColor());
 	        		g2d.fill(arc);
 	        		
-	        		/*
-	    			if(Mandala.getInstance().getSelectedRing() == i && showSelection) {
-							g2d.setColor(Color.gray);
-							g2d.setComposite(translucentBrighter);
-			        		g2d.fill(arc);
-						if(Mandala.getInstance().getSelectedSlices().contains(j)) {
+	    			if(Mandala.getInstance().getSelectedRing() == currentRing 
+	    					&& showSelection) {
+						g2d.setColor(Color.gray);
+						g2d.setComposite(translucentBrighter);
+		        		g2d.fill(arc);
+		        		
+						if(Mandala.getInstance().getSelectedSlices().contains(currentSlice)) {
 							g2d.setComposite(translucentDarker);
 			        		g2d.fill(arc);
 		    			}
+						
 		        		g2d.setComposite(original);
 	    			}
-	    			*/
 	        		
 	    			// Draws the outline
 	    			g2d.setColor(currentSlice.getColor().darker());
@@ -270,7 +271,6 @@ public class MandalaPanel extends JPanel {
 	    			//double textAngle = (sliceAngle + (2 * sliceAngle)) / 2 - arc.start;
 	    			double textAngle = -arc.start;
 	    			textAngle -= arc.extent / 2;
-	    			System.out.println(textAngle);
 	        		
 	    			int strWidth = 
 	    					(int) g2d.getFontMetrics()

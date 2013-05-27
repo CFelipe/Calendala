@@ -22,19 +22,13 @@ public class Mandala {
 	public Mandala() {
 		title = "Untitled";
 		rings = new ArrayList<Ring>();
-		//selectedRing = 0;
-		/*
 		selectedSlices = new LinkedList<Slice>();
-		selectedSlices.add(rings.get(0).getGroups().get(0).getSlices().get(0));
-		*/
 	}
 	
 	public Mandala(String title) {
 		this.title = title;
 		rings = new ArrayList<Ring>();
-		//selectedRing = 0;
 		selectedSlices = new LinkedList<Slice>();
-		selectedSlices.add(rings.get(0).getGroups().get(0).getSlices().get(0));
 	}
 	
 	public void setMandala(Mandala mandala) {
@@ -70,6 +64,22 @@ public class Mandala {
 	
 	public void setSelectedRing(Ring selectedRing) {
 		//?
+	}
+	
+	public Slice getFirstSelectedSlice() {
+		return selectedSlices.getFirst();
+	}
+	
+	public Slice getLastSelectedSlice() {
+		return selectedSlices.getLast();
+	}
+	
+	public LinkedList<Slice> getSelectedSlices() {
+		return selectedSlices;
+	}
+
+	public void setSelectedSlices(LinkedList<Slice> selectedSlices) {
+		this.selectedSlices = selectedSlices;
 	}
 	
 	public void insertRing() {
@@ -253,7 +263,9 @@ public class Mandala {
 		group1.insertSlice("1/2");
 		Group group2 = new Group(ring1);
 		group2.insertSlice("2/1");
-		group2.insertSlice("2/2");
+		Slice sl = new Slice(group2, "2/2");
+		group2.insertSlice(sl);
+		selectedSlices.add(sl);
 		group2.insertSlice("2/3");
 		
 		Group group3 = new Group(ring1);
@@ -275,6 +287,7 @@ public class Mandala {
 		insertGroup(ring1, group5);
 		insertGroup(ring1, group6);
 		
+		selectedRing = ring1;
 		getRings().add(ring1);
 		/*
 		ring1.getGroups().get(0).addSlice(new Slice("Bb"));

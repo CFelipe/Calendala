@@ -34,8 +34,6 @@ public class MainFrame extends JFrame {
 		setTitle("Calendala (v" + version + ") - " + mandala.getTitle());
 		setJMenuBar(FacadeSwing.singleton().getMenuBar());
 		add(FacadeSwing.singleton().getMandalaPanel(), BorderLayout.PAGE_START);
-		//add(FacadeSwing.singleton().getColorPanel(), BorderLayout.CENTER);
-		//add(FacadeSwing.singleton().getInfoPanel(), BorderLayout.PAGE_END);
 		pack();
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationByPlatform(true);

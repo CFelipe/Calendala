@@ -498,7 +498,7 @@ public class MainController {
 	    public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(
 					MainFrame.getInstance(), 
-					"Calendala is a free open-source software for the creation of mandalas\n\nTeam: Alexandre Reche, Felipe Cortez de Sá\nEntypo pictograms by Daniel Bruce — www.entypo.com",
+					"Calendala is a free open-source software mandala and circular diagram editor\n\nTeam: Alexandre Reche, Felipe Cortez de Sá\nEntypo pictograms by Daniel Bruce — www.entypo.com",
 					"About", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(ResourceIO.cogIcon));
 		}
 	}

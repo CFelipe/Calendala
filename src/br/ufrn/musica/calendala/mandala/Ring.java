@@ -24,11 +24,10 @@ public class Ring {
 		groups.add(new Group(this, sliceTitle));
 	}
 	
-	// For copy-pasting and cloning
 	public Ring(Ring source) {
 		groups = new CircularArrayList<Group>();
 		for(Group s : source.groups) {
-			groups.add(new Group(s));
+			groups.add(new Group(s, this));
 		}
 	}
 	

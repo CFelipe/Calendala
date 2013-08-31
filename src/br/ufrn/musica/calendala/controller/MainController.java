@@ -35,6 +35,28 @@ public class MainController {
 			"Edits the selected slice's text",
 			new ImageIcon(ResourceIO.pencilIcon)),
 	
+	changeSelectedRingUPAction = new ChangeSelectedRingAction(
+			"Move selection up",
+			"Moves the selection one ring up", 
+			Direction.UP),
+	
+	changeSelectedRingDOWNAction = new ChangeSelectedRingAction(
+			"Move selection down", 
+			"Moves the selection one ring down", 
+			Direction.DOWN),
+	
+	rotateRingCWAction = new RotateRingAction(
+			"Rotate ring (CW)", 
+			"Rotates the ring clockwise", 
+			Direction.CW,
+			new ImageIcon(ResourceIO.cwIcon)),
+	
+	rotateRingCCWAction = new RotateRingAction(
+			"Rotate ring (CCW)", 
+			"Rotates the ring counterclockwise", 
+			Direction.CCW,
+			new ImageIcon(ResourceIO.ccwIcon)),
+			
 	rotateSelectionCWAction = new RotateSelectionAction(
 			"Move selection (CW)", 
 			"Rotates the selection clockwise",
@@ -45,27 +67,6 @@ public class MainController {
 			"Rotates the selection counterclockwise", 
 			Direction.CCW),
 	
-	shiftRingSelectionUPAction = new ShiftRingSelectionAction(
-			"Move selection up",
-			"Moves the selection one ring up", 
-			Direction.UP),
-	
-	shiftRingSelectionDOWNAction = new ShiftRingSelectionAction(
-			"Move selection down", 
-			"Moves the selection one ring down", 
-			Direction.DOWN),
-	
-	shiftRingCWAction = new ShiftRingAction(
-			"Rotate ring (CW)", 
-			"Rotates the ring clockwise", 
-			Direction.CW,
-			new ImageIcon(ResourceIO.cwIcon)),
-	
-	shiftRingCCWAction = new ShiftRingAction(
-			"Rotate ring (CCW)", 
-			"Rotates the ring counterclockwise", 
-			Direction.CCW,
-			new ImageIcon(ResourceIO.ccwIcon)),
 	
 	changeSelectionCWAction = new ChangeSelectionAction(
 			"Move selection CW (multiple selection)", 
@@ -210,11 +211,11 @@ public class MainController {
 	    }
 	  }
 	 
-	 public class ShiftRingAction extends AbstractAction {
+	 public class RotateRingAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		private Direction direction;
 	
-		public ShiftRingAction(String name, String shortDescription, 
+		public RotateRingAction(String name, String shortDescription, 
 				Direction direction, Icon icon) {
 	      super(name, icon);
 	      putValue(SHORT_DESCRIPTION, shortDescription);
@@ -222,24 +223,24 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().getRings().get(Mandala.getInstance().getSelectedRing()).rotate(direction);
-	    	//Mandala.getInstance().rotateSelectedSlice(direction);
+	    	Mandala.getInstance().getSelectedRing().rotate(direction);
+	    	Mandala.getInstance().updateSelectionValues();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }
 	 
-	 public class ShiftRingSelectionAction extends AbstractAction {
+	 public class ChangeSelectedRingAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		private Direction direction;
 	
-		public ShiftRingSelectionAction(String name, String shortDescription, Direction direction) {
+		public ChangeSelectedRingAction(String name, String shortDescription, Direction direction) {
 	      super(name);
 	      putValue(SHORT_DESCRIPTION, shortDescription);
 	      this.direction = direction;
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().shiftRingSelection(direction);
+	    	Mandala.getInstance().shiftRingSelection(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }
@@ -331,7 +332,7 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	Mandala.getInstance().insertRing();
+	    	Mandala.getInstance().insertRing(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 		 

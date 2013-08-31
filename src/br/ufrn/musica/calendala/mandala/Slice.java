@@ -31,10 +31,10 @@ public class Slice {
 		this.group = group;
 	}
 	
-	public Slice(Slice source) {
+	public Slice(Slice source, Group g) {
 		this.title = source.title;
 		this.color = source.color;
-		this.group = source.group;
+		this.group = g;
 	}
 
 	public String getTitle() {

@@ -19,6 +19,8 @@ public class Mandala {
 	private String title;
 	private Ring selectedRing;
 	private LinkedList<Slice> selectedSlices;
+	private double selectionStart;
+	private double selectionExtent;
 	private Direction selectionDirection = Direction.NONE;
 	
 	public Mandala() {
@@ -64,10 +66,6 @@ public class Mandala {
 		return selectedRing;
 	}
 	
-	public void setSelectedRing(Ring selectedRing) {
-		
-	}
-	
 	public Slice getFirstSelectedSlice() {
 		return selectedSlices.getFirst();
 	}
@@ -84,6 +82,94 @@ public class Mandala {
 		this.selectedSlices = selectedSlices;
 	}
 	
+	public void shiftRingSelection(Direction direction) {
+		int ringIndex = rings.indexOf(selectedRing);
+		if(direction == Direction.UP) {
+			if(ringIndex > 0) {
+				updateSelectionValues();
+				selectedRing = rings.get(ringIndex - 1);
+			}
+		} else if(direction == Direction.DOWN) {
+			if(ringIndex < rings.size() - 1) {
+				updateSelectionValues();
+				selectedRing = rings.get(ringIndex + 1);
+			}
+		}
+	}
+
+	
+	public void updateSelectionValues() {
+		double angle = 0;
+		double groupAngle = 360 / selectedRing.getGroups().size();
+		Slice firstSelected = getFirstSelectedSlice();
+		Slice lastSelected = getLastSelectedSlice();
+		if(firstSelected == lastSelected) {
+			angle = groupAngle / firstSelected.getGroup().getSlices().size();
+		} else {
+			Slice currentlySelected = firstSelected;
+			if(selectionDirection == Direction.CW) {
+				while(currentlySelected != lastSelected) {
+					angle += groupAngle / currentlySelected.getGroup().getSlices().size();
+					currentlySelected = getCWSlice(currentlySelected);
+				}
+			} else if(selectionDirection == Direction.CCW) {
+				while(currentlySelected != lastSelected) {
+					angle += groupAngle / currentlySelected.getGroup().getSlices().size();
+					currentlySelected = getCCWSlice(currentlySelected);
+				}
+			}
+			angle += groupAngle / currentlySelected.getGroup().getSlices().size();
+		}
+		
+		selectionExtent = angle;
+		
+		angle = 0;
+		double sliceAngle;
+		for(Group g : selectedRing.getGroups()) {
+			sliceAngle = groupAngle / g.getSlices().size();
+			for(Slice s : g.getSlices()) {
+				if(s == selectedSlices.getFirst()) {
+					selectionStart = angle;
+					if(selectionDirection == Direction.CCW)
+						selectionStart += sliceAngle;
+					selectionStart %= 360;
+					return;
+				}
+				angle += sliceAngle;
+			}
+		}
+	}
+	
+	public void updateSelectedSlices() {
+		selectedSlices.clear();
+		double angle = 0;
+		double extent = selectionExtent;
+		double groupAngle = 360 / selectedRing.getGroups().size();
+		Slice s1 = selectedRing.getGroups().get(0).getSlices().get(0);
+		Slice s2 = s1;
+		do {
+			if(angle >= selectionStart) {
+				selectedSlices.add(s2);
+				extent -= groupAngle / s2.getGroup().getSlices().size();
+			}
+			s2 = getCWSlice(s2);
+			angle += groupAngle / s2.getGroup().getSlices().size();
+		} while(extent > 0);
+	}
+	
+	private Slice getCWSlice(Slice s) {
+		Group g = s.getGroup();
+		if(s.getGroup().getSlices().getLast() == s) {
+			int gIndex = selectedRing.getGroups().indexOf(g);
+			selectedRing.getGroups().moveTo(gIndex);
+			Group nextG = selectedRing.getGroups().next();
+			return nextG.getSlices().getFirst();
+		} else {
+			int nextSliceIndex = s.getGroup().getSlices().indexOf(s) + 1;
+			return s.getGroup().getSlices().get(nextSliceIndex);
+		}
+	}
+	
 	private Slice getCWSlice() {
 		Slice s = selectedSlices.getLast();
 		Group g = s.getGroup();
@@ -95,6 +181,19 @@ public class Mandala {
 		} else {
 			int nextSliceIndex = s.getGroup().getSlices().indexOf(s) + 1;
 			return s.getGroup().getSlices().get(nextSliceIndex);
+		}
+	}
+	
+	private Slice getCCWSlice(Slice s) {
+		Group g = s.getGroup();
+		if(s.getGroup().getSlices().getFirst() == s) {
+			int gIndex = selectedRing.getGroups().indexOf(g);
+			selectedRing.getGroups().moveTo(gIndex);
+			Group nextG = selectedRing.getGroups().previous();
+			return nextG.getSlices().getLast();
+		} else {
+			int prevSliceIndex = s.getGroup().getSlices().indexOf(s) - 1;
+			return s.getGroup().getSlices().get(prevSliceIndex);
 		}
 	}
 	
@@ -113,22 +212,24 @@ public class Mandala {
 	}
 	
 	public void rotateSelectedSlice(Direction direction) {
-		Slice s = getCWSlice();
+		Slice s = selectedSlices.getFirst();
 		if(direction == Direction.CW) {
 			if(selectionDirection == Direction.NONE) {
-				s = getCWSlice();
+				s = getCWSlice(selectedSlices.getFirst());
 			} else if(selectionDirection == Direction.CW) {
-				s = getCWSlice();
+				//s = getCWSlice(selectedSlices.getLast());
+				s = selectedSlices.getLast();
 			} else if(selectionDirection == Direction.CCW) {
-				s = getCCWSlice();
+				s = selectedSlices.getFirst();
 			}
 		} else if(direction == Direction.CCW) {
 			if(selectionDirection == Direction.NONE) {
-				s = getCCWSlice();
+				s = getCCWSlice(selectedSlices.getFirst());
 			} else if(selectionDirection == Direction.CW) {
-				s = getCWSlice();
+				s = selectedSlices.getFirst();
 			} else if(selectionDirection == Direction.CCW) {
-				s = getCCWSlice();
+				//s = getCCWSlice(selectedSlices.getLast());
+				s = selectedSlices.getLast();
 			}
 		} else {
 			s = getCCWSlice();
@@ -160,11 +261,36 @@ public class Mandala {
 		} 
 	}
 	
-	public void insertRing() {
-		rings.add(new Ring(" "));
+	public void insertRing(Direction dir) {
+		Ring r = new Ring(" ");
+		if(dir == Direction.UP) {
+			rings.add(rings.indexOf(selectedRing), r);
+		} else if(dir == Direction.DOWN) {
+			rings.add(rings.indexOf(selectedRing) + 1, r);
+		}
+		selectedRing = r;
+		selectedSlices.clear();
+		selectedSlices.add(selectedRing.getGroups().get(0).getSlices().get(0));
 	}
 	
-	public void insertRing(Ring r, Direction d, boolean clone) {
+	public void insertRing(Ring r, Direction dir) {
+		if(dir == Direction.UP) {
+			rings.add(rings.indexOf(selectedRing), r);
+		} else if(dir == Direction.DOWN) {
+			rings.add(rings.indexOf(selectedRing) + 1, r);
+		}
+		selectedRing = r;
+		selectedSlices.clear();
+		selectedSlices.add(selectedRing.getGroups().get(0).getSlices().get(0));
+	}
+	
+	public void cloneRing (Direction direction) {
+		Ring r = new Ring(selectedRing);
+		insertRing(r, direction);
+	}
+	
+	
+	public void cloneRing(Ring r, Direction dir) {
 		int index = rings.indexOf(selectedRing);
 		rings.add(index, r);
 	}
@@ -259,11 +385,6 @@ public class Mandala {
 		}
 	}
 	
-	public void cloneRing (Direction direction) {
-		Ring r = new Ring(getSelectedRing());
-		insertRing(r, direction, true);
-	}
-	
 	public void insideOut() {
 		if(rings.size() > 1) {
 			Stack<Ring> ringStack = new Stack<Ring>();
@@ -274,30 +395,6 @@ public class Mandala {
 		}
 	}
 	
-	/*
-	
-	public void shiftRingSelection(Direction direction) {
-		float oldSlice = getSelectedSlice();
-		float oldSlices = getRings().get(getSelectedRing()).getSlices().size();
-		float newSlice = 0, newSlices;
-		
-		if(direction == Direction.UP) {
-			setSelectedRing((getSelectedRing() - 1));
-			newSlices = getRings().get(getSelectedRing()).getSlices().size();
-			newSlice = ((newSlices/oldSlices) * oldSlice) + ((newSlices/oldSlices) / 2);
-		} else if(direction == Direction.DOWN) {
-			setSelectedRing((getSelectedRing() + 1));
-			newSlices = getRings().get(getSelectedRing()).getSlices().size();
-			newSlice = (oldSlice / (oldSlices/newSlices)) + ((newSlices/oldSlices) / 2);
-		}
-		
-		setSelectedSlice((int) newSlice);
-	}
-		
-	
-	
-	*/
-
 	public void init() {
 		setTitle("Mandala");
 		

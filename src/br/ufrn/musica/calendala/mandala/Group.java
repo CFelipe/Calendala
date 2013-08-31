@@ -19,13 +19,12 @@ public class Group {
 		insertSlice(s);
 	}
 
-	//For copy-pasting and cloning
-	public Group(Group source) {
+	public Group(Group source, Ring r) {
 		slices = new LinkedList<Slice>();
 		for(Slice s : source.slices) {
-			slices.add(new Slice(s));
+			slices.add(new Slice(s, this));
 		}
-		ring = source.ring;
+		ring = r;
 	}
 
 	public LinkedList<Slice> getSlices() {

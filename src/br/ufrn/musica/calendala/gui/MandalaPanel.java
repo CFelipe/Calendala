@@ -105,13 +105,13 @@ public class MandalaPanel extends JPanel {
         getActionMap().put("leftKey", 
         		MainController.getInstance().rotateSelectionCCWAction);
         getActionMap().put("upKey", 
-        		MainController.getInstance().shiftRingSelectionUPAction);
+        		MainController.getInstance().changeSelectedRingUPAction);
         getActionMap().put("downKey", 
-        		MainController.getInstance().shiftRingSelectionDOWNAction);
+        		MainController.getInstance().changeSelectedRingDOWNAction);
         getActionMap().put("ctrlRightKey", 
-        		MainController.getInstance().shiftRingCWAction);
+        		MainController.getInstance().rotateRingCWAction);
         getActionMap().put("ctrlLeftKey", 
-        		MainController.getInstance().shiftRingCCWAction);
+        		MainController.getInstance().rotateRingCCWAction);
         getActionMap().put("shiftRightKey", 
         		MainController.getInstance().changeSelectionCWAction);
         getActionMap().put("shiftLeftKey", 
@@ -189,6 +189,8 @@ public class MandalaPanel extends JPanel {
 		Graphics2D g2d = bi.createGraphics();
 		Composite original = g2d.getComposite();
 		Composite translucentDarker = 
+				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f);	
+		Composite translucentDark = 
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);	
 		Composite translucentBrighter = 
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.04f);	
@@ -211,6 +213,9 @@ public class MandalaPanel extends JPanel {
         	double groupsNum = currentRing.getGroups().size();
 			double groupAngle = 360 / groupsNum;
 			
+			Arc2D.Double groupArc = new Arc2D.Double();
+    		groupArc.setArcByCenter(width / 2, width / 2, arcRadius, 90, 0, Arc2D.PIE);
+    		
 			Arc2D.Double arc = new Arc2D.Double();
     		arc.setArcByCenter(width / 2, width / 2, arcRadius, 90, 0, Arc2D.PIE);
     		
@@ -219,11 +224,14 @@ public class MandalaPanel extends JPanel {
 				double slicesNum = currentGroup.getSlices().size();
         		double sliceAngle = groupAngle / slicesNum;
         		
+        		groupArc.start -= groupAngle;
+        		groupArc.setAngleExtent(groupAngle);
+        		
 				for(int k = 0; k < slicesNum; k++) {
         			Slice currentSlice = currentGroup.getSlices().get(k);
         			
 	    			arc.start -= sliceAngle;
-	    			arc.setAngleExtent((sliceAngle/*+ (offset / slicesNum)) * -1*/));
+	    			arc.setAngleExtent(sliceAngle);
 	    			
 	    			g2d.setColor(currentSlice.getColor());
 	        		g2d.fill(arc);
@@ -235,17 +243,21 @@ public class MandalaPanel extends JPanel {
 		        		g2d.fill(arc);
 		        		
 						if(Mandala.getInstance().getSelectedSlices().contains(currentSlice)) {
-							g2d.setComposite(translucentDarker);
+							g2d.setComposite(translucentDark);
 			        		g2d.fill(arc);
 		    			}
 						
 		        		g2d.setComposite(original);
 	    			}
-	        		
-	    			// Draws the outline
+	    			// Draws the slice arc outline
 	    			g2d.setColor(currentSlice.getColor().darker());
 	        		g2d.draw(arc);
         		}
+				//Draws the group arc outline
+				g2d.setComposite(translucentDarker);
+    			g2d.setColor(Color.darkGray);
+        		g2d.draw(groupArc);
+        		g2d.setComposite(original);
         	}
         }
         
@@ -304,7 +316,6 @@ public class MandalaPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        //Does creating a new BI for every iteration make the performance worse?
         bi = new BufferedImage(MainFrame.WIDTH, MainFrame.WIDTH, 
         		BufferedImage.TYPE_INT_ARGB); 
         drawMandala();

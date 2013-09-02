@@ -8,11 +8,14 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
+import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -20,6 +23,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.Timer;
 
 import br.ufrn.musica.calendala.controller.MainController;
 import br.ufrn.musica.calendala.io.ResourceIO;
@@ -34,9 +38,9 @@ import br.ufrn.musica.calendala.mandala.Slice;
  * @since 0.1
  */
 
-public class MandalaPanel extends JPanel {
+public class MandalaPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	private final int DOC_MARGIN = 70;
+	private final int DOC_MARGIN = 50;
 	private BasicStroke mandalaStroke = new BasicStroke(1.5f);
 	private int selectedBoundsX, selectedBoundsY;
 	private BufferedImage bi, overlay;
@@ -175,6 +179,14 @@ public class MandalaPanel extends JPanel {
 				repaint();
 			}
 		});
+        
+        Timer timer = new Timer(1000, this);
+        timer.start();
+        
+    }
+    
+    public void actionPerformed(ActionEvent ae) {
+    	repaint();
     }
     
     public void editField() {
@@ -189,7 +201,7 @@ public class MandalaPanel extends JPanel {
 		Graphics2D g2d = bi.createGraphics();
 		Composite original = g2d.getComposite();
 		Composite translucentDarker = 
-				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f);	
+				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f);	
 		Composite translucentDark = 
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);	
 		Composite translucentBrighter = 
@@ -226,6 +238,7 @@ public class MandalaPanel extends JPanel {
         		
         		groupArc.start -= groupAngle;
         		groupArc.setAngleExtent(groupAngle);
+        		
         		
 				for(int k = 0; k < slicesNum; k++) {
         			Slice currentSlice = currentGroup.getSlices().get(k);
@@ -283,6 +296,30 @@ public class MandalaPanel extends JPanel {
 	    			arc.start -= sliceAngle;
 	    			arc.setAngleExtent((sliceAngle/*+ (offset / slicesNum)) * -1*/));
 	    			
+		        // Draws selection arrows
+    			/*
+		        g2d.setColor(Color.black);
+		        int arrowSize = 15;
+		        
+		        AffineTransform at = new AffineTransform();
+		        Path2D p = new Path2D.Double();
+		        p.moveTo(0, 0);
+		        p.lineTo(arrowSize, 0);
+		        p.lineTo(arrowSize, arrowSize);
+		        
+		        at.translate(width / 2, width / 2);
+		        at.rotate(Math.toRadians(90));
+		        at.translate(-arrowSize/2, 0);
+		        
+		        at.rotate(Math.toRadians(arc.start));
+		        
+		        at.translate(150, -arrowSize / 2);
+		        at.rotate(Math.toRadians(135));
+		        
+		        Shape s = at.createTransformedShape(p);
+		        g2d.draw(s);
+		        */
+	    			
 	    			double textAngle = -arc.start - (arc.extent / 2);
 	        		
 	    			int strWidth = 
@@ -309,6 +346,8 @@ public class MandalaPanel extends JPanel {
         if(showHelpOverlay) {
         	g2d.drawImage(overlay, 5, 5, null);
         }
+        
+        g2d.rotate(Math.PI / 5);
         
         g2d.dispose();
     }

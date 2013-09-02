@@ -141,20 +141,27 @@ public class Mandala {
 	}
 	
 	public void updateSelectedSlices() {
-		selectedSlices.clear();
 		double angle = 0;
-		double extent = selectionExtent;
 		double groupAngle = 360 / selectedRing.getGroups().size();
-		Slice s1 = selectedRing.getGroups().get(0).getSlices().get(0);
+		Slice s1 = getCCWSlice(selectedRing.getGroups().get(0).getSlices().get(0));
 		Slice s2 = s1;
 		do {
-			if(angle >= selectionStart) {
-				selectedSlices.add(s2);
-				extent -= groupAngle / s2.getGroup().getSlices().size();
-			}
+			System.out.println(angle);
 			s2 = getCWSlice(s2);
 			angle += groupAngle / s2.getGroup().getSlices().size();
-		} while(extent > 0);
+		} while(s2 != s1);
+	}
+	
+	public void printDegrees(Ring r) {
+		double angle = 0;
+		double groupAngle = 360 / r.getGroups().size();
+		Slice s1 = getCCWSlice(r.getGroups().get(0).getSlices().get(0));
+		Slice s2 = s1;
+		do {
+			System.out.println(angle);
+			s2 = getCWSlice(s2);
+			angle += groupAngle / s2.getGroup().getSlices().size();
+		} while(s2 != s1);
 	}
 	
 	private Slice getCWSlice(Slice s) {

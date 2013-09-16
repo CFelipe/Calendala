@@ -1,14 +1,18 @@
 package br.ufrn.musica.calendala.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 import br.ufrn.musica.calendala.controller.MainController;
 
 /**
  * @author Felipe Cortez de Sá
- * @version 0.1
+ * @version 0.2
  * @since 0.1
  */
 
@@ -20,38 +24,153 @@ public class MenuBar extends JMenuBar {
 		
 		MainController ctrl = MainController.getInstance();
 		
-		JMenu fileMenu = new JMenu("File");
-		fileMenu.add(new JMenuItem(ctrl.openFileAction));
-		fileMenu.add(new JMenuItem(ctrl.saveFileAction));
-		fileMenu.addSeparator();
-		fileMenu.add(new JMenuItem(ctrl.exportAsPNGAction));
-		fileMenu.addSeparator();
-		fileMenu.add(new JMenuItem(ctrl.changeMandalaTitleAction));
-		add(fileMenu);
+		JMenu menu;
+		JMenuItem menuItem;
 		
-		JMenu editMenu = new JMenu("Edit");
-		editMenu.add(new JMenuItem(ctrl.editSliceAction));
-		editMenu.addSeparator();
-		editMenu.add(new JMenuItem(ctrl.insertRingUPAction));
-		editMenu.add(new JMenuItem(ctrl.insertRingDOWNAction));
-		editMenu.addSeparator();
-		editMenu.add(new JMenuItem(ctrl.insertSliceAfterSelectionAction));
-		editMenu.addSeparator();
-		editMenu.add(new JMenuItem(ctrl.shiftRingCWAction));
-		editMenu.add(new JMenuItem(ctrl.shiftRingCCWAction));
-		editMenu.addSeparator();
-		editMenu.add(new JMenuItem(ctrl.removeRingAction));
-		editMenu.add(new JMenuItem(ctrl.removeSlicesAction));
-		editMenu.addSeparator();
-		editMenu.add(new JMenuItem(ctrl.cloneRingUPAction));
-		editMenu.add(new JMenuItem(ctrl.cloneRingDOWNAction));
-		editMenu.add(new JMenuItem(ctrl.insideOutAction));
-		editMenu.add(new JMenuItem(ctrl.enumerateSelectionAction));
-		add(editMenu);
-		JMenu helpMenu = new JMenu("Help");
-		helpMenu.add(new JMenuItem(ctrl.toggleHelpAction));
-		helpMenu.add(new JMenuItem(ctrl.showAboutDialogAction));
-		add(helpMenu);
+		
+		menu = new JMenu("File");
+		menu.setMnemonic(KeyEvent.VK_F);
+		
+		menuItem = new JMenuItem(ctrl.openFileAction);
+		menuItem.setMnemonic(KeyEvent.VK_O);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem(ctrl.saveFileAction);
+		menuItem.setMnemonic(KeyEvent.VK_S);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		
+		menu.addSeparator();
+		
+		menuItem = new JMenuItem(ctrl.exportAsPNGAction);
+		menuItem.setMnemonic(KeyEvent.VK_E);
+		menu.add(menuItem);
+		
+		menu.addSeparator();
+		
+		menuItem = new JMenuItem(ctrl.changeMandalaTitleAction);
+		menuItem.setMnemonic(KeyEvent.VK_T);
+		menu.add(menuItem);
+		
+		add(menu);
+		
+		
+		menu = new JMenu("Edit");
+		menu.setMnemonic(KeyEvent.VK_E);
+
+		/** TODO **/
+		/*
+		menuItem = new JMenuItem(ctrl.undoAction);
+		menuItem.setMnemonic(KeyEvent.VK_R);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem(ctrl.redoAction);
+		menuItem.setMnemonic(KeyEvent.VK_U);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		*/
+		
+		menuItem = new JMenuItem(ctrl.editSliceAction);
+		menuItem.setMnemonic(KeyEvent.VK_E);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
+		menu.add(menuItem);
+
+		menu.addSeparator();
+		
+		menuItem = new JMenuItem(ctrl.insertRingUPAction);
+		menuItem.setMnemonic(KeyEvent.VK_I);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem(ctrl.insertRingDOWNAction);
+		menuItem.setMnemonic(KeyEvent.VK_I);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, ActionEvent.CTRL_MASK + ActionEvent.SHIFT_MASK));
+		menu.add(menuItem);
+		
+		menu.addSeparator();
+		
+		menuItem = new JMenuItem(ctrl.insertSliceAfterSelectionAction);
+		menuItem.setMnemonic(KeyEvent.VK_I);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem(ctrl.insertSliceBeforeSelectionAction);
+		menuItem.setMnemonic(KeyEvent.VK_I);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, ActionEvent.SHIFT_MASK));
+		menu.add(menuItem);
+		
+		menu.addSeparator();
+		
+		menuItem = new JMenuItem(ctrl.shiftRingCWAction);
+		menuItem.setMnemonic(KeyEvent.VK_S);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem(ctrl.shiftRingCCWAction);
+		menuItem.setMnemonic(KeyEvent.VK_S);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		
+		menu.addSeparator();
+		
+		menuItem = new JMenuItem(ctrl.removeRingAction);
+		menuItem.setMnemonic(KeyEvent.VK_R);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem(ctrl.removeSlicesAction);
+		menuItem.setMnemonic(KeyEvent.VK_R);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+		menu.add(menuItem);
+		
+		menu.addSeparator();
+		
+		menuItem = new JMenuItem(ctrl.cloneRingUPAction);
+		menuItem.setMnemonic(KeyEvent.VK_C);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem(ctrl.cloneRingDOWNAction);
+		menuItem.setMnemonic(KeyEvent.VK_C);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.SHIFT_MASK));
+		menu.add(menuItem);
+		
+		menu.addSeparator();
+		
+		menuItem = new JMenuItem(ctrl.insideOutAction);
+		menuItem.setMnemonic(KeyEvent.VK_N);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem(ctrl.enumerateSelectionAction);
+		menuItem.setMnemonic(KeyEvent.VK_E);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0));
+		menu.add(menuItem);
+
+		menuItem = new JMenuItem(ctrl.colorSelectionAction);
+		menuItem.setMnemonic(KeyEvent.VK_P);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0));
+		menu.add(menuItem);
+		
+		add(menu);
+		
+		
+		menu = new JMenu("Help");
+		menu.setMnemonic(KeyEvent.VK_H);
+		
+		menuItem = new JMenuItem(ctrl.toggleHelpAction);
+		menuItem.setMnemonic(KeyEvent.VK_H);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem(ctrl.showAboutDialogAction);
+		menuItem.setMnemonic(KeyEvent.VK_A);
+		menu.add(menuItem);
+		
+		add(menu);
+		
 	}
 	
 }

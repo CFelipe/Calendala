@@ -44,54 +44,6 @@ public class MandalaPanel extends JPanel {
 	private boolean showSelection = true;
 	
     public MandalaPanel() {
-        
-    	/** TODO 
-    	 * Replace input/action maps with accelerators (when needed)
-    	 */
-        /* Input map */
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "F2Key");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "leftKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "rightKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "upKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "downKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,
-                InputEvent.SHIFT_DOWN_MASK),
-        "shiftLeftKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,
-                InputEvent.SHIFT_DOWN_MASK),
-        "shiftRightKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT,
-                InputEvent.CTRL_DOWN_MASK),
-        "ctrlLeftKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT,
-                InputEvent.CTRL_DOWN_MASK),
-        "ctrlRightKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT, 0), "insertKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT,
-                InputEvent.SHIFT_DOWN_MASK),
-        "shiftInsertKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 
-    			InputEvent.CTRL_DOWN_MASK), "ctrlDeleteKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT,
-                InputEvent.CTRL_DOWN_MASK),
-        "ctrlInsertKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_INSERT,
-                (InputEvent.CTRL_DOWN_MASK + InputEvent.SHIFT_DOWN_MASK)),
-        "ctrlShiftInsertKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-                InputEvent.CTRL_DOWN_MASK),
-        "ctrlSKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-                InputEvent.CTRL_DOWN_MASK),
-        "ctrlOKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_H, 0), "hKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F, 0), "fKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0), "cKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 
-    			InputEvent.SHIFT_DOWN_MASK), "shiftCKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0), "eKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0), "pKey");
     	
     	/* Action map */
         getActionMap().put("F2Key", 

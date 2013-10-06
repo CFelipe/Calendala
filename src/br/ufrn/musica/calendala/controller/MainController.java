@@ -9,6 +9,7 @@ import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.undo.UndoManager;
 
 import br.ufrn.musica.calendala.gui.FacadeSwing;
 import br.ufrn.musica.calendala.gui.MainFrame;
@@ -21,7 +22,8 @@ import br.ufrn.musica.calendala.mandala.Ring.Direction;
 
 public class MainController {
 	private static MainController controller;
-	
+	private static UndoManager undoManager = new UndoManager();
+
 	public static MainController getInstance() {
 		if (controller == null) {
 			MainController.controller = new MainController();
@@ -30,6 +32,11 @@ public class MainController {
 	}
 	
 	public Action 
+
+	undoAction = new UndoAction(
+			"Undo", 
+			"Undoes the last undoable action",
+			new ImageIcon(ResourceIO.pencilIcon)),
 	
 	editSliceAction = new EditSliceAction(
 			"Edit slice", 
@@ -170,7 +177,25 @@ public class MainController {
 			"Change title", 
 			"Opens up a dialog for changing the mandala's title");
     	
-	 public class EditSliceAction extends AbstractAction {
+	public class UndoAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+	
+		public UndoAction(String name, String shortDescription, Icon icon) {
+			super(name, icon);
+			putValue(Action.NAME, undoManager.getPresentationName());
+		}
+		
+	    public void actionPerformed(ActionEvent e) {
+	    	undoManager.undo();
+	    }
+
+    	public void update() {
+	    	this.putValue(Action.NAME, undoManager.getUndoPresentationName());
+	    	this.setEnabled(undoManager.canUndo());
+    	}
+	}
+
+	public class EditSliceAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 	
 		public EditSliceAction(String name, String shortDescription, Icon icon) {

@@ -10,8 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.awt.geom.Arc2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -19,9 +17,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 
-import br.ufrn.musica.calendala.controller.MainController;
 import br.ufrn.musica.calendala.io.ResourceIO;
 import br.ufrn.musica.calendala.mandala.Mandala;
 import br.ufrn.musica.calendala.mandala.Ring;
@@ -45,55 +41,7 @@ public class MandalaPanel extends JPanel {
 	
     public MandalaPanel() {
     	
-    	/* Action map */
-        getActionMap().put("F2Key", 
-        		MainController.getInstance().editSliceAction);
-        getActionMap().put("rightKey", 
-        		MainController.getInstance().rotateSelectionCWAction);
-        getActionMap().put("leftKey", 
-        		MainController.getInstance().rotateSelectionCCWAction);
-        getActionMap().put("upKey", 
-        		MainController.getInstance().shiftRingSelectionUPAction);
-        getActionMap().put("downKey", 
-        		MainController.getInstance().shiftRingSelectionDOWNAction);
-        getActionMap().put("ctrlRightKey", 
-        		MainController.getInstance().shiftRingCWAction);
-        getActionMap().put("ctrlLeftKey", 
-        		MainController.getInstance().shiftRingCCWAction);
-        getActionMap().put("shiftRightKey", 
-        		MainController.getInstance().changeSelectionCWAction);
-        getActionMap().put("shiftLeftKey", 
-        		MainController.getInstance().changeSelectionCCWAction);
-        getActionMap().put("insertKey", 
-        		MainController.getInstance().insertSliceAfterSelectionAction);
-        getActionMap().put("shiftInsertKey", 
-        		MainController.getInstance().insertSliceBeforeSelectionAction);
-        getActionMap().put("deleteKey", 
-        		MainController.getInstance().removeSlicesAction);
-        getActionMap().put("ctrlDeleteKey", 
-        		MainController.getInstance().removeRingAction);
-        getActionMap().put("ctrlInsertKey", 
-        		MainController.getInstance().insertRingUPAction);
-        getActionMap().put("ctrlShiftInsertKey", 
-        		MainController.getInstance().insertRingDOWNAction);
-        getActionMap().put("cKey", 
-        		MainController.getInstance().cloneRingUPAction);
-        getActionMap().put("shiftCKey", 
-        		MainController.getInstance().cloneRingDOWNAction);
-        getActionMap().put("ctrlSKey", 
-        		MainController.getInstance().saveFileAction);
-        getActionMap().put("ctrlOKey", 
-        		MainController.getInstance().openFileAction);
-        getActionMap().put("hKey", 
-        		MainController.getInstance().toggleHelpAction);
-        getActionMap().put("fKey", 
-        		MainController.getInstance().insideOutAction);
-        getActionMap().put("eKey", 
-        		MainController.getInstance().enumerateSelectionAction);
-        getActionMap().put("pKey", 
-        		MainController.getInstance().colorSelectionAction);
-    				
-    	// Tries to import the overlay image
+    	// Import the overlay image
         try {
         	overlay = ImageIO.read(ResourceIO.overlay);
         } catch(IOException e) {

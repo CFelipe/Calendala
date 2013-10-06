@@ -59,18 +59,7 @@ public class MenuBar extends JMenuBar {
 		menu = new JMenu("Edit");
 		menu.setMnemonic(KeyEvent.VK_E);
 
-		/** TODO **/
-		/*
-		menuItem = new JMenuItem(ctrl.undoAction);
-		menuItem.setMnemonic(KeyEvent.VK_R);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
-		menu.add(menuItem);
-		
-		menuItem = new JMenuItem(ctrl.redoAction);
-		menuItem.setMnemonic(KeyEvent.VK_U);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
-		menu.add(menuItem);
-		*/
+		menu.addSeparator();
 		
 		menuItem = new JMenuItem(ctrl.editSliceAction);
 		menuItem.setMnemonic(KeyEvent.VK_E);
@@ -156,6 +145,36 @@ public class MenuBar extends JMenuBar {
 		
 		add(menu);
 		
+
+		menu = new JMenu("Selection");
+		menu.setMnemonic(KeyEvent.VK_S);
+
+		menuItem = new JMenuItem(ctrl.rotateSelectionCWAction);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
+		menu.add(menuItem);
+
+		menuItem = new JMenuItem(ctrl.rotateSelectionCCWAction);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
+		menu.add(menuItem);
+
+		menuItem = new JMenuItem(ctrl.shiftRingSelectionUPAction);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
+		menu.add(menuItem);
+
+		menuItem = new JMenuItem(ctrl.shiftRingSelectionDOWNAction);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
+		menu.add(menuItem);
+
+		menuItem = new JMenuItem(ctrl.changeSelectionCWAction);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, ActionEvent.SHIFT_MASK));
+		menu.add(menuItem);
+
+		menuItem = new JMenuItem(ctrl.changeSelectionCCWAction);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, ActionEvent.SHIFT_MASK));
+		menu.add(menuItem);
+
+		add(menu);
+
 		
 		menu = new JMenu("Help");
 		menu.setMnemonic(KeyEvent.VK_H);

@@ -19,8 +19,6 @@ public class Mandala {
 	private String title;
 	private Ring selectedRing;
 	private LinkedList<Slice> selectedSlices;
-	private double selectionStart;
-	private double selectionExtent;
 	private Direction selectionDirection = Direction.NONE;
 	
 	public Mandala() {
@@ -66,23 +64,7 @@ public class Mandala {
 		return selectedRing;
 	}
 	
-	public Slice getFirstSelectedSlice() {
-		return selectedSlices.getFirst();
-	}
-	
-	public Slice getLastSelectedSlice() {
-		return selectedSlices.getLast();
-	}
-	
-	public LinkedList<Slice> getSelectedSlices() {
-		return selectedSlices;
-	}
-
-	public void setSelectedSlices(LinkedList<Slice> selectedSlices) {
-		this.selectedSlices = selectedSlices;
-	}
-	
-	public void shiftRingSelection(Direction direction) {
+	public void changeSelectedRing(Direction direction) {
 		int ringIndex = rings.indexOf(selectedRing);
 		if(direction == Direction.UP) {
 			if(ringIndex > 0) {
@@ -96,155 +78,6 @@ public class Mandala {
 			}
 		}
 	}
-
-	
-	public void updateSelectionValues() {
-		double angle = 0;
-		double groupAngle = 360 / selectedRing.getGroups().size();
-		Slice firstSelected = getFirstSelectedSlice();
-		Slice lastSelected = getLastSelectedSlice();
-		if(firstSelected == lastSelected) {
-			angle = groupAngle / firstSelected.getGroup().getSlices().size();
-		} else {
-			Slice currentlySelected = firstSelected;
-			if(selectionDirection == Direction.CW) {
-				while(currentlySelected != lastSelected) {
-					angle += groupAngle / currentlySelected.getGroup().getSlices().size();
-					currentlySelected = getCWSlice(currentlySelected);
-				}
-			} else if(selectionDirection == Direction.CCW) {
-				while(currentlySelected != lastSelected) {
-					angle += groupAngle / currentlySelected.getGroup().getSlices().size();
-					currentlySelected = getCCWSlice(currentlySelected);
-				}
-			}
-			angle += groupAngle / currentlySelected.getGroup().getSlices().size();
-		}
-		
-		selectionExtent = angle;
-		
-		angle = 0;
-		double sliceAngle;
-		for(Group g : selectedRing.getGroups()) {
-			sliceAngle = groupAngle / g.getSlices().size();
-			for(Slice s : g.getSlices()) {
-				if(s == selectedSlices.getFirst()) {
-					selectionStart = angle;
-					if(selectionDirection == Direction.CCW)
-						selectionStart += sliceAngle;
-					selectionStart %= 360;
-					return;
-				}
-				angle += sliceAngle;
-			}
-		}
-	}
-	
-	public void updateSelectedSlices() {
-		double angle = 0;
-		double groupAngle = 360 / selectedRing.getGroups().size();
-		Slice s1 = getCCWSlice(selectedRing.getGroups().get(0).getSlices().get(0));
-		Slice s2 = s1;
-		do {
-			System.out.println(angle);
-			s2 = getCWSlice(s2);
-			angle += groupAngle / s2.getGroup().getSlices().size();
-		} while(s2 != s1);
-	}
-	
-	public void printDegrees(Ring r) {
-		double angle = 0;
-		double groupAngle = 360 / r.getGroups().size();
-		Slice s1 = getCCWSlice(r.getGroups().get(0).getSlices().get(0));
-		Slice s2 = s1;
-		do {
-			System.out.println(angle);
-			s2 = getCWSlice(s2);
-			angle += groupAngle / s2.getGroup().getSlices().size();
-		} while(s2 != s1);
-	}
-	
-	private Slice getCWSlice(Slice s) {
-		Group g = s.getGroup();
-		if(s.getGroup().getSlices().getLast() == s) {
-			int gIndex = selectedRing.getGroups().indexOf(g);
-			selectedRing.getGroups().moveTo(gIndex);
-			Group nextG = selectedRing.getGroups().next();
-			return nextG.getSlices().getFirst();
-		} else {
-			int nextSliceIndex = s.getGroup().getSlices().indexOf(s) + 1;
-			return s.getGroup().getSlices().get(nextSliceIndex);
-		}
-	}
-	
-	private Slice getCWSlice() {
-		Slice s = selectedSlices.getLast();
-		Group g = s.getGroup();
-		if(s.getGroup().getSlices().getLast() == s) {
-			int gIndex = selectedRing.getGroups().indexOf(g);
-			selectedRing.getGroups().moveTo(gIndex);
-			Group nextG = selectedRing.getGroups().next();
-			return nextG.getSlices().getFirst();
-		} else {
-			int nextSliceIndex = s.getGroup().getSlices().indexOf(s) + 1;
-			return s.getGroup().getSlices().get(nextSliceIndex);
-		}
-	}
-	
-	private Slice getCCWSlice(Slice s) {
-		Group g = s.getGroup();
-		if(s.getGroup().getSlices().getFirst() == s) {
-			int gIndex = selectedRing.getGroups().indexOf(g);
-			selectedRing.getGroups().moveTo(gIndex);
-			Group nextG = selectedRing.getGroups().previous();
-			return nextG.getSlices().getLast();
-		} else {
-			int prevSliceIndex = s.getGroup().getSlices().indexOf(s) - 1;
-			return s.getGroup().getSlices().get(prevSliceIndex);
-		}
-	}
-	
-	private Slice getCCWSlice() {
-		Slice s = selectedSlices.getLast();
-		Group g = s.getGroup();
-		if(s.getGroup().getSlices().getFirst() == s) {
-			int gIndex = selectedRing.getGroups().indexOf(g);
-			selectedRing.getGroups().moveTo(gIndex);
-			Group nextG = selectedRing.getGroups().previous();
-			return nextG.getSlices().getLast();
-		} else {
-			int prevSliceIndex = s.getGroup().getSlices().indexOf(s) - 1;
-			return s.getGroup().getSlices().get(prevSliceIndex);
-		}
-	}
-	
-	public void rotateSelectedSlice(Direction direction) {
-		Slice s = selectedSlices.getFirst();
-		if(direction == Direction.CW) {
-			if(selectionDirection == Direction.NONE) {
-				s = getCWSlice(selectedSlices.getFirst());
-			} else if(selectionDirection == Direction.CW) {
-				//s = getCWSlice(selectedSlices.getLast());
-				s = selectedSlices.getLast();
-			} else if(selectionDirection == Direction.CCW) {
-				s = selectedSlices.getFirst();
-			}
-		} else if(direction == Direction.CCW) {
-			if(selectionDirection == Direction.NONE) {
-				s = getCCWSlice(selectedSlices.getFirst());
-			} else if(selectionDirection == Direction.CW) {
-				s = selectedSlices.getFirst();
-			} else if(selectionDirection == Direction.CCW) {
-				//s = getCCWSlice(selectedSlices.getLast());
-				s = selectedSlices.getLast();
-			}
-		} else {
-			s = getCCWSlice();
-		}
-		selectedSlices.clear();
-		selectedSlices.add(s);
-		selectionDirection = Direction.NONE;
-	}	
 	
 	public void changeSelection(Direction dir) {
 		boolean add = true;
@@ -259,11 +92,9 @@ public class Mandala {
 		
 		if(add) {
 			if(dir == Direction.CW) {
-				if(getCWSlice() != selectedSlices.getFirst())
-					selectedSlices.addLast(getCWSlice());
+				// Add CW slice to selection
 			} else if(dir == Direction.CCW) {
-				if(getCCWSlice() != selectedSlices.getFirst())
-					selectedSlices.addLast(getCCWSlice());
+				// Add CCW slice to selection
 			}
 		} 
 	}

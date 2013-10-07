@@ -206,7 +206,6 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	Mandala.getInstance().rotateSelectedSlice(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }
@@ -240,12 +239,8 @@ public class MainController {
 		
 	    public void actionPerformed(ActionEvent e) {
 	    	System.out.println("------------");
-	    	Mandala.getInstance().printDegrees(Mandala.getInstance().getSelectedRing());
-	    	Mandala.getInstance().shiftRingSelection(direction);
+	    	Mandala.getInstance().changeSelectedRing(direction);
 	    	System.out.println("---");
-	    	Mandala.getInstance().printDegrees(Mandala.getInstance().getSelectedRing());
-	    	//Mandala.getInstance().updateSelectionValues();
-	    	//Mandala.getInstance().updateSelectedSlices();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }

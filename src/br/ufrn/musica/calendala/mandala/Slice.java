@@ -5,42 +5,32 @@ import java.awt.Color;
 /**
  * @author Felipe Cortez de Sá
  * @version 0.1
- * @since 0.1
+ * @since 0.5
  */
 
 public class Slice {
 	private String title;
 	private Color color;
-	private Group group;
+	private Slice mergedSlice;
 	
-	public Slice(Group group) {
-		this.title = " ";
-		this.color = Color.WHITE;
-		this.group = group;
-	}
-	
-	public Slice(Group group, String title) {
-		this.title = title;
-		this.color = Color.WHITE;
-		this.group = group;
-	}
-
-	public Slice(Group group, String title, Color color) {
-		this.title = title;
-		this.color = color;
-		this.group = group;
+	public Slice() {
+		title = " ";
+		color = Color.white;
+		mergedSlice = null;
 	}
 	
-	public Slice(Slice source, Group g) {
-		this.title = source.title;
-		this.color = source.color;
-		this.group = g;
+	public void setMergedSlice(Slice mergedSlice) {
+		this.mergedSlice = mergedSlice;
 	}
-
+	
+	public Slice getMergedSlice() {
+		return mergedSlice;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
-
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -51,14 +41,6 @@ public class Slice {
 
 	public void setColor(Color color) {
 		this.color = color;
-	}
-	
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group group) {
-		this.group = group;
 	}
 	
 }

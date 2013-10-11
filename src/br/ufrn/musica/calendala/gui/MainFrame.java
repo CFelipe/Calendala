@@ -34,8 +34,6 @@ public class MainFrame extends JFrame {
 		setTitle("Calendala (v" + version + ") - " + mandala.getTitle());
 		setJMenuBar(FacadeSwing.singleton().getMenuBar());
 		add(FacadeSwing.singleton().getMandalaPanel(), BorderLayout.PAGE_START);
-		//add(FacadeSwing.singleton().getColorPanel(), BorderLayout.CENTER);
-		//add(FacadeSwing.singleton().getInfoPanel(), BorderLayout.PAGE_END);
 		pack();
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationByPlatform(true);
@@ -61,7 +59,7 @@ public class MainFrame extends JFrame {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				//OSX-specificc
+				//OSX-specific
 				System.setProperty("apple.laf.useScreenMenuBar", "true");
 				System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Calendala");
 				instance = new MainFrame();

@@ -32,6 +32,11 @@
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_zdFctCngEeOq9ZN2JmR94g" source="QualifiedName">
       <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zdGDwCngEeOq9ZN2JmR94g" key="QualifiedNameDepth" value="1000"/>
     </eAnnotations>
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_zXs04C9bEeO26f_HWpOG3Q" source="PapyrusHyperLink_Document">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zXs04S9bEeO26f_HWpOG3Q" key="tooltip_text" value="MainFrame"/>
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zXs04i9bEeO26f_HWpOG3Q" key="localization" value="C:\Users\Felipe\EclipseWorkspace\calendala\src\br\ufrn\musica\calendala\gui\MainFrame.java"/>
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zXs04y9bEeO26f_HWpOG3Q" key="is_default_navigation" value="false"/>
+    </eAnnotations>
     <children xmi:type="notation:DecorationNode" xmi:id="_zdGDwSngEeOq9ZN2JmR94g" type="5016"/>
     <children xmi:type="notation:DecorationNode" xmi:id="_zdGDwingEeOq9ZN2JmR94g" type="7009">
       <styles xmi:type="notation:SortingStyle" xmi:id="_zdGDwyngEeOq9ZN2JmR94g"/>
@@ -297,6 +302,11 @@
     </eAnnotations>
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_PsY5Ii7FEeO26f_HWpOG3Q" source="QualifiedName">
       <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_PsZgMC7FEeO26f_HWpOG3Q" key="QualifiedNameDepth" value="1000"/>
+    </eAnnotations>
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_wDDr4DKeEeO7lZVnjRwADQ" source="PapyrusHyperLink_Document">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_wDDr4TKeEeO7lZVnjRwADQ" key="tooltip_text" value="C:\Users\Felipe\EclipseWorkspace\calendala\src\br\ufrn\musica\calendala\gui\MainFrame.java"/>
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_wDDr4jKeEeO7lZVnjRwADQ" key="localization" value="C:\Users\Felipe\EclipseWorkspace\calendala\src\br\ufrn\musica\calendala\gui\MainFrame.java"/>
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_wDDr4zKeEeO7lZVnjRwADQ" key="is_default_navigation" value="false"/>
     </eAnnotations>
     <children xmi:type="notation:DecorationNode" xmi:id="_PsZgMS7FEeO26f_HWpOG3Q" type="5016"/>
     <children xmi:type="notation:DecorationNode" xmi:id="_PsZgMi7FEeO26f_HWpOG3Q" type="7009">

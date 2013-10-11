@@ -1,148 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_66mkUCl2EeOq9ZN2JmR94g" name="Model">
-  <packageImport xmi:id="_66mkUSl2EeOq9ZN2JmR94g">
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_66mkUCl2EeOq9ZN2JmR94g" name="Use Case">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_66mkUSl2EeOq9ZN2JmR94g">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
   <packagedElement xmi:type="uml:Actor" xmi:id="_cb3A8CnZEeOq9ZN2JmR94g" clientDependency="_eScV0CneEeOq9ZN2JmR94g" name="Usuário">
-    <generalization xmi:id="_bTOysCneEeOq9ZN2JmR94g" general="_d-obQCnZEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_bTOysCneEeOq9ZN2JmR94g" general="_d-obQCnZEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_d-obQCnZEeOq9ZN2JmR94g" name="UseCase"/>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_k2Y9QCnZEeOq9ZN2JmR94g" name="UseCase1"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_XklWsCneEeOq9ZN2JmR94g" name="A_actor_usecase" memberEnd="_XklWsSneEeOq9ZN2JmR94g _XklWtCneEeOq9ZN2JmR94g">
-    <ownedEnd xmi:id="_XklWsSneEeOq9ZN2JmR94g" name="actor" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_XklWsCneEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_XklWsSneEeOq9ZN2JmR94g" name="actor" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_XklWsCneEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XklWsineEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XklWsyneEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
-    <ownedEnd xmi:id="_XklWtCneEeOq9ZN2JmR94g" name="usecase" type="_d-obQCnZEeOq9ZN2JmR94g" association="_XklWsCneEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_XklWtCneEeOq9ZN2JmR94g" name="usecase" type="_d-obQCnZEeOq9ZN2JmR94g" association="_XklWsCneEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XklWtSneEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XklWtineEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Dependency" xmi:id="_eScV0CneEeOq9ZN2JmR94g" name="Dependency1" client="_cb3A8CnZEeOq9ZN2JmR94g" supplier="_k2Y9QCnZEeOq9ZN2JmR94g"/>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_zb-pcCngEeOq9ZN2JmR94g" name="Adiciona">
-    <generalization xmi:id="_nlS54CnhEeOq9ZN2JmR94g" general="_NnFrcCnhEeOq9ZN2JmR94g"/>
-    <generalization xmi:id="_oRJ6UCnhEeOq9ZN2JmR94g" general="_Oh-mYCnhEeOq9ZN2JmR94g"/>
-    <generalization xmi:id="_pX1OgCnhEeOq9ZN2JmR94g" general="_PZby0CnhEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_nlS54CnhEeOq9ZN2JmR94g" general="_NnFrcCnhEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_oRJ6UCnhEeOq9ZN2JmR94g" general="_Oh-mYCnhEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_pX1OgCnhEeOq9ZN2JmR94g" general="_PZby0CnhEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_1zmBECngEeOq9ZN2JmR94g" name="Edita"/>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_BtGlsCnhEeOq9ZN2JmR94g" name="Remove"/>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_DM8AwCnhEeOq9ZN2JmR94g" name="Salva .cdl"/>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_JtKMgCnhEeOq9ZN2JmR94g" name="Seleciona"/>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_NnFrcCnhEeOq9ZN2JmR94g" name="Anel">
-    <generalization xmi:id="_t_1UYCnhEeOq9ZN2JmR94g" general="_zb-pcCngEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_t_1UYCnhEeOq9ZN2JmR94g" general="_zb-pcCngEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_Oh-mYCnhEeOq9ZN2JmR94g" name="Grupo">
-    <generalization xmi:id="_tT-T8CnhEeOq9ZN2JmR94g" general="_zb-pcCngEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_tT-T8CnhEeOq9ZN2JmR94g" general="_zb-pcCngEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_PZby0CnhEeOq9ZN2JmR94g" name="Célula">
-    <generalization xmi:id="_rGaQMCnhEeOq9ZN2JmR94g" general="_zb-pcCngEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_rGaQMCnhEeOq9ZN2JmR94g" general="_zb-pcCngEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_Qbg64CnhEeOq9ZN2JmR94g" name="UseCase2"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_aRzqkCnhEeOq9ZN2JmR94g" name="A_usuário_adiciona" memberEnd="_aRzqkSnhEeOq9ZN2JmR94g _aRzqlCnhEeOq9ZN2JmR94g">
-    <ownedEnd xmi:id="_aRzqkSnhEeOq9ZN2JmR94g" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_aRzqkCnhEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_aRzqkSnhEeOq9ZN2JmR94g" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_aRzqkCnhEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_aRzqkinhEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_aRzqkynhEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
-    <ownedEnd xmi:id="_aRzqlCnhEeOq9ZN2JmR94g" name="adiciona" type="_zb-pcCngEeOq9ZN2JmR94g" association="_aRzqkCnhEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_aRzqlCnhEeOq9ZN2JmR94g" name="adiciona" type="_zb-pcCngEeOq9ZN2JmR94g" association="_aRzqkCnhEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_aRzqlSnhEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_aRzqlinhEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_bgiukCnhEeOq9ZN2JmR94g" name="A_usuário_edita" memberEnd="_bgiukSnhEeOq9ZN2JmR94g _bgiulCnhEeOq9ZN2JmR94g">
-    <ownedEnd xmi:id="_bgiukSnhEeOq9ZN2JmR94g" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_bgiukCnhEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_bgiukSnhEeOq9ZN2JmR94g" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_bgiukCnhEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bgiukinhEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bgiukynhEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
-    <ownedEnd xmi:id="_bgiulCnhEeOq9ZN2JmR94g" name="edita" type="_1zmBECngEeOq9ZN2JmR94g" association="_bgiukCnhEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_bgiulCnhEeOq9ZN2JmR94g" name="edita" type="_1zmBECngEeOq9ZN2JmR94g" association="_bgiukCnhEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bgiulSnhEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bgiulinhEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_cpBZkCnhEeOq9ZN2JmR94g" name="A_usuário_remove" memberEnd="_cpBZkSnhEeOq9ZN2JmR94g _cpBZlCnhEeOq9ZN2JmR94g">
-    <ownedEnd xmi:id="_cpBZkSnhEeOq9ZN2JmR94g" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_cpBZkCnhEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_cpBZkSnhEeOq9ZN2JmR94g" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_cpBZkCnhEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cpBZkinhEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cpBZkynhEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
-    <ownedEnd xmi:id="_cpBZlCnhEeOq9ZN2JmR94g" name="remove" type="_BtGlsCnhEeOq9ZN2JmR94g" association="_cpBZkCnhEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_cpBZlCnhEeOq9ZN2JmR94g" name="remove" type="_BtGlsCnhEeOq9ZN2JmR94g" association="_cpBZkCnhEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cpBZlSnhEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cpBZlinhEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_dfw0UCnhEeOq9ZN2JmR94g" name="A_usuário_arquiva" memberEnd="_dfw0USnhEeOq9ZN2JmR94g _dfw0VCnhEeOq9ZN2JmR94g">
-    <ownedEnd xmi:id="_dfw0USnhEeOq9ZN2JmR94g" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_dfw0UCnhEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_dfw0USnhEeOq9ZN2JmR94g" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_dfw0UCnhEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_dfw0UinhEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_dfw0UynhEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
-    <ownedEnd xmi:id="_dfw0VCnhEeOq9ZN2JmR94g" name="arquiva" type="_DM8AwCnhEeOq9ZN2JmR94g" association="_dfw0UCnhEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_dfw0VCnhEeOq9ZN2JmR94g" name="arquiva" type="_DM8AwCnhEeOq9ZN2JmR94g" association="_dfw0UCnhEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_dfw0VSnhEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_dfw0VinhEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_eKRJ4CnhEeOq9ZN2JmR94g" name="A_usuário_seleciona" memberEnd="_eKRJ4SnhEeOq9ZN2JmR94g _eKRJ5CnhEeOq9ZN2JmR94g">
-    <ownedEnd xmi:id="_eKRJ4SnhEeOq9ZN2JmR94g" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_eKRJ4CnhEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_eKRJ4SnhEeOq9ZN2JmR94g" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_eKRJ4CnhEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eKRJ4inhEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eKRJ4ynhEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
-    <ownedEnd xmi:id="_eKRJ5CnhEeOq9ZN2JmR94g" name="seleciona" type="_JtKMgCnhEeOq9ZN2JmR94g" association="_eKRJ4CnhEeOq9ZN2JmR94g">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_eKRJ5CnhEeOq9ZN2JmR94g" name="seleciona" type="_JtKMgCnhEeOq9ZN2JmR94g" association="_eKRJ4CnhEeOq9ZN2JmR94g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eKRJ5SnhEeOq9ZN2JmR94g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eKRJ5inhEeOq9ZN2JmR94g" value="1"/>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_9TpcsC7DEeO26f_HWpOG3Q" name="Externamente">
-    <generalization xmi:id="_I3cQAC7EEeO26f_HWpOG3Q" general="_NnFrcCnhEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_I3cQAC7EEeO26f_HWpOG3Q" general="_NnFrcCnhEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_CppRAC7EEeO26f_HWpOG3Q" name="Internamente">
-    <generalization xmi:id="_JfHUAC7EEeO26f_HWpOG3Q" general="_NnFrcCnhEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_JfHUAC7EEeO26f_HWpOG3Q" general="_NnFrcCnhEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_QLhhoC7EEeO26f_HWpOG3Q" name="Cor da célula">
-    <generalization xmi:id="_EgXsoC7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_EgXsoC7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_Sl55YC7EEeO26f_HWpOG3Q" name="Texto da célula">
-    <generalization xmi:id="_FHaegC7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_FHaegC7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_aCtCIC7EEeO26f_HWpOG3Q" name="Abre .cdl"/>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_dPSS4C7EEeO26f_HWpOG3Q" name="Título da mandala / documento">
-    <generalization xmi:id="_FrCI8C7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_FrCI8C7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_0mY8MC7EEeO26f_HWpOG3Q" name="Exporta"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_5n5HMC7EEeO26f_HWpOG3Q" name="A_exporta_usuário" memberEnd="_5n5HMS7EEeO26f_HWpOG3Q _5n5HNC7EEeO26f_HWpOG3Q">
-    <ownedEnd xmi:id="_5n5HMS7EEeO26f_HWpOG3Q" name="exporta" type="_0mY8MC7EEeO26f_HWpOG3Q" association="_5n5HMC7EEeO26f_HWpOG3Q">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_5n5HMS7EEeO26f_HWpOG3Q" name="exporta" type="_0mY8MC7EEeO26f_HWpOG3Q" association="_5n5HMC7EEeO26f_HWpOG3Q">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5n5HMi7EEeO26f_HWpOG3Q" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5n5HMy7EEeO26f_HWpOG3Q" value="1"/>
     </ownedEnd>
-    <ownedEnd xmi:id="_5n5HNC7EEeO26f_HWpOG3Q" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_5n5HMC7EEeO26f_HWpOG3Q">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_5n5HNC7EEeO26f_HWpOG3Q" name="usuário" type="_cb3A8CnZEeOq9ZN2JmR94g" association="_5n5HMC7EEeO26f_HWpOG3Q">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5n5HNS7EEeO26f_HWpOG3Q" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5n5HNi7EEeO26f_HWpOG3Q" value="1"/>
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_HsCXYC7FEeO26f_HWpOG3Q" name=".png">
-    <generalization xmi:id="_MGvBEC7FEeO26f_HWpOG3Q" general="_0mY8MC7EEeO26f_HWpOG3Q"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_MGvBEC7FEeO26f_HWpOG3Q" general="_0mY8MC7EEeO26f_HWpOG3Q"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_PsAeoC7FEeO26f_HWpOG3Q" name="Ordem dos anéis">
-    <generalization xmi:id="_RqXowC7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_RqXowC7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_T0JYsC7FEeO26f_HWpOG3Q" name="Enumeração">
-    <generalization xmi:id="_VWpGMC7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_VWpGMC7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_WzA9kC7FEeO26f_HWpOG3Q" name="Rotação">
-    <generalization xmi:id="_p4mHUC7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_p4mHUC7FEeO26f_HWpOG3Q" general="_1zmBECngEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_jRURUC7FEeO26f_HWpOG3Q" name="CW">
-    <generalization xmi:id="_lp55UC7FEeO26f_HWpOG3Q" general="_WzA9kC7FEeO26f_HWpOG3Q"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_lp55UC7FEeO26f_HWpOG3Q" general="_WzA9kC7FEeO26f_HWpOG3Q"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_kLNtwC7FEeO26f_HWpOG3Q" name="CCW">
-    <generalization xmi:id="_mIsHEC7FEeO26f_HWpOG3Q" general="_WzA9kC7FEeO26f_HWpOG3Q"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_mIsHEC7FEeO26f_HWpOG3Q" general="_WzA9kC7FEeO26f_HWpOG3Q"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_8wKYUC7HEeO26f_HWpOG3Q" name="Célula">
-    <generalization xmi:id="_-c0HYC7HEeO26f_HWpOG3Q" general="_BtGlsCnhEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_-c0HYC7HEeO26f_HWpOG3Q" general="_BtGlsCnhEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="__veCEC7HEeO26f_HWpOG3Q" name="Anéis selecionados">
-    <generalization xmi:id="_E3pc0C7IEeO26f_HWpOG3Q" general="_BtGlsCnhEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_E3pc0C7IEeO26f_HWpOG3Q" general="_BtGlsCnhEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_ZvfOYC7IEeO26f_HWpOG3Q" name="Anel">
-    <generalization xmi:id="_eq70sC7IEeO26f_HWpOG3Q" general="_JtKMgCnhEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_eq70sC7IEeO26f_HWpOG3Q" general="_JtKMgCnhEeOq9ZN2JmR94g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_az4qoC7IEeO26f_HWpOG3Q" name="Células">
-    <generalization xmi:id="_d-zugC7IEeO26f_HWpOG3Q" general="_JtKMgCnhEeOq9ZN2JmR94g"/>
+    <generalization xmi:type="uml:Generalization" xmi:id="_d-zugC7IEeO26f_HWpOG3Q" general="_JtKMgCnhEeOq9ZN2JmR94g"/>
   </packagedElement>
 </uml:Model>

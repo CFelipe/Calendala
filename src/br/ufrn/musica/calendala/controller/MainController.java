@@ -90,18 +90,6 @@ public class MainController {
 			new ImageIcon(ResourceIO.addSliceIcon),
 			Direction.CW),
 			
-	insertGroupAfterSelectionAction = new InsertGroupAction(
-			"Insert group (CW)",
-			"Inserts a group after the selection",
-			new ImageIcon(ResourceIO.addSliceIcon),
-			Direction.CW),
-			
-	insertGroupBeforeSelectionAction = new InsertGroupAction(
-			"Insert group (CCW)",
-			"Inserts a group before the selection",
-			new ImageIcon(ResourceIO.addSliceIcon),
-			Direction.CCW),
-	
 	removeSlicesAction = new RemoveSlicesAction(
 			"Remove slice", 
 			new ImageIcon(ResourceIO.removeSliceIcon),
@@ -276,22 +264,6 @@ public class MainController {
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }
-	 
-	public class InsertGroupAction extends AbstractAction {
-		private static final long serialVersionUID = 1L;
-		private Direction direction;
-	
-		public InsertGroupAction(String name, String shortDescription, Icon icon, Direction direction) {
-		    super(name, icon);
-			putValue(SHORT_DESCRIPTION, shortDescription);
-		    this.direction = direction;
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			Mandala.getInstance().insertGroup(direction);
-			FacadeSwing.singleton().getMandalaPanel().repaint();
-		}
-	}
 	 
 	 public class RemoveSlicesAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;

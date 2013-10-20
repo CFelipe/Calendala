@@ -73,6 +73,11 @@ public class Mandala {
 	}
 	
 	public void insertRing(Direction dir) {
+		if(dir == Direction.UP) {
+			rings.add(new Ring());
+		} else if(dir == Direction.DOWN) {
+			rings.add(new Ring());
+		}
 	}
 	
 	public void insertRing(Ring r, Direction dir) {
@@ -119,6 +124,7 @@ public class Mandala {
 	}
 	
 	public void init() {
+		getInstance().insertRing(Direction.UP);
 		getInstance().insertRing(Direction.UP);
 	}
 	

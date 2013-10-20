@@ -31,7 +31,7 @@ import br.ufrn.musica.calendala.mandala.Ring;
 public class MandalaPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final int DOC_MARGIN = 50;
-	private BasicStroke mandalaStroke = new BasicStroke(1.5f);
+	private BasicStroke mandalaStroke = new BasicStroke(1.0f);
 	private int selectedBoundsX, selectedBoundsY;
 	private BufferedImage bi, overlay;
 	private JTextField editField;
@@ -93,8 +93,8 @@ public class MandalaPanel extends JPanel implements ActionListener {
     
 	public void drawMandala() {
 		Graphics2D g2d = bi.createGraphics();
-		Composite original = g2d.getComposite();
 		/*
+		Composite original = g2d.getComposite();
 		Composite translucentDarker = 
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f);	
 		Composite translucentDark = 
@@ -108,7 +108,7 @@ public class MandalaPanel extends JPanel implements ActionListener {
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
         RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         
-        g2d.setColor(Color.black);
+        g2d.setColor(Color.gray);
         g2d.setStroke(mandalaStroke);
         
         int width = getWidth();
@@ -118,11 +118,7 @@ public class MandalaPanel extends JPanel implements ActionListener {
         for(int i = 0; i < ringsNum; i++) {
         	Ring currentRing = Mandala.getInstance().getRings().get(i);
     		double arcRadius = (ringSize * (ringsNum - i)) / 2;
-			double slicesNum = currentRing.getSlices().size();
 			
-			Arc2D.Double arc = new Arc2D.Double();
-    		arc.setArcByCenter(width / 2, width / 2, arcRadius, 90, 0, Arc2D.PIE);
-
 			Arc2D.Double ringArc = new Arc2D.Double();
     		ringArc.setArcByCenter(width / 2, width / 2, arcRadius, 90, 0, Arc2D.PIE);
     		double divAngle = 360 / currentRing.getSubdivisions();
@@ -130,25 +126,7 @@ public class MandalaPanel extends JPanel implements ActionListener {
         	for(int j = 0; j < currentRing.getSubdivisions(); j++) {
         		ringArc.start -= divAngle;
         		ringArc.setAngleExtent(divAngle);
-
-    			if(Mandala.getInstance().getSelectedRing() == currentRing 
-    					&& showSelection) {
-					g2d.setColor(Color.gray);
-					//g2d.setComposite(translucentBrighter);
-	        		g2d.fill(arc);
-	        		
-	        		/*
-					if(Mandala.getInstance().getSelectedSlices().contains(currentSlice)) {
-						g2d.setComposite(translucentDark);
-		        		g2d.fill(arc);
-	    			}
-	    			*/
-					
-	        		g2d.setComposite(original);
-    			}
-    			// Draws the slice arc outline
-    			//g2d.setColor(currentSlice.getColor().darker());
-        		g2d.draw(arc);
+        		g2d.draw(ringArc);
     		}
         }
         
@@ -162,8 +140,6 @@ public class MandalaPanel extends JPanel implements ActionListener {
         if(showHelpOverlay) {
         	g2d.drawImage(overlay, 5, 5, null);
         }
-        
-        g2d.rotate(Math.PI / 5);
         
         g2d.dispose();
     }

@@ -5,18 +5,21 @@ import java.awt.Color;
 /**
  * @author Felipe Cortez de Sá
  * @version 0.1
- * @since 0.5
+ * @since 0.1
  */
 
 public class Slice {
 	private String title;
 	private Color color;
 	private Slice mergedSlice;
+	private Ring ring;
+	private int pos;
 	
-	public Slice() {
+	public Slice(int pos, Ring r) {
 		title = " ";
 		color = Color.white;
-		mergedSlice = null;
+		mergedSlice = this;
+		this.pos = pos;
 	}
 	
 	public void setMergedSlice(Slice mergedSlice) {
@@ -41,6 +44,18 @@ public class Slice {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+	
+	public int getPos() {
+		return pos;
+	}
+	
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
+
+	public Ring getRing() {
+		return ring;
 	}
 	
 }

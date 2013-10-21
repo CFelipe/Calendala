@@ -16,14 +16,7 @@ public class Ring {
 	
 	public Ring() {
 		slices = new CircularArrayList<Slice>();
-		subdivisions = 30;
-	}
-	
-	public Ring(String sliceTitle) {
-		slices = new CircularArrayList<Slice>();
-	}
-	
-	public Ring(Ring source) {
+		subdivisions = 60;
 	}
 	
 	public int getSubdivisions() {

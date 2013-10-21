@@ -68,12 +68,12 @@ public class MainController {
 			Direction.CCW),
 	
 	
-	changeSelectionCWAction = new ChangeSelectionAction(
+	changeSelectionCWAction = new ChangeSelectionRangeAction(
 			"Move selection CW (multiple selection)", 
 			"Changes the selection clockwise", 
 			Direction.CW),
 	
-	changeSelectionCCWAction = new ChangeSelectionAction(
+	changeSelectionCCWAction = new ChangeSelectionRangeAction(
 			"Move selection CCW (multiple selection)", 
 			"Changes the selection counterclockwise", 
 			Direction.CCW),
@@ -233,18 +233,18 @@ public class MainController {
 	    }
 	  }
 	 
-	 public class ChangeSelectionAction extends AbstractAction {
+	 public class ChangeSelectionRangeAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		private Direction direction;
 	
-		public ChangeSelectionAction(String name, String shortDescription, Direction direction) {
+		public ChangeSelectionRangeAction(String name, String shortDescription, Direction direction) {
 	      super(name);
 	      putValue(SHORT_DESCRIPTION, shortDescription);
 	      this.direction = direction;
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	Mandala.getInstance().changeSelection(direction);
+	    	Mandala.getInstance().changeSelectionRange(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }

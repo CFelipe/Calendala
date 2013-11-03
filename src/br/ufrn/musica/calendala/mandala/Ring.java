@@ -28,14 +28,6 @@ public class Ring {
 	}
 	
 	public void rotate(Direction direction) {
-		// Not so easy now!
-		/*
-		if(direction == Direction.CW) {
-			Collections.rotate(slices, 1);
-		} else {
-			Collections.rotate(slices, -1);
-		}
-		*/
 	}
 	
 	public CircularArrayList<Slice> getSlices() {

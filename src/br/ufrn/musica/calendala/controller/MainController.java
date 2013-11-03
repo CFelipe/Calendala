@@ -121,6 +121,14 @@ public class MainController {
 			"Clones a ring and adds it below the selected one", 
 			new ImageIcon(ResourceIO.cloneIcon),
 			Direction.DOWN),
+
+	mergeSlicesAction = new MergeSlicesAction(
+			"Merge slices", 
+			"Merges selected slices"),
+
+	unmergeSlicesAction = new UnmergeSlicesAction(
+			"Unmerge slices", 
+			"Unmerges selected slices"),
 	
 	saveFileAction = new SaveFileAction(
 			"Save as...", 
@@ -168,7 +176,11 @@ public class MainController {
 			
 	changeMandalaTitleAction = new ChangeMandalaTitleAction(
 			"Change title", 
-			"Opens up a dialog for changing the mandala's title");
+			"Opens up a dialog for changing the mandala's title"),
+	
+	toggleInnerRingAction = new ToggleInnerRingAction(
+			"Toggle inner ring",
+			"Toggles an inner ring for tidying up");
     	
 	 public class EditSliceAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
@@ -194,6 +206,11 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
+	    	if(direction == Direction.CW)
+		    	Mandala.getInstance().changeSelectionStart(1);
+	    	else
+	    		Mandala.getInstance().changeSelectionStart(-1);
+
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }
@@ -322,6 +339,36 @@ public class MainController {
 		
 	    public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().cloneRing(direction);
+	    	FacadeSwing.singleton().getMandalaPanel().repaint();
+	    }
+		 
+	 }
+
+	 public class MergeSlicesAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+	
+		public MergeSlicesAction(String name, String shortDescription) {
+	      super(name);
+	      putValue(SHORT_DESCRIPTION, shortDescription);
+	    }
+		
+	    public void actionPerformed(ActionEvent e) {
+	    	Mandala.getInstance().mergeSelectedSlices();
+	    	FacadeSwing.singleton().getMandalaPanel().repaint();
+	    }
+		 
+	 }
+
+	 public class UnmergeSlicesAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+	
+		public UnmergeSlicesAction(String name, String shortDescription) {
+	      super(name);
+	      putValue(SHORT_DESCRIPTION, shortDescription);
+	    }
+		
+	    public void actionPerformed(ActionEvent e) {
+	    	Mandala.getInstance().unmergeSelectedSlices();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 		 
@@ -484,6 +531,20 @@ public class MainController {
 		
 	    public void actionPerformed(ActionEvent e) {
 		    Mandala.getInstance().paintSelection();
+	    	FacadeSwing.singleton().getMandalaPanel().repaint();
+		}
+	}
+	
+	public class ToggleInnerRingAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+	
+		public ToggleInnerRingAction(String name, String shortDescription) {
+			super(name);
+			putValue(SHORT_DESCRIPTION, shortDescription);
+		}
+		
+	    public void actionPerformed(ActionEvent e) {
+		    Mandala.getInstance().toggleInnerRing();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 		}
 	}

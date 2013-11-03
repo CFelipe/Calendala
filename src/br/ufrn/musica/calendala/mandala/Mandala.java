@@ -3,6 +3,7 @@ package br.ufrn.musica.calendala.mandala;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import br.ufrn.musica.calendala.controller.MainController.MergeSlicesAction;
 import br.ufrn.musica.calendala.mandala.Ring.Direction;
 
 /**
@@ -16,6 +17,7 @@ public class Mandala {
 	private ArrayList<Ring> rings;
 	private String title;
 	private Ring selectedRing;
+	private boolean innerRing = true;
 	private int selectionStart = 0;
 	private int selectionRange = 0;
 	
@@ -68,16 +70,24 @@ public class Mandala {
 		return selectionRange;
 	}
 	
-	public void changeSelectedRing(Direction direction) {
-		if(direction == Direction.UP) {
-		} else if(direction == Direction.DOWN) {
+	public void changeSelectionStart(int change) {
+		// -x for CCW, x for CW
+		selectionStart = (selectionStart + change) % selectedRing.getSubdivisions();
+		if(selectionStart < 0) selectionStart += selectedRing.getSubdivisions();
+	}
+	
+	public void changeSelectedRing(Direction dir) {
+		if(dir == Direction.UP) {
+		} else if(dir == Direction.DOWN) {
 		}
 	}
 	
 	public void changeSelectionRange(Direction dir) {
 		if(dir == Direction.CW) {
-			selectionRange++;
+			if(selectionRange < selectedRing.getSubdivisions() - 1)
+				selectionRange++;
 		} else if(dir == Direction.CCW) {
+			if(selectionRange * -1 < selectedRing.getSubdivisions() - 1)
 			selectionRange--;
 		}
 	}
@@ -113,6 +123,16 @@ public class Mandala {
 		return true;
 	}
 	
+	public void mergeSelectedSlices() {
+		if(selectionRange != 0) {
+			
+		}
+	}
+
+	public void unmergeSelectedSlices() {
+		
+	}
+	
 	public void paintSelection() {
 	}
 	
@@ -129,9 +149,13 @@ public class Mandala {
 		}
 	}
 	
-	public void init() {
-		Ring r1 = insertRing(Direction.UP);
+	public void toggleInnerRing() {
+		innerRing = !innerRing;
 	}
 	
+	public void init() {
+		Ring r1 = insertRing(Direction.UP);
+		selectedRing = r1;
+	}
 	 
 }

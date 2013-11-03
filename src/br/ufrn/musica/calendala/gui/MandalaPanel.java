@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import br.ufrn.musica.calendala.io.ResourceIO;
 import br.ufrn.musica.calendala.mandala.Mandala;
 import br.ufrn.musica.calendala.mandala.Ring;
+import br.ufrn.musica.calendala.util.MathUtils;
 
 /**
  * @author Felipe Cortez de Sá
@@ -99,6 +100,8 @@ public class MandalaPanel extends JPanel implements ActionListener {
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f);	
 		Composite translucentDark = 
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);	
+		Composite translucentBright = 
+				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.1f);	
 		Composite translucentBrighter = 
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.04f);	
         
@@ -129,18 +132,42 @@ public class MandalaPanel extends JPanel implements ActionListener {
     		ringArc.setArcByCenter(width / 2, width / 2, arcRadius, 90, 0, Arc2D.PIE);
     		
 
+    		//Smallest slice angle
     		double divAngle = 360 / currentRing.getSubdivisions();
-    		
-        	for(int j = 0; j < currentRing.getSubdivisions(); j++) {
-        		ringArc.start -= divAngle;
+
+    		//Draws selected slices
+			int initialSlice = Mandala.getInstance().getSelectionStart();
+    		int selSlices = Mandala.getInstance().getSelectionRange();
+    		int totalSlices = currentRing.getSubdivisions();
+
+    		if(selSlices < 0) {
+    			initialSlice = MathUtils.circularize(initialSlice + selSlices, totalSlices);
+    			selSlices *= -1;
+    		}
+
+    		ringArc.start -= divAngle * initialSlice + 1;
+
+    		while(totalSlices > 0) {
+	    		ringArc.start -= divAngle;
         		ringArc.setAngleExtent(divAngle);
 
+        		g2d.setComposite(original);
         		g2d.setColor(Color.white);
         		g2d.fill(ringArc);
+        		
+        		if(Mandala.getInstance().getSelectedRing() == currentRing && selSlices >= 0) {
+        			g2d.setColor(Color.gray);
+	    			g2d.setComposite(translucentDark);
+	    			g2d.fill(ringArc);
+	    			selSlices--;
+	    		}
+        		
         		g2d.setComposite(translucentDark);
         		g2d.setColor(Color.darkGray);
         		g2d.draw(ringArc);
+    			totalSlices--;
     		}
+
     		g2d.setComposite(translucentDarker);
     		g2d.draw(fullArc);
         }

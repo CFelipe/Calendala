@@ -12,6 +12,7 @@ public class Slice {
 	private String title;
 	private Color color;
 	private Slice mergedSlice;
+	private int mergeSize;
 	private Ring ring;
 	private int pos;
 	
@@ -20,6 +21,7 @@ public class Slice {
 		color = Color.white;
 		mergedSlice = this;
 		this.pos = pos;
+		this.ring = r; 
 	}
 	
 	public void setMergedSlice(Slice mergedSlice) {

@@ -92,6 +92,7 @@ public class MenuBar extends JMenuBar {
 		
 		menu.addSeparator();
 		
+		/*
 		menuItem = new JMenuItem(ctrl.changeSelectionCCWAction);
 		menuItem.setMnemonic(KeyEvent.VK_S);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, ActionEvent.CTRL_MASK));
@@ -103,6 +104,7 @@ public class MenuBar extends JMenuBar {
 		menu.add(menuItem);
 		
 		menu.addSeparator();
+		*/
 		
 		menuItem = new JMenuItem(ctrl.removeRingAction);
 		menuItem.setMnemonic(KeyEvent.VK_R);

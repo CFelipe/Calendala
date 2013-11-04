@@ -243,9 +243,7 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	System.out.println("------------");
 	    	Mandala.getInstance().changeSelectedRing(direction);
-	    	System.out.println("---");
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	  }

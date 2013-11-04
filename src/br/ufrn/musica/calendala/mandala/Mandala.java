@@ -77,8 +77,13 @@ public class Mandala {
 	}
 	
 	public void changeSelectedRing(Direction dir) {
+		int selectedIndex = rings.indexOf(selectedRing);
 		if(dir == Direction.UP) {
+			if(selectedIndex > 0)
+				selectedRing = rings.get(selectedIndex - 1);
 		} else if(dir == Direction.DOWN) {
+			if(selectedIndex < rings.size() - 1)
+				selectedRing = rings.get(selectedIndex + 1);
 		}
 	}
 	
@@ -97,7 +102,7 @@ public class Mandala {
 		if(dir == Direction.UP) {
 			rings.add(ring);
 		} else if(dir == Direction.DOWN) {
-			rings.add(ring);
+			rings.add(rings.indexOf(selectedRing), ring);
 		}
 		return ring;
 	}

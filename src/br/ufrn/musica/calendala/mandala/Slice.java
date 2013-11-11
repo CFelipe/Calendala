@@ -27,9 +27,17 @@ public class Slice {
 	public void setMergedSlice(Slice mergedSlice) {
 		this.mergedSlice = mergedSlice;
 	}
-	
+
 	public Slice getMergedSlice() {
 		return mergedSlice;
+	}
+	
+	public void setMergeSize(int mergeSize) {
+		this.mergeSize = mergeSize;
+	}
+
+	public int getMergeSize() {
+		return mergeSize;
 	}
 	
 	public String getTitle() {

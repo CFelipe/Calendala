@@ -5,6 +5,8 @@ import java.util.Stack;
 
 import br.ufrn.musica.calendala.controller.MainController.MergeSlicesAction;
 import br.ufrn.musica.calendala.mandala.Ring.Direction;
+import br.ufrn.musica.calendala.util.CircularArrayList;
+import br.ufrn.musica.calendala.util.MathUtils;
 
 /**
  * @author Felipe Cortez de Sá
@@ -129,7 +131,16 @@ public class Mandala {
 	}
 	
 	public void mergeSelectedSlices() {
-		if(selectionRange != 0) {
+		CircularArrayList<Slice> slices = selectedRing.getSlices();
+		if(selectionRange > 0) {
+			Slice mergeParent = slices.get(selectionStart);
+			mergeParent.setMergeSize(selectionRange + 1);
+
+			int selSlices = selectionRange - 1;
+			while(selSlices > 0) {
+				//
+			}
+		} else if(selectionRange < 0) {
 			
 		}
 	}

@@ -131,18 +131,6 @@ public class Mandala {
 	}
 	
 	public void mergeSelectedSlices() {
-		CircularArrayList<Slice> slices = selectedRing.getSlices();
-		if(selectionRange > 0) {
-			Slice mergeParent = slices.get(selectionStart);
-			mergeParent.setMergeSize(selectionRange + 1);
-
-			int selSlices = selectionRange - 1;
-			while(selSlices > 0) {
-				//
-			}
-		} else if(selectionRange < 0) {
-			
-		}
 	}
 
 	public void unmergeSelectedSlices() {

@@ -16,7 +16,7 @@ public class Ring {
 	
 	public Ring() {
 		slices = new CircularArrayList<Slice>();
-		subdivisions = 60;
+		subdivisions = 12;
 	}
 	
 	public int getSubdivisions() {

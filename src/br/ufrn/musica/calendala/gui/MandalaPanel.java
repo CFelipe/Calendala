@@ -11,6 +11,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Arc2D;
+import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -32,25 +33,15 @@ import br.ufrn.musica.calendala.util.MathUtils;
 public class MandalaPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final int DOC_MARGIN = 50;
-	private BasicStroke mandalaStroke = new BasicStroke(1.2f);
+	private BasicStroke mandalaStroke = new BasicStroke(0.8f);
 	private int selectedBoundsX, selectedBoundsY;
 	private BufferedImage bi, overlay;
 	private JTextField editField;
 	private boolean showHelpOverlay = false;
 	private boolean showSelection = true;
-	
-    public MandalaPanel() {
-        
-    	//In case I need to go back to action maps this serves as a reference
-    	/*
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0), "pKey");
-    	getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_G, 
-    			InputEvent.SHIFT_DOWN_MASK), "shiftGKey");
-    			
-        getActionMap().put("pKey", 
-        		MainController.getInstance().colorSelectionAction);
-		*/
     				
+    public MandalaPanel() {
+
     	//Tries to import the overlay image
         try {
         	overlay = ImageIO.read(ResourceIO.overlay);
@@ -91,6 +82,21 @@ public class MandalaPanel extends JPanel implements ActionListener {
 		editField.selectAll();
 		editField.grabFocus();
     }
+
+    public Path2D AnnularSector(float start, float extent, float r, float R) {
+        Path2D path;
+        //Set 0 degree to 12 o'clock
+        start = 90 - start;
+        path = new Path2D.Float();
+        Arc2D.Float arc = new Arc2D.Float();
+        arc.setArcByCenter(0, 0, r, start, -extent, Arc2D.OPEN);
+        path.append(arc, true);
+        arc.setArcByCenter(0, 0, R, start - extent, extent, Arc2D.OPEN);
+        path.append(arc, true);
+        path.closePath();
+        
+        return path;
+    }
     
 	public void drawMandala() {
 		Graphics2D g2d = bi.createGraphics();
@@ -110,16 +116,15 @@ public class MandalaPanel extends JPanel implements ActionListener {
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
         RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         
+        
         g2d.setColor(Color.black);
         g2d.setStroke(mandalaStroke);
         
         int width = getWidth();
         int ringsNum = Mandala.getInstance().getRings().size();
         int ringSize = (width - DOC_MARGIN) / ringsNum;
-        
-        Arc2D.Double fullArc = new Arc2D.Double();
-		Arc2D.Double ringArc = new Arc2D.Double();
-        
+
+        /*
         
         for(int i = 0; i < ringsNum; i++) {
         	Ring currentRing = Mandala.getInstance().getRings().get(i);
@@ -176,8 +181,58 @@ public class MandalaPanel extends JPanel implements ActionListener {
         for(int i = 0; i < ringsNum; i++) {
         	// See original code on GitHub
         }
-    			
-        
+        */
+
+        //Sets center to (0, 0)
+        g2d.translate(width / 2, width / 2);
+        for(int i = 0; i < ringsNum; i++) {
+        	Ring currentRing = Mandala.getInstance().getRings().get(i);
+    		float arcRadius = (ringSize * (ringsNum - i)) / 2;
+    		float divAngle = 360 / currentRing.getSubdivisions();
+
+			int initialSlice = Mandala.getInstance().getSelectionStart();
+    		int selSlices = Mandala.getInstance().getSelectionRange();
+    		int totalSlices = currentRing.getSubdivisions();
+        }
+
+
+        Path2D path = AnnularSector(0, 45, 150, 200);
+        g2d.setColor(Color.lightGray);
+        g2d.fill(path);
+        g2d.setColor(Color.darkGray);
+        g2d.draw(path);
+
+        path = AnnularSector(45, 45, 150, 250);
+        g2d.setColor(Color.lightGray);
+        g2d.fill(path);
+        g2d.setColor(Color.darkGray);
+        g2d.draw(path);
+
+        path = AnnularSector(45, 45, 100, 150);
+        g2d.setColor(Color.lightGray);
+        g2d.fill(path);
+        g2d.setColor(Color.darkGray);
+        g2d.draw(path);
+
+        path = AnnularSector(0, 360, 0, 100);
+        g2d.setColor(Color.lightGray);
+        g2d.fill(path);
+        g2d.setColor(Color.darkGray);
+        g2d.draw(path);
+
+        path = AnnularSector(-90, 120, 200, 220);
+        g2d.setColor(Color.lightGray);
+        g2d.fill(path);
+        g2d.setColor(Color.darkGray);
+        g2d.draw(path);
+
+        int strWidth = (int) g2d.getFontMetrics().getStringBounds("Text", g2d).getWidth() + 10;
+
+        for(int i = 0; i < 12; i++) {
+        g2d.rotate(30 * Math.PI / 180);
+        g2d.drawString("Test", -strWidth / 2, -120);
+        }
+
         // Draws the overlay
         if(showHelpOverlay) {
         	g2d.drawImage(overlay, 5, 5, null);
@@ -185,7 +240,7 @@ public class MandalaPanel extends JPanel implements ActionListener {
         
         g2d.dispose();
     }
-        
+	
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -194,8 +249,9 @@ public class MandalaPanel extends JPanel implements ActionListener {
         drawMandala();
         g.drawImage(bi, 0, 0, null);
         g.dispose();
+
     }
-    
+
     public BufferedImage getBI() {
     	return bi;
     }

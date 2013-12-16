@@ -32,7 +32,7 @@ import br.ufrn.musica.calendala.mandala.Ring;
 public class MandalaPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final int DOC_MARGIN = 50;
-	private BasicStroke mandalaStroke = new BasicStroke(1.5f);
+	private BasicStroke mandalaStroke = new BasicStroke(1.2f);
 	private int selectedBoundsX, selectedBoundsY;
 	private BufferedImage bi, overlay;
 	private JTextField editField;
@@ -104,9 +104,9 @@ public class MandalaPanel extends JPanel implements ActionListener {
 		Composite translucentDarker = 
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f);	
 		Composite translucentDark = 
-				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);	
+				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f);	
 		Composite translucentLight = 
-				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.1f);	
+				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.12f);	
 		Composite translucentLighter = 
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.04f);	
         
@@ -129,8 +129,6 @@ public class MandalaPanel extends JPanel implements ActionListener {
         	Ring currentRing = Mandala.getInstance().getRings().get(i);
         	float arcRadius = (ringSize * (ringsNum - i)) / 2;
     		float divAngle = 360f / currentRing.getSubdivisions();
-    		System.out.println("DivAngle: " + divAngle);
-    		System.out.println("DivAngle * : " + divAngle);
     		
     		int pos, size, drawnSlices;
     		drawnSlices = 0;
@@ -151,6 +149,12 @@ public class MandalaPanel extends JPanel implements ActionListener {
         		g2d.setComposite(original);
         		g2d.setColor(Color.white);
 		        g2d.fill(shape);
+		        // Fill selected ring
+	    		if(currentRing == Mandala.getInstance().getSelectedRing()) {
+					g2d.setColor(Color.gray);
+					g2d.setComposite(translucentLighter);
+					g2d.fill(shape);
+	    		}
 		        // Draw cell outline
         		g2d.setComposite(translucentDark);
         		g2d.setColor(Color.darkGray);
@@ -161,14 +165,15 @@ public class MandalaPanel extends JPanel implements ActionListener {
     		}
     		if(currentRing == Mandala.getInstance().getSelectedRing()) {
 				// Draw selection
-		        Path2D path = AnnularSector(
+    			size = currentRing.getSlices().get(Mandala.getInstance().getSelectionStart()).getMergeSize();
+		        Path2D shape = AnnularSector(
 		        		Mandala.getInstance().getSelectionStart() * divAngle, 
-						Mandala.getInstance().getSelectionRange() + 1 * divAngle, 
+						size * divAngle, 
 			        	arcRadius - (ringSize / 2),
 			        	arcRadius + 2);
 				g2d.setColor(Color.gray);
-				g2d.setComposite(translucentDark);
-				g2d.fill(path);
+				g2d.setComposite(translucentLight);
+				g2d.fill(shape);
     		}
         }
 

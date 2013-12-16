@@ -78,15 +78,13 @@ public class Mandala {
 			selectionStart = (selectionStart + 
 					selectedRing.getSlices().get(selectionStart).getMergeSize())
 					% selectedRing.getSubdivisions();
-		} else {
-			if(selectionStart - 1 < 0) 
-			selectionStart = (selectionStart - 1 +
-					selectedRing.getSlices().get(selectionStart).getMergeSize())
-					% selectedRing.getSubdivisions();
+		} else if (change < 0) {
+			selectionStart -= 1;
+			if(selectionStart < 0) {
+				selectionStart += mandala.selectedRing.getSubdivisions();
+			}
+			selectionStart = mandala.selectedRing.getSlices().get(selectionStart).getStart();
 		}
-
-		if(selectionStart < 0) 
-		System.out.println(selectionStart);
 	}
 	
 	public void changeSelectedRing(Direction dir) {

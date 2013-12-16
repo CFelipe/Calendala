@@ -41,7 +41,7 @@ public class FileIO {
 	public static void openFile(File file) {
 		if(file.isFile()) {
 			try {
-				/* References
+				/* Resources 
 				http://www.vogella.com/articles/JavaXML/article.html
 				http://www.xml.com/pub/a/2003/09/17/stax.html?page=2
 				*/

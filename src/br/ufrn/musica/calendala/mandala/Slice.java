@@ -4,32 +4,34 @@ import java.awt.Color;
 
 /**
  * @author Felipe Cortez de Sá
- * @version 0.1
+ * @version 0.2
  * @since 0.1
  */
 
 public class Slice {
 	private String title;
 	private Color color;
-	private Slice mergedSlice;
 	private int mergeSize;
-	private Ring ring;
 	private int pos;
+	private Ring ring;
 	
 	public Slice(int pos, Ring r) {
+		// There's a blank character so saving works
 		title = " ";
-		color = Color.white;
-		mergedSlice = this;
+		// Positions are 0-indexed (makes drawing easier)
 		this.pos = pos;
-		this.ring = r; 
-	}
-	
-	public void setMergedSlice(Slice mergedSlice) {
-		this.mergedSlice = mergedSlice;
+		// mergeSize bigger than 1 means there's a merge
+		this.mergeSize = 1;
+		this.ring = r;
+		color = Color.white; // Maybe change to 'transparent' later
 	}
 
-	public Slice getMergedSlice() {
-		return mergedSlice;
+	public Slice(int pos, int mergeSize, Ring r) {
+		title = " ";
+		this.pos = pos;
+		this.mergeSize = mergeSize;
+		this.ring = r;
+		color = Color.white;
 	}
 	
 	public void setMergeSize(int mergeSize) {
@@ -56,12 +58,12 @@ public class Slice {
 		this.color = color;
 	}
 	
-	public int getPos() {
+	public int getStart() {
 		return pos;
 	}
 	
-	public void setPos(int pos) {
-		this.pos = pos;
+	public void setPos(int start) {
+		this.pos = start;
 	}
 
 	public Ring getRing() {

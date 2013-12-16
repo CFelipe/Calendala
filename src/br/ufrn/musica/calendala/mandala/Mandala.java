@@ -15,13 +15,13 @@ import br.ufrn.musica.calendala.util.MathUtils;
  */
 
 public class Mandala {
-	private static Mandala mandala;
+	private static Mandala mandala;		// For now, only a single mandala can be opened
 	private ArrayList<Ring> rings;
 	private String title;
 	private Ring selectedRing;
-	private boolean innerRing = true;
 	private int selectionStart = 0;
 	private int selectionRange = 0;
+	private boolean innerRing = true;	// Not implemented yet
 	
 	public Mandala() {
 		title = "Untitled";
@@ -74,8 +74,19 @@ public class Mandala {
 	
 	public void changeSelectionStart(int change) {
 		// -x for CCW, x for CW
-		selectionStart = (selectionStart + change) % selectedRing.getSubdivisions();
-		if(selectionStart < 0) selectionStart += selectedRing.getSubdivisions();
+		if(change > 0) {
+			selectionStart = (selectionStart + 
+					selectedRing.getSlices().get(selectionStart).getMergeSize())
+					% selectedRing.getSubdivisions();
+		} else {
+			if(selectionStart - 1 < 0) 
+			selectionStart = (selectionStart - 1 +
+					selectedRing.getSlices().get(selectionStart).getMergeSize())
+					% selectedRing.getSubdivisions();
+		}
+
+		if(selectionStart < 0) 
+		System.out.println(selectionStart);
 	}
 	
 	public void changeSelectedRing(Direction dir) {
@@ -101,6 +112,16 @@ public class Mandala {
 	
 	public Ring insertRing(Direction dir) {
 		Ring ring = new Ring();
+		if(dir == Direction.UP) {
+			rings.add(ring);
+		} else if(dir == Direction.DOWN) {
+			rings.add(rings.indexOf(selectedRing), ring);
+		}
+		return ring;
+	}
+
+	public Ring insertRing(Direction dir, int subdivisions) {
+		Ring ring = new Ring(subdivisions);
 		if(dir == Direction.UP) {
 			rings.add(ring);
 		} else if(dir == Direction.DOWN) {
@@ -159,6 +180,10 @@ public class Mandala {
 	
 	public void init() {
 		Ring r1 = insertRing(Direction.UP);
+		r1.addMerge(3, 3);
+		r1.addMerge(9, 5);
+		insertRing(Direction.UP, 28);
+		insertRing(Direction.UP);
 		selectedRing = r1;
 	}
 	 

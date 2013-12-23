@@ -12,23 +12,23 @@ public class Slice {
 	private String title;
 	private Color color;
 	private int mergeSize;
-	private int pos;
+	private int start;
 	private Ring ring;
 	
-	public Slice(int pos, Ring r) {
+	public Slice(int start, Ring r) {
 		// There's a blank character so saving works
 		title = " ";
 		// Positions are 0-indexed (makes drawing easier)
-		this.pos = pos;
+		this.start = start;
 		// mergeSize bigger than 1 means there's a merge
 		this.mergeSize = 1;
 		this.ring = r;
 		color = Color.white; // Maybe change to 'transparent' later
 	}
 
-	public Slice(int pos, int mergeSize, Ring r) {
+	public Slice(int start, int mergeSize, Ring r) {
 		title = " ";
-		this.pos = pos;
+		this.start = start;
 		this.mergeSize = mergeSize;
 		this.ring = r;
 		color = Color.white;
@@ -59,11 +59,11 @@ public class Slice {
 	}
 	
 	public int getStart() {
-		return pos;
+		return start;
 	}
 	
-	public void setPos(int start) {
-		this.pos = start;
+	public void setStart(int start) {
+		this.start = start;
 	}
 
 	public Ring getRing() {

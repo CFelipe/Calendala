@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import br.ufrn.musica.calendala.io.ResourceIO;
 import br.ufrn.musica.calendala.mandala.Mandala;
 import br.ufrn.musica.calendala.mandala.Ring;
+import br.ufrn.musica.calendala.mandala.Ring.Direction;
 
 /**
  * @author Felipe Cortez de Sá
@@ -130,19 +131,18 @@ public class MandalaPanel extends JPanel implements ActionListener {
         	float arcRadius = (ringSize * (ringsNum - i)) / 2;
     		float divAngle = 360f / currentRing.getSubdivisions();
     		
-    		int pos, size, drawnSlices;
+    		int pos, cellExtent, drawnSlices;
     		drawnSlices = 0;
     		pos = currentRing.getSlices().get(0).getStart();
-    		size = currentRing.getSlices().get(0).getMergeSize();
+    		cellExtent = currentRing.getSlices().get(0).getMergeSize();
     		while(drawnSlices < currentRing.getSubdivisions()) {
 	    		pos = currentRing.getSlices().get(pos).getStart();
-	    		size = currentRing.getSlices().get(pos).getMergeSize();
-	    		drawnSlices += size;
+	    		cellExtent = currentRing.getSlices().get(pos).getMergeSize(); drawnSlices += cellExtent;
 
 	    		// Cell shape
 		        Path2D shape = AnnularSector(
 		        		pos * divAngle, 
-						size * divAngle, 
+						cellExtent * divAngle, 
 			        	arcRadius - (ringSize / 2),
 			        	arcRadius + 2);
 		        // Fill cell
@@ -161,19 +161,37 @@ public class MandalaPanel extends JPanel implements ActionListener {
         		g2d.draw(shape);
 
         		// Prepares to draw next cell
-	    		pos = (pos + size) % currentRing.getSubdivisions();
+	    		pos = (pos + cellExtent) % currentRing.getSubdivisions();
     		}
     		if(currentRing == Mandala.getInstance().getSelectedRing()) {
 				// Draw selection
-    			size = currentRing.getSlices().get(Mandala.getInstance().getSelectionStart()).getMergeSize();
-		        Path2D shape = AnnularSector(
-		        		Mandala.getInstance().getSelectionStart() * divAngle, 
-						size * divAngle, 
-			        	arcRadius - (ringSize / 2),
-			        	arcRadius + 2);
-				g2d.setColor(Color.gray);
-				g2d.setComposite(translucentLight);
-				g2d.fill(shape);
+    			int cellStart = Mandala.getInstance().getSelectionStart();
+    			Direction orientation = 
+    					(Mandala.getInstance().getSelectionRange() >= 0) ? Direction.CW : Direction.CCW;
+    			int j = Math.abs(Mandala.getInstance().getSelectionRange());
+    			
+    			do {
+	    			cellExtent = currentRing.getSlices().get(cellStart).getMergeSize();
+			        Path2D shape = AnnularSector(
+			        		cellStart * divAngle,
+							cellExtent * divAngle,
+				        	arcRadius - (ringSize / 2),
+				        	arcRadius + 2);
+					g2d.setColor(Color.gray);
+					g2d.setComposite(translucentLight);
+					g2d.fill(shape);
+
+					if(orientation == Direction.CW) {
+						cellStart = (cellStart + currentRing.getSlices().get(cellStart).getMergeSize())
+								% currentRing.getSubdivisions();
+					} else {
+						cellStart -= 1;
+						if(cellStart < 0) cellStart += currentRing.getSubdivisions();
+						cellStart = currentRing.getSlices().get(cellStart).getStart();
+					}
+
+					j--;
+    			} while(j >= 0);
     		}
         }
 

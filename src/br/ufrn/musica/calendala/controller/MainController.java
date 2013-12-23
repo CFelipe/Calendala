@@ -298,16 +298,15 @@ public class MainController {
 		private static final long serialVersionUID = 1L;
 	
 		public RemoveRingAction(String name, Icon icon, String shortDescription) {
-	      super(name, icon);
-	      putValue(SHORT_DESCRIPTION, shortDescription);
+			super(name, icon);
+			putValue(SHORT_DESCRIPTION, shortDescription);
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Mandala.getInstance().removeRing();
+		    Mandala.getInstance().removeSelectedRing();
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    }
-	    
-	  }
+		}
+	}
 	 
 	 public class InsertRingAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
@@ -318,7 +317,7 @@ public class MainController {
 	      this.direction = direction;
 	    }
 		
-	    public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().insertRing(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }

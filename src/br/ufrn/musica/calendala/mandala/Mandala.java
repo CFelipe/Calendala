@@ -15,7 +15,7 @@ import br.ufrn.musica.calendala.util.MathUtils;
  */
 
 public class Mandala {
-	private static Mandala mandala;		// For now, only a single mandala can be opened
+	private static Mandala mandala;		// For now, only a single mandala can be open
 	private ArrayList<Ring> rings;
 	private String title;
 	private Ring selectedRing;
@@ -58,6 +58,10 @@ public class Mandala {
 	
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public void setSelectionRange(int selectionRange) {
+		this.selectionRange = selectionRange;
 	}
 	
 	public Ring getSelectedRing() {
@@ -148,6 +152,10 @@ public class Mandala {
 	}
 	
 	public void mergeSelectedSlices() {
+		Direction orientation = 
+				(Mandala.getInstance().getSelectionRange() >= 0) ? Direction.CW : Direction.CCW;
+		int range = Math.abs(Mandala.getInstance().getSelectionRange()) + 1;
+		selectedRing.mergeCells(selectionStart, range, orientation);
 	}
 
 	public void unmergeSelectedSlices() {

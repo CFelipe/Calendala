@@ -1,5 +1,7 @@
 package br.ufrn.musica.calendala.mandala;
 
+import java.util.ArrayList;
+
 import br.ufrn.musica.calendala.util.CircularArrayList;
 
 /**
@@ -57,6 +59,17 @@ public class Ring {
 		}
 		slices.get(start).setMergeSize(size);
 		totalDivs -= size - 1;
+	}
+
+	public void mergeCells(int start, int quantity, Direction direction) {
+		int size = 0;
+		if(direction == Direction.CW) {
+			for(int i = 0; i < quantity; i++) {
+				size += slices.get(start + size).getMergeSize();
+			}
+		}
+		addMerge(start, size);
+		Mandala.getInstance().setSelectionRange(0);
 	}
 	
 	public void rotate(Direction direction) {

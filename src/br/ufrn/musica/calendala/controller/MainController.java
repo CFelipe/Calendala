@@ -321,7 +321,6 @@ public class MainController {
 	    	Mandala.getInstance().insertRing(direction);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
-		 
 	 }
 	 
 	 public class CloneRingAction extends AbstractAction {

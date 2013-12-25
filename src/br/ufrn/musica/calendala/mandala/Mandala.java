@@ -114,25 +114,23 @@ public class Mandala {
 		}
 	}
 	
-	public Ring insertRing(Direction dir) {
-		Ring ring = new Ring();
+	public Ring insertRing(Direction dir, int subdivisions) {
+		Ring ring = new Ring(subdivisions);
+		int selectedIndex = rings.indexOf(selectedRing);
 		if(dir == Direction.UP) {
-			rings.add(ring);
-		} else if(dir == Direction.DOWN) {
 			rings.add(rings.indexOf(selectedRing), ring);
+			selectedRing = rings.get(selectedIndex);
+		} else if(dir == Direction.DOWN) {
+			rings.add(rings.indexOf(selectedRing) + 1, ring);
+			selectedRing = rings.get(selectedIndex + 1);
 		}
 		return ring;
 	}
 
-	public Ring insertRing(Direction dir, int subdivisions) {
-		Ring ring = new Ring(subdivisions);
-		if(dir == Direction.UP) {
-			rings.add(ring);
-		} else if(dir == Direction.DOWN) {
-			rings.add(rings.indexOf(selectedRing), ring);
-		}
-		return ring;
+	public Ring insertRing(Direction dir) {
+		return insertRing(dir, 12); 
 	}
+
 	
 	public void cloneRing (Direction direction) {
 	}
@@ -183,11 +181,11 @@ public class Mandala {
 	}
 	
 	public void init() {
-		Ring r1 = insertRing(Direction.UP);
+		Ring r1 = insertRing(Direction.DOWN);
 		r1.addMerge(11, 2);
 		r1.addMerge(1, 2);
 		selectedRing = r1;
-		Ring r2 = insertRing(Direction.UP, 4);
+		Ring r2 = insertRing(Direction.DOWN, 4);
 		r2.addMerge(0, 2);
 		changeSelectionStart(0);
 	}

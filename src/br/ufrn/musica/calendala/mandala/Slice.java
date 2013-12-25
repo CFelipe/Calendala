@@ -70,4 +70,17 @@ public class Slice {
 		return ring;
 	}
 	
+	public int getNext() {
+		return (start + mergeSize) % ring.getSubdivisions();
+	}
+
+	public int getPrev() {
+		int s = start;
+		s -= 1;
+		if(s < 0)
+			s += ring.getSubdivisions();
+
+		return ring.getSlices().get(s).getStart();
+	}
+	
 }

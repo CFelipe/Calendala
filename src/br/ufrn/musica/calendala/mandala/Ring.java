@@ -63,12 +63,26 @@ public class Ring {
 
 	public void mergeCells(int start, int quantity, Direction direction) {
 		int size = 0;
+		int slice = start;
 		if(direction == Direction.CW) {
-			for(int i = 0; i < quantity; i++) {
-				size += slices.get(start + size).getMergeSize();
-			}
+			int i = 0;
+			do {
+				size += slices.get(slice).getMergeSize();
+				slice = slices.get(slice).getNext();
+				i++;
+			} while(i < quantity);
+			addMerge(start, size);
+		} else if(direction == Direction.CCW) {
+			// Messy but it works! Fix this later
+			int i = 0;
+			do {
+				size += slices.get(slice).getMergeSize();
+				slice = slices.get(slice).getPrev();
+				i++;
+			} while(i < quantity);
+			slice = slices.get(slice).getNext();
+			addMerge(slice, size);
 		}
-		addMerge(start, size);
 		Mandala.getInstance().setSelectionRange(0);
 	}
 	

@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -34,7 +35,7 @@ public class MandalaPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final int DOC_MARGIN = 50;
 	private BasicStroke mandalaStroke = new BasicStroke(1.2f);
-	private int selectedBoundsX, selectedBoundsY;
+	//private Font inputFont = new Font(arg0, arg1, arg2)
 	private BufferedImage bi, overlay;
 	private JTextField editField;
 	private boolean showHelpOverlay = false;
@@ -49,21 +50,21 @@ public class MandalaPanel extends JPanel implements ActionListener {
         	System.out.println("Could not load file");
         }
         
-        editField = new JTextField();
+		editField = new JTextField();
 		editField.setHorizontalAlignment(JTextField.CENTER);
-        setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(MainFrame.WIDTH, MainFrame.WIDTH));
-        setFocusable(true);
-        setLayout(null); //Allows absolute positioning of components
+		setBackground(Color.WHITE);
+		setPreferredSize(new Dimension(MainFrame.WIDTH, MainFrame.WIDTH));
+		setFocusable(true);
+		setLayout(null); //Allows absolute positioning of components
         
-        editField.addActionListener(new ActionListener() {
+		editField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String finalText = editField.getText();
 				if(finalText.equals(""))
 					finalText = " ";
 				
-				//Mandala.getInstance().getFirstSelectedSlice().setTitle(finalText);
+				Mandala.getInstance().getSelectedSlice().setTitle(finalText);
 				remove(editField);
 				repaint();
 			}
@@ -76,11 +77,15 @@ public class MandalaPanel extends JPanel implements ActionListener {
     }
     
     public void editField() {
-		editField.setBounds(selectedBoundsX - 31, selectedBoundsY - 2, 70, 20);
-		add(editField);
-		editField.setText(editField.getText());
-		editField.selectAll();
-		editField.grabFocus();
+    	if(Mandala.getInstance().getSelectionRange() == 0) {
+			editField.setBounds((MainFrame.WIDTH / 2) - 95, 550 - 2, 200, 40);
+			add(editField);
+			String sliceTitle = Mandala.getInstance().getSelectedSlice().getTitle();
+			if(sliceTitle.equals(" ")) sliceTitle = "";
+			editField.setText(sliceTitle);
+			editField.selectAll();
+			editField.grabFocus();
+    	}
     }
 
     public Path2D AnnularSector(float start, float extent, float r, float R) {
@@ -137,7 +142,8 @@ public class MandalaPanel extends JPanel implements ActionListener {
     		cellExtent = currentRing.getSlices().get(0).getMergeSize();
     		while(drawnSlices < currentRing.getSubdivisions()) {
 	    		pos = currentRing.getSlices().get(pos).getStart();
-	    		cellExtent = currentRing.getSlices().get(pos).getMergeSize(); drawnSlices += cellExtent;
+	    		cellExtent = currentRing.getSlices().get(pos).getMergeSize(); 
+	    		drawnSlices += cellExtent;
 
 	    		// Cell shape
 		        Path2D shape = AnnularSector(
@@ -195,68 +201,38 @@ public class MandalaPanel extends JPanel implements ActionListener {
     		}
         }
 
+        g2d.setColor(Color.black);
+        g2d.setComposite(original);
 
-        /*
-        
         for(int i = 0; i < ringsNum; i++) {
         	Ring currentRing = Mandala.getInstance().getRings().get(i);
-    		double arcRadius = (ringSize * (ringsNum - i)) / 2;
-			
-	        fullArc.setArcByCenter(width / 2, width / 2, arcRadius, 90, 0, Arc2D.OPEN);
-	        fullArc.start = 0;
-	        fullArc.setAngleExtent(360);
-
-    		ringArc.setArcByCenter(width / 2, width / 2, arcRadius, 90, 0, Arc2D.PIE);
+        	float arcRadius = (ringSize * (ringsNum - i)) / 2;
+    		float divAngle = ((float) Math.PI / 180) * 360f / currentRing.getSubdivisions();
+	        float textAngle;
     		
+    		int pos, cellExtent, drawnSlices;
+    		drawnSlices = 0;
+    		pos = currentRing.getSlices().get(0).getStart();
+    		cellExtent = currentRing.getSlices().get(0).getMergeSize();
+    		while(drawnSlices < currentRing.getSubdivisions()) {
+	    		pos = currentRing.getSlices().get(pos).getStart();
+	    		cellExtent = currentRing.getSlices().get(pos).getMergeSize(); 
+	    		drawnSlices += cellExtent;
 
-    		//Smallest slice angle
-    		double divAngle = 360 / currentRing.getSubdivisions();
+		        String text = currentRing.getSlices().get(pos).getTitle(); 
+		        int strWidth = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+		        textAngle = divAngle * pos;
+		        textAngle += (cellExtent * divAngle) / 2;
+		        g2d.rotate(textAngle);
+		        float textRadius = (((arcRadius - (ringSize / 2)) + arcRadius) / 2) - (g2d.getFontMetrics().getHeight() / 4);
+		        g2d.drawString(text, -strWidth / 2, -textRadius);
+		        g2d.rotate(-textAngle);
 
-    		//Draws selected slices
-			int initialSlice = Mandala.getInstance().getSelectionStart();
-    		int selSlices = Mandala.getInstance().getSelectionRange();
-    		int totalSlices = currentRing.getSubdivisions();
+        		// Prepares to draw next cell
+	    		pos = (pos + cellExtent) % currentRing.getSubdivisions();
 
-    		if(selSlices < 0) {
-    			initialSlice = MathUtils.circularize(initialSlice + selSlices, totalSlices);
-    			selSlices *= -1;
     		}
-
-    		ringArc.start -= divAngle * initialSlice + 1;
-
-    		while(totalSlices > 0) {
-	    		ringArc.start -= divAngle;
-        		ringArc.setAngleExtent(divAngle);
-
-        		g2d.setComposite(original);
-        		g2d.setColor(Color.white);
-        		g2d.fill(ringArc);
-        		
-        		if(Mandala.getInstance().getSelectedRing() == currentRing && selSlices >= 0) {
-        			g2d.setColor(Color.gray);
-	    			g2d.setComposite(translucentDark);
-	    			g2d.fill(ringArc);
-	    			selSlices--;
-	    		}
-        		
-        		g2d.setComposite(translucentDark);
-        		g2d.setColor(Color.darkGray);
-        		g2d.draw(ringArc);
-    			totalSlices--;
-    		}
-
-    		g2d.setComposite(translucentDarker);
-    		g2d.draw(fullArc);
         }
-
-        */
-
-//        int strWidth = (int) g2d.getFontMetrics().getStringBounds("Text", g2d).getWidth() + 10;
-//
-//        for(int i = 0; i < 12; i++) {
-//	        g2d.rotate(30 * Math.PI / 180);
-//	        g2d.drawString("Test", -strWidth / 2, -120);
-//        }
 
         // Draws the overlay
         if(showHelpOverlay) {

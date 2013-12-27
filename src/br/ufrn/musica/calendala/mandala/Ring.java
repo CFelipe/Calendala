@@ -1,6 +1,7 @@
 package br.ufrn.musica.calendala.mandala;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import br.ufrn.musica.calendala.util.CircularArrayList;
 
@@ -18,7 +19,7 @@ public class Ring {
 	public enum Direction {CW, CCW, UP, DOWN, NONE}
 	
 	public Ring() {
-		slices = new CircularArrayList<Slice>(); // Maybe change to ArrayList later
+		slices = new CircularArrayList<Slice>();
 		subdivisions = 12;
 		totalDivs = subdivisions;
 		for(int i = 0; i < subdivisions; i++) {
@@ -49,16 +50,12 @@ public class Ring {
 		return totalDivs;
 	}
 
-	public void setTotalDivs(int totalDivs) {
-		this.totalDivs = totalDivs;
-	}
-	
 	public void addMerge(int start, int size) {
 		for(int i = 0; i < size; i++) {
 			slices.get(start + i).setStart(start);
+			slices.get(start + i).setMergeSize(1);
 		}
 		slices.get(start).setMergeSize(size);
-		totalDivs -= size - 1;
 	}
 
 	public void mergeCells(int start, int quantity, Direction direction) {
@@ -82,11 +79,61 @@ public class Ring {
 			} while(i < quantity);
 			slice = slices.get(slice).getNext();
 			addMerge(slice, size);
+			Mandala.getInstance().setSelectionStart(slice);
 		}
+
+		totalDivs -= (quantity - 1);
+		// Selects the merged cell
 		Mandala.getInstance().setSelectionRange(0);
 	}
 	
+	public void removeMerge(int start) {
+		int mergeSize = slices.get(start).getMergeSize();
+		if(mergeSize > 1) {
+			slices.get(start).setMergeSize(1);
+			for(int i = 1; i < mergeSize; i++) {
+				slices.get(start + i).setStart(start + i);
+				totalDivs++;
+			}
+		}
+	}
+	
+	public void unmergeCells(int start, int quantity, Direction direction) {
+		int slice = start;
+		int next;
+		int size = 0;
+		if(direction == Direction.CW) {
+			int i = 0;
+			do {
+				size += slices.get(slice).getMergeSize();
+				next = slices.get(slice).getNext();
+				removeMerge(slice);
+				slice = next;
+				i++;
+			} while(i < quantity);
+		} else if(direction == Direction.CCW) {
+			int i = 0;
+			do {
+				size += slices.get(slice).getMergeSize();
+				next = slices.get(slice).getPrev();
+				removeMerge(slice);
+				slice = next;
+				i++;
+			} while(i < quantity);
+			slice = slices.get(slice).getNext();
+			Mandala.getInstance().setSelectionStart(slice);
+
+		}
+
+		Mandala.getInstance().setSelectionRange(size - 1);
+	}
+	
 	public void rotate(Direction direction) {
+		int start;
+		for(Slice s : slices) {
+			start = s.getStart();
+			s.setStart((start + 1) % subdivisions);
+		}
 	}
 	
 	public CircularArrayList<Slice> getSlices() {

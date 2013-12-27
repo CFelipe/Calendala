@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import br.ufrn.musica.calendala.gui.FacadeSwing;
 import br.ufrn.musica.calendala.gui.MainFrame;
+import br.ufrn.musica.calendala.gui.MenuBar;
 import br.ufrn.musica.calendala.io.FileIO;
 import br.ufrn.musica.calendala.io.FileIO.Extension;
 import br.ufrn.musica.calendala.io.ResourceIO;
@@ -78,23 +79,6 @@ public class MainController {
 			"Changes the selection counterclockwise", 
 			Direction.CCW),
 	
-	insertSliceBeforeSelectionAction = new InsertSliceAction(
-			"Insert slice (CCW)", 
-			"Inserts a slice before the selection", 
-			new ImageIcon(ResourceIO.addSliceIcon),
-			Direction.CCW),
-	
-	insertSliceAfterSelectionAction = new InsertSliceAction(
-			"Insert slice (CW)", 
-			"Inserts a slice after the selection", 
-			new ImageIcon(ResourceIO.addSliceIcon),
-			Direction.CW),
-			
-	removeSlicesAction = new RemoveSlicesAction(
-			"Remove slice", 
-			new ImageIcon(ResourceIO.removeSliceIcon),
-			"Removes selected slice or slices"),
-	
 	removeRingAction = new RemoveRingAction(
 			"Remove ring", 
 			new ImageIcon(ResourceIO.removeRingIcon),
@@ -107,6 +91,16 @@ public class MainController {
 	
 	insertRingDOWNAction = new InsertRingAction(
 			"Insert ring inward", 
+			new ImageIcon(ResourceIO.addRingIcon),
+			Direction.DOWN),
+
+	insertRingWithNSubdivsUPAction = new InsertRingWithNSubdivsAction(
+			"Insert ring outward with N subdivisions", 
+			new ImageIcon(ResourceIO.addRingIcon),
+			Direction.UP),
+	
+	insertRingWithNSubdivsDOWNAction = new InsertRingWithNSubdivsAction(
+			"Insert ring inward with N subdivisions", 
 			new ImageIcon(ResourceIO.addRingIcon),
 			Direction.DOWN),
 	
@@ -191,7 +185,9 @@ public class MainController {
 	    }
 		
 	    public void actionPerformed(ActionEvent e) {
+	    	FacadeSwing.singleton().getMenuBar().setEnabled(false);
 	    	FacadeSwing.singleton().getMandalaPanel().editField();
+	    	FacadeSwing.singleton().getMenuBar().setEnabled(true);
 	    }
 	  }
 		
@@ -264,36 +260,6 @@ public class MainController {
 	    }
 	  }
 	 
-	 public class InsertSliceAction extends AbstractAction {
-		private static final long serialVersionUID = 1L;
-		private Direction direction;
-	
-		public InsertSliceAction(String name, String shortDescription, Icon icon, Direction direction) {
-	      super(name, icon);
-	      putValue(SHORT_DESCRIPTION, shortDescription);
-	      this.direction = direction;
-	    }
-		
-	    public void actionPerformed(ActionEvent e) {
-	    	Mandala.getInstance().insertSlice(direction);
-	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    }
-	  }
-	 
-	 public class RemoveSlicesAction extends AbstractAction {
-		private static final long serialVersionUID = 1L;
-	
-		public RemoveSlicesAction(String name, Icon icon, String shortDescription) {
-	      super(name, icon);
-	      putValue(SHORT_DESCRIPTION, shortDescription);
-	    }
-		
-	    public void actionPerformed(ActionEvent e) {
-		    Mandala.getInstance().removeSelectedSlices();
-	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-	    }
-	  }
-	 
 	 public class RemoveRingAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 	
@@ -319,6 +285,22 @@ public class MainController {
 		
 		public void actionPerformed(ActionEvent e) {
 	    	Mandala.getInstance().insertRing(direction);
+	    	FacadeSwing.singleton().getMandalaPanel().repaint();
+	    }
+	 }
+
+	 public class InsertRingWithNSubdivsAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		private Direction direction;
+	
+		public InsertRingWithNSubdivsAction(String name, Icon icon, Direction direction) {
+	      super(name, icon);
+	      this.direction = direction;
+	    }
+		
+		public void actionPerformed(ActionEvent e) {
+	    	int subdivs = Integer.parseInt(JOptionPane.showInputDialog("Enter"));
+	    	Mandala.getInstance().insertRing(direction, subdivs);
 	    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    }
 	 }

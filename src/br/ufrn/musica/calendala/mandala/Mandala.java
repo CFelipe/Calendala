@@ -63,6 +63,10 @@ public class Mandala {
 	public void setSelectionRange(int selectionRange) {
 		this.selectionRange = selectionRange;
 	}
+
+	public void setSelectionStart(int selectionStart) {
+		this.selectionStart = selectionStart;
+	}
 	
 	public Ring getSelectedRing() {
 		return selectedRing;
@@ -71,9 +75,13 @@ public class Mandala {
 	public int getSelectionStart() {
 		return selectionStart;
 	}
-	
+
 	public int getSelectionRange() {
 		return selectionRange;
+	}
+	
+	public Slice getSelectedSlice() {
+		return selectedRing.getSlices().get(selectionStart);
 	}
 	
 	public void changeSelectionStart(int change) {
@@ -95,6 +103,7 @@ public class Mandala {
 	
 	public void changeSelectedRing(Direction dir) {
 		int selectedIndex = rings.indexOf(selectedRing);
+		int oldsubdivs = selectedRing.getSubdivisions();
 		if(dir == Direction.UP) {
 			if(selectedIndex > 0)
 				selectedRing = rings.get(selectedIndex - 1);
@@ -102,6 +111,9 @@ public class Mandala {
 			if(selectedIndex < rings.size() - 1)
 				selectedRing = rings.get(selectedIndex + 1);
 		}
+		int newsubdivs = selectedRing.getSubdivisions();
+		selectionStart *= (float) newsubdivs/oldsubdivs;
+		selectionStart = selectedRing.getSlices().get(selectionStart).getStart();
 	}
 	
 	public void changeSelectionRange(Direction dir) {
@@ -135,29 +147,30 @@ public class Mandala {
 	public void cloneRing (Direction direction) {
 	}
 	
-	public void insertSlice(Direction d) {
-	}
-	
-	public void removeSelectedSlices() {
-	}
-	
 	public boolean removeSelectedRing() {
-		 if(rings.size() > 1) {
-             rings.remove(selectedRing);
-             return true;
-	     }
-         return false;
+		int selectedIndex = rings.indexOf(selectedRing);
+		if(rings.size() > 1) {
+			rings.remove(selectedRing);
+			selectedRing = selectedIndex <= 0 ? rings.get(selectedIndex) : rings.get(selectedIndex - 1);;
+			return true;
+		}
+		return false;
 	}
 	
 	public void mergeSelectedSlices() {
-		Direction orientation = 
-				(Mandala.getInstance().getSelectionRange() >= 0) ? Direction.CW : Direction.CCW;
-		int range = Math.abs(Mandala.getInstance().getSelectionRange()) + 1;
-		selectedRing.mergeCells(selectionStart, range, orientation);
+		if(Mandala.getInstance().getSelectionRange() != 0) {
+			Direction orientation = 
+					(Mandala.getInstance().getSelectionRange() >= 0) ? Direction.CW : Direction.CCW;
+			int range = Math.abs(Mandala.getInstance().getSelectionRange()) + 1;
+			selectedRing.mergeCells(selectionStart, range, orientation);
+		}
 	}
 
 	public void unmergeSelectedSlices() {
-		
+		Direction orientation = 
+				(Mandala.getInstance().getSelectionRange() >= 0) ? Direction.CW : Direction.CCW;
+		int range = Math.abs(Mandala.getInstance().getSelectionRange()) + 1;
+		selectedRing.unmergeCells(selectionStart, range, orientation);;
 	}
 	
 	public void paintSelection() {
@@ -182,12 +195,7 @@ public class Mandala {
 	
 	public void init() {
 		Ring r1 = insertRing(Direction.DOWN);
-		r1.addMerge(11, 2);
-		r1.addMerge(1, 2);
 		selectedRing = r1;
-		Ring r2 = insertRing(Direction.DOWN, 4);
-		r2.addMerge(0, 2);
-		changeSelectionStart(0);
 	}
 	 
 }

@@ -12,7 +12,7 @@ import br.ufrn.musica.calendala.controller.MainController;
 
 /**
  * @author Felipe Cortez de Sá
- * @version 0.1
+ * @version 0.2
  * @since 0.1
  */
 
@@ -87,20 +87,6 @@ public class MenuBar extends JMenuBar {
 		menu.add(menuItem);
 		
 		menu.addSeparator();
-		
-		/*
-		menuItem = new JMenuItem(ctrl.changeSelectionCCWAction);
-		menuItem.setMnemonic(KeyEvent.VK_S);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, ActionEvent.CTRL_MASK));
-		menu.add(menuItem);
-		
-		menuItem = new JMenuItem(ctrl.changeSelectionCWAction);
-		menuItem.setMnemonic(KeyEvent.VK_S);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, ActionEvent.CTRL_MASK));
-		menu.add(menuItem);
-		
-		menu.addSeparator();
-		*/
 		
 		menuItem = new JMenuItem(ctrl.rotateRingCWAction);
 		menuItem.setMnemonic(KeyEvent.VK_R);
@@ -212,5 +198,4 @@ public class MenuBar extends JMenuBar {
 		
 		add(menu);
 	}
-	
 }

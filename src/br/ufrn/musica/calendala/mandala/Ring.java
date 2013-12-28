@@ -1,6 +1,5 @@
 package br.ufrn.musica.calendala.mandala;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import br.ufrn.musica.calendala.util.CircularArrayList;
@@ -54,6 +53,7 @@ public class Ring {
 		for(int i = 0; i < size; i++) {
 			slices.get(start + i).setStart(start);
 			slices.get(start + i).setMergeSize(1);
+			slices.get(start + i).setTitle(" ");
 		}
 		slices.get(start).setMergeSize(size);
 	}
@@ -130,9 +130,25 @@ public class Ring {
 	
 	public void rotate(Direction direction) {
 		int start;
-		for(Slice s : slices) {
-			start = s.getStart();
-			s.setStart((start + 1) % subdivisions);
+		if(direction == Direction.CW) {
+			for(Slice s : slices) {
+				start = s.getStart();
+				s.setStart((start + 1) % subdivisions);
+			}
+			Collections.rotate(slices, 1);
+	    	Mandala.getInstance().changeSelectionStart(1);
+		} else {
+			for(Slice s : slices) {
+				start = s.getStart();
+				if(start - 1 < 0) {
+					s.setStart((start - 1 + subdivisions));
+				}
+				else {
+					s.setStart((start - 1));
+				}
+			}
+			Collections.rotate(slices, -1);
+	    	Mandala.getInstance().changeSelectionStart(-1);
 		}
 	}
 	

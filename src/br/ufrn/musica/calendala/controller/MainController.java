@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 
 import br.ufrn.musica.calendala.gui.FacadeSwing;
 import br.ufrn.musica.calendala.gui.MainFrame;
-import br.ufrn.musica.calendala.gui.MenuBar;
 import br.ufrn.musica.calendala.io.FileIO;
 import br.ufrn.musica.calendala.io.FileIO.Extension;
 import br.ufrn.musica.calendala.io.ResourceIO;

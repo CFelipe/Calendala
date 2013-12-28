@@ -20,7 +20,7 @@ import br.ufrn.musica.calendala.mandala.Mandala;
 public class MainFrame extends JFrame {
 	public static final int WIDTH = 600;
 	private static final long serialVersionUID = 1L;
-	private static final String version = "0.4.0";
+	private static final String version = "1.0.0";
 	private static MainFrame instance;
 	
 	private MainFrame() {

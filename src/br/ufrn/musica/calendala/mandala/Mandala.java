@@ -3,10 +3,7 @@ package br.ufrn.musica.calendala.mandala;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import br.ufrn.musica.calendala.controller.MainController.MergeSlicesAction;
 import br.ufrn.musica.calendala.mandala.Ring.Direction;
-import br.ufrn.musica.calendala.util.CircularArrayList;
-import br.ufrn.musica.calendala.util.MathUtils;
 
 /**
  * @author Felipe Cortez de Sá

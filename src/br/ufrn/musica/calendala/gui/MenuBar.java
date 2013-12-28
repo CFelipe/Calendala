@@ -79,9 +79,11 @@ public class MenuBar extends JMenuBar {
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem(ctrl.insertRingWithNSubdivsUPAction);
+		menuItem.setMnemonic(KeyEvent.VK_I);
 		menu.add(menuItem);
 		
 		menuItem = new JMenuItem(ctrl.insertRingWithNSubdivsDOWNAction);
+		menuItem.setMnemonic(KeyEvent.VK_I);
 		menu.add(menuItem);
 		
 		menu.addSeparator();
@@ -152,7 +154,6 @@ public class MenuBar extends JMenuBar {
 		menuItem = new JMenuItem(ctrl.enumerateSelectionAction);
 		menuItem.setMnemonic(KeyEvent.VK_E);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0));
-		menuItem.setEnabled(false);
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem(ctrl.colorSelectionAction);
@@ -197,11 +198,13 @@ public class MenuBar extends JMenuBar {
 		menu = new JMenu("Help");
 		menu.setMnemonic(KeyEvent.VK_H);
 		
+		/*
 		menuItem = new JMenuItem(ctrl.toggleHelpAction);
 		menuItem.setMnemonic(KeyEvent.VK_H);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		menuItem.setEnabled(false);
 		menu.add(menuItem);
+		*/
 		
 		menuItem = new JMenuItem(ctrl.showAboutDialogAction);
 		menuItem.setMnemonic(KeyEvent.VK_A);

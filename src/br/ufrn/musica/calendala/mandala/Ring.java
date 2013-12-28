@@ -37,6 +37,12 @@ public class Ring {
 		}
 	}
 	
+	public Ring(int subdivisions, int totalDivs) {
+		this.subdivisions = subdivisions;
+		this.totalDivs = totalDivs;
+		slices = new CircularArrayList<Slice>();
+	}
+
 	public int getSubdivisions() {
 		return subdivisions;
 	}
@@ -85,6 +91,25 @@ public class Ring {
 		totalDivs -= (quantity - 1);
 		// Selects the merged cell
 		Mandala.getInstance().setSelectionRange(0);
+	}
+	
+	public void enumerateRing(int start, int quantity, Direction direction) {
+		int slice = start;
+		if(direction == Direction.CW) {
+			int i = 0;
+			do {
+				slices.get(slice).setTitle(Integer.toString(i + 1));
+				slice = slices.get(slice).getNext();
+				i++;
+			} while(i < quantity);
+		} else if(direction == Direction.CCW) {
+			int i = 0;
+			do {
+				slices.get(slice).setTitle(Integer.toString(i + 1));
+				slice = slices.get(slice).getPrev();
+				i++;
+			} while(i < quantity);
+		}
 	}
 	
 	public void removeMerge(int start) {
@@ -154,5 +179,9 @@ public class Ring {
 	
 	public CircularArrayList<Slice> getSlices() {
 		return slices;
+	}
+	
+	public void setSlices(CircularArrayList<Slice> slices) {
+		this.slices = slices;
 	}
 }

@@ -145,10 +145,12 @@ public class MainController {
 			"Opens a file",
 			new ImageIcon(ResourceIO.folderIcon)),
 	
+	/*
 	toggleHelpAction = new ToggleHelpAction(
 			"Toggle help", 
 			new ImageIcon(ResourceIO.helpIcon),
 			"Toggles the help overlay"),
+	*/
 	
 	insideOutAction = new InsideOutAction(
 			"Turn inside out", 
@@ -412,11 +414,7 @@ public class MainController {
 		}
 		
 	    public void actionPerformed(ActionEvent e) {
-	    	//Hides the overlay
-			if(FacadeSwing.singleton().getMandalaPanel().getShowHelpOverlay())
-				FacadeSwing.singleton().getMandalaPanel().toggleHelpOverlay();
-			
-	    	FacadeSwing.singleton().getMandalaPanel().setShowSelection(false);
+	    	//FacadeSwing.singleton().getMandalaPanel().setShowSelection(false);
 	    	FacadeSwing.singleton().getMandalaPanel().drawMandala();
 			
 	    	FileDialog saveFileDialog = new FileDialog(
@@ -434,25 +432,11 @@ public class MainController {
 		    	FacadeSwing.singleton().getMandalaPanel().repaint();
 	    	}
 			
-			FacadeSwing.singleton().getMandalaPanel().setShowSelection(true);
+			//FacadeSwing.singleton().getMandalaPanel().setShowSelection(true);
 			FacadeSwing.singleton().getMandalaPanel().repaint();
 		}
 	}
 	 
-	public class ToggleHelpAction extends AbstractAction {
-		private static final long serialVersionUID = 1L;
-	
-		public ToggleHelpAction(String name, Icon icon, String shortDescription) {
-	      super(name, icon);
-	      putValue(SHORT_DESCRIPTION, shortDescription);
-	    }
-		
-	    public void actionPerformed(ActionEvent e) {
-	    	FacadeSwing.singleton().getMandalaPanel().toggleHelpOverlay();
-	    	FacadeSwing.singleton().getMandalaPanel().repaint();
-		}
-	}
-	
 	public class InsideOutAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 	

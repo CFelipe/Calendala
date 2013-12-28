@@ -68,6 +68,10 @@ public class Mandala {
 	public Ring getSelectedRing() {
 		return selectedRing;
 	}
+
+	public void setSelectedRing(Ring selectedRing) {
+		this.selectedRing = selectedRing;
+	}
 	
 	public int getSelectionStart() {
 		return selectionStart;
@@ -139,7 +143,6 @@ public class Mandala {
 	public Ring insertRing(Direction dir) {
 		return insertRing(dir, 12); 
 	}
-
 	
 	public void cloneRing (Direction direction) {
 	}
@@ -174,6 +177,12 @@ public class Mandala {
 	}
 	
 	public void enumerateSelection() {
+		if(Mandala.getInstance().getSelectionRange() != 0) {
+			Direction orientation = 
+					(Mandala.getInstance().getSelectionRange() >= 0) ? Direction.CW : Direction.CCW;
+			int range = Math.abs(Mandala.getInstance().getSelectionRange()) + 1;
+			selectedRing.enumerateRing(selectionStart, range, orientation);
+		}
 	}
 	
 	public void insideOut() {

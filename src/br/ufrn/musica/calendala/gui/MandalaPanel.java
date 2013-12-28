@@ -5,7 +5,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -39,7 +38,7 @@ public class MandalaPanel extends JPanel implements ActionListener {
 	private BufferedImage bi, overlay;
 	private JTextField editField;
 	private boolean showHelpOverlay = false;
-	private boolean showSelection = true;
+	//private boolean showSelection = true;
     				
     public MandalaPanel() {
 
@@ -107,8 +106,6 @@ public class MandalaPanel extends JPanel implements ActionListener {
 		Graphics2D g2d = bi.createGraphics();
 
 		Composite original = g2d.getComposite();
-		Composite translucentDarker = 
-				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f);	
 		Composite translucentDark = 
 				AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f);	
 		Composite translucentLight = 
@@ -257,22 +254,10 @@ public class MandalaPanel extends JPanel implements ActionListener {
     	return bi;
     }
     
-    public boolean getShowHelpOverlay() {
-    	return showHelpOverlay;
-    }
-    
-    public void toggleHelpOverlay() {
-    	showHelpOverlay = !showHelpOverlay;
-    	
-    	if(showHelpOverlay) {
-    		showSelection = false;
-    	} else {
-    		showSelection = true;
-    	}
-    }
-    
+    /*
     public void setShowSelection(boolean showSelection) {
     	this.showSelection = showSelection;
     }
+    */
 
 }
